@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title>Actividad 7</title>
+
+    <script>
+        var nombrePaises = ["Grecia", "Argentina", "Austria", "Egipto"];
+        var nombreCapitales = ["Atenas", "Buenos Aires", "Viena", "El Cairo"];
+        var mumeroAleatorio = Math.floor(Math.random() * (nombrePaises.length - 1));
+        var intentosRestantes = 3;
+
+        while (intentosRestantes > 0) {
+            var intento = prompt("Introduzca la capital de " + nombrePaises[mumeroAleatorio] + ", tienes " + intentosRestantes + " intentos.");
+            if (intento == nombreCapitales[mumeroAleatorio]) {
+                alert("Lo ha conseguido");
+                intentosRestantes = 0;
+            } else {
+                alert("Has fallado, vuelve a intentarlo");
+                intentosRestantes--;
+            }
+        }
+    </script>
+
+</head>
+
+<!-- Hacer un juego para que el usuario averigüe la capital de un país previamente definida. 
+    Tiene tres intentos y debe mostrase en pantalla si ha acertado o no, incluyendo en este 
+    caso el número de intentos que le quedan. -->
+
+<body>
+    <p>
+        Este es el cuerpo
+    </p>
+</body>
+
+</html>
