@@ -9,8 +9,30 @@
     <title>Actividad 9</title>
 
     <script>
-        var fecha = Date.parse(prompt("Introduzca el numero a tratar"));
-        alert(fecha);
+        var mes = 0;
+        var anio = 2021;
+        while (mes > 12 || mes <= 0) {
+            mes = parseInt(prompt("Introduzca el mes"));
+        }
+        anio = parseInt(prompt("Introduzca el año"));
+
+        var mesFechaAnterior = mes - 1;
+        var anioFechaAnterior = anio;
+        if (mesFechaAnterior == 0) {
+            mesFechaAnterior = 12;
+            anioFechaAnterior = anio - 1;
+        }
+        var fechaAnterior = mesFechaAnterior + "/" + anioFechaAnterior;
+
+        var mesFechaPosterior = mes + 1;
+        var anioFechaPosterior = anio;
+        if (mesFechaPosterior == 13) {
+            mesFechaPosterior = 1;
+            anioFechaPosterior = anio + 1;
+        }
+        var fechaPosterior = mesFechaPosterior + "/" + anioFechaPosterior;
+
+        alert("El mes anterior será el " + fechaAnterior + " y el mes posterior será el " + fechaPosterior);
     </script>
 
 </head>
