@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title>Actividad 11</title>
+
+    <script>
+        var anio = parseInt(prompt("Introduzca una año"));
+        
+        if ((anio % 4 == 0) && (anio % 100 != 0 ) || (anio % 400 == 0)){
+            alert("El año " + anio + " es biciesto");
+        } else {
+            alert("El año " + anio + " no es biciesto");
+        }
+
+    </script>
+
+</head>
+
+<!-- En este reto deberás pedir un año y escriba si es bisiesto o no. 
+    Sabemos que son bisiestos todos los años múltiplos de 4, 
+    excepto los que sean múltiplos de 100 sin que sean múltiplos de 400. -->
+
+<body>
+    <p>
+        Este es el cuerpo
+    </p>
+</body>
+
+</html>

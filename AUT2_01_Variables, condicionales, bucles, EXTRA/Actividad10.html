@@ -9,7 +9,17 @@
     <title>Actividad 10</title>
 
     <script>
-        var letra = prompt("Introduzca una letra");
+        var letraIndroducida = prompt("Introduzca una letra");
+        var letraMinuscula = letraIndroducida.toLowerCase();
+
+        const vocales = ["a", "e", "i", "o", "u"];
+        
+        if (!vocales.indexOf(letraMinuscula)) {
+            alert("La letra " + letraMinuscula + " es una vocal");
+        } else {
+            alert("La letra " + letraMinuscula + " no es una vocal");
+        }
+
     </script>
 
 </head>
