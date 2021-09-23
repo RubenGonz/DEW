@@ -9,17 +9,21 @@
     <title>Actividad 13</title>
 
     <script>
-        for (i = 0; i < 3; i++) {
-            var numero = parseInt(prompt("Introduzca un numero"));
-        }
-            
-        var resultado = "";
+        var numero1 = parseInt(prompt("Introduzca un numero"));
+        var numero2= parseInt(prompt("Introduzca un numero"));
+        var numero3 = parseInt(prompt("Introduzca un numero"));
 
-        for (i = 1; i <= numero; i++) {
-            resultado = resultado + " " + i;
-            console.log(resultado);
+        if (numero1 + numero2 == numero3) {
+            console.log("La suma de " + numero1 + " y " + numero2 + " es " + numero3);
+        } else {
+            console.log("La suma de " + numero1 + " y " + numero2 + " no es " + numero3);
         }
 
+        if ((numero1 < numero2) && (numero2 < numero3)) {
+            console.log("Los valores se han introducido en orden ascendente");
+        } else {
+            console.log("Los valores no se han introducido en orden ascendente");
+        }
     </script>
 
 </head>
