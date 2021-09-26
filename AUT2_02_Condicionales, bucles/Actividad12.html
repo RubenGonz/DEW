@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title>Actividad 12</title>
+
+    <script>
+        var fecha = parseInt(prompt("Introduzca tu fecha de nacimiento con el formato: 'aaaa-mm-dd' "));
+        var formato = prompt("En que formato quiere la respuesta, las opciones son: 'd' , 'h' , 'm' o 's'");
+
+        let fecha_cadena = new Date(fecha);
+
+        let dia = fecha_cadena.getDate();
+        let mes = fecha_cadena.getMonth();
+        let año = fecha_cadena.getFullYear();
+
+        let resultado = dia + ' ' + mes + ' ' + año;
+        alert(resultado);
+
+    </script>
+
+</head>
+
+<!-- ¿Cuántos segundos han pasado desde que naciste? ¿y minutos? ¿y horas? ¿y días? 
+    Implementar una función que dada una fecha cualquiera en formato “yyyy-mm-dd”, 
+    devuelva cuánto tiempo ha pasado desde esa fecha. La función aceptará un 
+    segundo parámetro para indicar en qué unidad se quiere obtener el resultado: 
+    ‘d’ → días, ‘h’ → horas, ‘m’ → minutos y ‘s’ → segundos. Si no es ninguna de estas 
+    unidades, se mostrará un error. -->
+
+<body>
+    <p>
+        Este es el cuerpo
+    </p>
+</body>
+
+</html>

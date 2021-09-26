@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title>Actividad 9</title>
+
+    <script>
+        var cantidad = prompt("Indica la cantidad que quierer desglosar");
+        var cantidadInicial = cantidad;
+        var formatos = [500, 200, 100, 50, 20, 10, 5, 2, 1];
+        var cambio = Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        for (var i = 0; i < formatos.length; i++) {
+            if (cantidad >= formatos[i]) {
+                cambio[i] = parseInt(cantidad / formatos[i]);
+                cantidad = cantidad - (cambio[i] * formatos[i]);
+            }
+        }
+
+        console.log("El cambio de " + cantidadInicial + " es:");
+        for (i = 0; i < formatos.length; i++) {
+            if (cambio[i] > 0) {
+                if (formatos[i] >= 5) {
+                    console.log(cambio[i] + " billetes de " + formatos[i]);
+                } else {
+                    console.log(cambio[i] + " monedas de " + formatos[i]);
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<!-- Escribir un programa que proporcione el desglose en el número mínimo de billetes y monedas 
+    de una cantidad entera cualquiera de euros dada. Recuerda que los billetes y monedas de uso legal 
+    disponibles hasta 1 euro son de: 500, 200, 100, 50, 20, 10, 5, 2 y 1 euros. Para ello deben 
+    solicitar al usuario un número entero (comprobar que lo es) y desglosar la cantidad en el 
+    número mínimo de billetes y monedas. -->
+
+<body>
+    <p>
+        Este es el cuerpo
+    </p>
+</body>
+
+</html>

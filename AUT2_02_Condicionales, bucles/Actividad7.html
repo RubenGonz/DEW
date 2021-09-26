@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title>Actividad 7</title>
+
+    <script>
+        var celcius = parseFloat(prompt("Introduzca la temperatura en Celcius"));
+        var pregunta = prompt("¿Quiere ver los grados? Si lo quiere escribe 'si'");
+        var farenheit = celcius * 9 / 5 + 32;
+        var mostrarGrados = false;
+        if (pregunta == "si") {
+            mostrarGrados = true;
+        }
+        if (!mostrarGrados) {
+            alert(celcius + " son " + farenheit);
+        } else {
+            alert(celcius + " grados celcius son " + farenheit + " grados farenheit");
+        }
+    </script>
+
+</head>
+
+<!-- En el ejercicio anterior, añadir un argumento opcional booleano 
+    de forma que si está a `False` (valor por defecto) devuelve 
+    sólo el resultado numérico (p.ej: `24`), mientras que si se indica `True` 
+    le añade la unidad `ºC` (p.ej `24ºC`). -->
+
+<body>
+    <p>
+        Este es el cuerpo
+    </p>
+</body>
+
+</html>
