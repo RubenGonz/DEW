@@ -1,0 +1,16 @@
+Conversión de variables:  ¿Qué generan los siguientes códigos?
+
+a. parseInt("15");
+Devuelve 15
+
+b. parseInt("15.5")
+Devuelve 15
+
+c. parseInt(15.5)
+Devuelve 15
+
+d. parseInt("true")
+Devuelve NaN
+
+e. parseInt(true)
+Devuelve NaN

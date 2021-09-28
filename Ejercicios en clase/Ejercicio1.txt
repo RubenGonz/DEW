@@ -1,0 +1,28 @@
+Resuelve estas expresiones y explica porqué devuelve ese valor:
+
+2 > 3 + 2
+Devuelve false porque a siempre será más chiquito que 5.
+
+1 + false + 3.5
+Devuelve 4.5 porque false se representa 0.
+
+4 * true + 2
+Devuelve 6 porque true se representa 1.
+
+5 / 0 
+Devuelve Infinity porque aunque es un cálculo imposible tenderá a ser infinito.
+
+10 > 2 > 0
+Devuelve true porque todas las condiciones son verdaderas.
+
+15 < 3 * 10 
+Devuelve true porque la multiplicacion tiene prioridad y 30 es mayor a 15.
+
+3 * hola + 2 
+Devuelve un error porque "hola" no esta definido.
+
+5 / “hola”
+Devuelve NaN porque la solucion no es un numero.
+
+π * 32 
+Devuleve que el simbolo π no esta definido ya que se deberia usar Math.PI.

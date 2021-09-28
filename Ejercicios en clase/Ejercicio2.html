@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title>Ejercicio 2</title>
+
+    <script>
+        var nota = parseInt(prompt("Introduzca la nota obtenida"));
+
+        if (nota < 0 || nota > 10) {
+            alert("ERROR! – Indique un número del rango 0 a 10");
+        } else if (nota < 5) {
+            alert("Suspenso");
+        } else if (nota < 7) {
+            alert("Aprobado");
+        } else if (nota < 9) {
+            alert("Notable");
+        } else {
+            alert("Sobresaliente");
+        }
+    </script>
+
+</head>
+
+<!-- Escribe un programa que pida una nota y muestre en una ventana 
+    emergente la siguiente información:
+
+a. Si la nota está entre 0 y 5 el mensaje indicará: Suspenso
+b. Si la nota está entre 5 y 7 el mensaje indicará: Aprobado
+c. Si la nota está entre 7 y 9 el mensaje indicará: Notable
+d. Si la nota está entre 9 y 10 el mensaje indicará: Sobresaliente
+e. Si no se introduce un número real: ERROR! – Indique un número del rango 0 a 10
+f. Si es un número que no está comprendido entre 0 y 10: ERROR! – Indique un
+número del rango 0 a 10 -->
+
+<body>
+    <p>
+        Este es el cuerpo
+    </p>
+</body>
+
+</html>
