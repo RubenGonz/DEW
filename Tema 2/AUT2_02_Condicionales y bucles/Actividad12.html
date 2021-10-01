@@ -9,17 +9,12 @@
     <title>Actividad 12</title>
 
     <script>
-        var fecha = parseInt(prompt("Introduzca tu fecha de nacimiento con el formato: 'aaaa-mm-dd' "));
+        var diaNacimiento = parseInt(prompt("Introduzca el dia de tu nacimiento"));
+        var mesNacimiento = parseInt(prompt("Introduzca el mes de tu nacimiento"));
+        var anioNacimiento = parseInt(prompt("Introduzca el año de tu nacimiento"));
         var formato = prompt("En que formato quiere la respuesta, las opciones son: 'd' , 'h' , 'm' o 's'");
 
-        let fecha_cadena = new Date(fecha);
-
-        let dia = fecha_cadena.getDate();
-        let mes = fecha_cadena.getMonth();
-        let año = fecha_cadena.getFullYear();
-
-        let resultado = dia + ' ' + mes + ' ' + año;
-        alert(resultado);
+        alert(diaNacimiento + " " + mesNacimiento + " " + anioNacimiento);
 
     </script>
 

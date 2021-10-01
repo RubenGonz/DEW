@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title>Actividad 3</title>
+
+    <script>
+        let numElementos = parseInt(prompt("Introduzca el numero de elementos del array"));
+        let valorMin = parseInt(prompt("Introduzca el valor minimo del array"));
+        let valorMax = parseInt(prompt("Introduzca el valor maximo del array"));
+
+        if (numElementos != Number) numElementos = 10;
+        if (valorMin != Number) valorMin = 100;
+        if (valorMax != Number) valorMax = 200;
+
+        function crearArray(numElementos = 10, valorMin = 100, valorMax = 200) {
+
+            function numeroAleatorio(valorMin, valorMax) {
+                return Math.floor((Math.random() * (valorMax - valorMin)) + valorMin);
+            }
+
+            const arrayAleatorio = [];
+            for (i = 0; i <= numElementos - 1; i++) {
+                arrayAleatorio[i] = numeroAleatorio(valorMin, valorMax);
+            }
+            return arrayAleatorio;
+        }
+
+        console.log(crearArray(numElementos, valorMin, valorMax));
+    </script>
+
+</head>
+
+<!-- Modifica la función del ejercicio anterior para que pueda 
+    generar un array con los parámetros aleatorios del ejercicio 
+    anterior o si le falta algún parámetro, utilize por defecto 
+    "20 elementos entre 50 y 100" y luego ordenarlo. Por ejemplo: 
+    "funcion();"  donde genere un array aleatorio de 20 elementos 
+    entre 50 y 100. -->
+
+<body>
+    <p>
+        Este es el cuerpo
+    </p>
+</body>
+
+</html>
