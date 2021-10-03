@@ -9,9 +9,16 @@
     <title>Actividad 6</title>
 
     <script>
+        //Se pide que se introduzca la temperatura en grados celcius
         var celcius = parseFloat(prompt("Introduzca la temperatura en Celcius"));
-        var farenheit = celcius * 9 / 5 + 32;
-        alert(celcius + " grados celcius son " + farenheit + " grados farenheit");
+
+        //Se crea la funcion que tiene como parametros la temperatura celcius que se encarga de pasar a farenheit
+        function converirAFarenheit(celcius) {
+            return celcius * 9 / 5 + 32;
+        }
+
+        //Muestra la solucion por pantalla
+        alert(celcius + " grados celcius son " + converirAFarenheit(celcius) + " grados farenheit");
     </script>
 
 </head>

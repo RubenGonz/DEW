@@ -9,19 +9,26 @@
     <title>Actividad 1</title>
 
     <script>
+        //Se piden 3 numeros
         var a = parseInt(prompt("Introduzca un numero"));
         var b = parseInt(prompt("Introduzca un numero"));
         var c = parseInt(prompt("Introduzca un numero"));
 
+        //Se evalua si uno de las 3 es negativo
         if (a < 0 || b < 0 || c < 0) {
+            //Se imprime por consola
             console.error("Al menos una de las 3 variables es negativa");
         }
 
+        //Se evalua si los tres numeros son iguales
         if (a == 0 && b == 0 && c == 0) {
+            //Se imprime por consola
             console.error("Las tres variables son iguales a 0");
         }
 
+        //Se evalua si la suma es mayor a 10 y ademas los 3 numeros son distintos
         if (a + b + c > 10 && a != b && b != c && c != a) {
+            //Se imprime por consola
             console.error("Las suma de las 3 variables es mayor que 10 Y las tres variables son diferentes");
         }
 

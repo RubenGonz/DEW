@@ -9,14 +9,20 @@
     <title>Actividad 10</title>
 
     <script>
+        //Se pide una letra al usuario
         var letraIndroducida = prompt("Introduzca una letra");
+        //Se convierte a mayuscula para mayor comodidad
         var letraMinuscula = letraIndroducida.toLowerCase();
 
+        //Creamos array con todas las vocales
         const vocales = ["a", "e", "i", "o", "u"];
         
+        //Se evalua si la letra esta en el array
         if (!vocales.indexOf(letraMinuscula)) {
+            //Se muestra la respuesta
             alert("La letra " + letraMinuscula + " es una vocal");
         } else {
+            //Se muestra la respuesta
             alert("La letra " + letraMinuscula + " no es una vocal");
         }
 

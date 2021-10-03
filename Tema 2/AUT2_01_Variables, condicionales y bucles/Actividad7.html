@@ -9,17 +9,28 @@
     <title>Actividad 7</title>
 
     <script>
+        //Creamos los arrays con los paises y las capitales
         var nombrePaises = ["Grecia", "Argentina", "Austria", "Egipto"];
         var nombreCapitales = ["Atenas", "Buenos Aires", "Viena", "El Cairo"];
+        
+        //Se recoge un numero aleatorio entre los elementos de los arrays
         var mumeroAleatorio = Math.floor(Math.random() * (nombrePaises.length - 1));
+
+        //Se establece la cantidad de intentos totales
         var intentosRestantes = 3;
 
+        // Se crea un bucle que se ejecute mientras queden intentos
         while (intentosRestantes > 0) {
+            //Se hace la pregunta
             var intento = prompt("Introduzca la capital de " + nombrePaises[mumeroAleatorio] + ", tienes " + intentosRestantes + " intentos.");
+            
+            //Se valora si ha acertado 
             if (intento == nombreCapitales[mumeroAleatorio]) {
+                //Muestra mensaje de enhorabuena y sale del bucle
                 alert("Lo ha conseguido");
                 intentosRestantes = 0;
             } else {
+                //Muestra mensaje de fallo y quita un intento
                 alert("Has fallado, vuelve a intentarlo");
                 intentosRestantes--;
             }

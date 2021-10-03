@@ -9,15 +9,21 @@
     <title>Actividad 14</title>
 
     <script>
+        //Se pide un numero
         var numero = parseInt(prompt("Introduzca un numero"));
 
+        //Con un bucle hacemos que sea multiplo de 4
         while (numero % 4) {
             numero--;
         }
+        //Enseñamos el numero
         console.log(numero);
 
+        //Con un bucle mostramos los 99 siguientes resultado de la resta de 4 en cada iteración
         for (i = 1; i < 100; i++) {
+            //Se produce la resta de 4
             numero = numero - 4;
+            //Se enseña por consola
             console.log(numero);
         }
     </script>

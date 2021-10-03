@@ -9,11 +9,16 @@
     <title>Actividad 12</title>
 
     <script>
+        //Se le pide al usuario un numero
         var numero = parseInt(prompt("Introduzca un numero"));
+        //Se inicializa resultado
         var resultado = "";
 
+        //Hacemos un bucle que se ejecute el numero de veces que puso el usuario
         for (i = 1; i <= numero; i++) {
+            //Se recoge los valores introducidos con anterioridad y el siguiente
             resultado = resultado + " " + i;
+            //Mostramos el contenido del resultado actual
             console.log(resultado);
         }
         
@@ -21,9 +26,12 @@
 
 </head>
 
-<!-- En este reto deberás pedir un año y escriba si es bisiesto o no. 
-    Sabemos que son bisiestos todos los años múltiplos de 4, 
-    excepto los que sean múltiplos de 100 sin que sean múltiplos de 400. -->
+<!-- En este reto deberás pedir al usuario un número N y muestre por pantalla el siguiente:
+1
+1 2
+1 2 3
+.......
+1 2 3 ......... N -->
 
 <body>
     <p>

@@ -9,12 +9,18 @@
     <title>Actividad 6</title>
 
     <script>
+        // Bucle hecho para poder hacer la ejecución las cinco veces
         for (let i = 0; i < 5; i++) {
+            //Se pide introducir los valores
             var numeroIntroducido = parseInt(prompt("Introduzca un número"));
+            //Se inicializa resultado a 0 para poder usarlode variable que guarde el resultado
             var resultado = 0;
+            // Se crea un bucle para repetir el proceso 5 veces
             for (let i = 1; i < 6; i++) {
+                //Se hace la suma
                 resultado = resultado + numeroIntroducido + i;
             }
+            //Aqui se muestra el resultado
             console.log(resultado);
         }
     </script>

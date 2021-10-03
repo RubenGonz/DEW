@@ -9,29 +9,43 @@
     <title>Actividad 9</title>
 
     <script>
+        //Se establacene valores por defecto
         var mes = 0;
         var anio = 2021;
+        
+        //Se pide el mes hasta que se cumpla la condicion
         while (mes > 12 || mes <= 0) {
             mes = parseInt(prompt("Introduzca el mes"));
         }
+
+        //Se pide el anio
         anio = parseInt(prompt("Introduzca el año"));
 
+        //Se resta un mes al introducido
         var mesFechaAnterior = mes - 1;
         var anioFechaAnterior = anio;
+
+        //Si el mes es 0 ponemos que sea diciembre del año anterior
         if (mesFechaAnterior == 0) {
             mesFechaAnterior = 12;
             anioFechaAnterior = anio - 1;
         }
+        // Se guarda en una variable la solucion
         var fechaAnterior = mesFechaAnterior + "/" + anioFechaAnterior;
 
+        //Se suma un mes al introducido
         var mesFechaPosterior = mes + 1;
         var anioFechaPosterior = anio;
+
+        //Si el mes es 13 ponemos que sea enero del año posterior
         if (mesFechaPosterior == 13) {
             mesFechaPosterior = 1;
             anioFechaPosterior = anio + 1;
         }
+        // Se guarda en una variable la solucion
         var fechaPosterior = mesFechaPosterior + "/" + anioFechaPosterior;
 
+        //Se muestra el resultado final
         alert("El mes anterior será el " + fechaAnterior + " y el mes posterior será el " + fechaPosterior);
     </script>
 

@@ -9,19 +9,26 @@
     <title>Actividad 13</title>
 
     <script>
+        //Se pide la introducción de 3 numeros
         var numero1 = parseInt(prompt("Introduzca un numero"));
         var numero2= parseInt(prompt("Introduzca un numero"));
         var numero3 = parseInt(prompt("Introduzca un numero"));
 
+        //Se evalua si la suma de los dos primeros es el tercero
         if (numero1 + numero2 == numero3) {
+            //Mostramos la respuesta
             console.log("La suma de " + numero1 + " y " + numero2 + " es " + numero3);
         } else {
+            //Mostramos la respuesta
             console.log("La suma de " + numero1 + " y " + numero2 + " no es " + numero3);
         }
 
+        //Se evalua si los 3 numeros son diferentes
         if ((numero1 < numero2) && (numero2 < numero3)) {
+            //Mostramos la respuesta
             console.log("Los valores se han introducido en orden ascendente");
         } else {
+            //Mostramos la respuesta
             console.log("Los valores no se han introducido en orden ascendente");
         }
     </script>

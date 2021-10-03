@@ -9,11 +9,15 @@
     <title>Actividad 11</title>
 
     <script>
+        //Se pide un anio al usuario
         var anio = parseInt(prompt("Introduzca una año"));
         
+        //Se evalua que cumpla todas las condiciones para ser biciesto
         if ((anio % 4 == 0) && (anio % 100 != 0 ) || (anio % 400 == 0)){
+            //Se muesta el resultado
             alert("El año " + anio + " es biciesto");
         } else {
+            //Se muesta el resultado
             alert("El año " + anio + " no es biciesto");
         }
 

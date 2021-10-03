@@ -9,12 +9,57 @@
     <title>Actividad 12</title>
 
     <script>
+        //Se pide que se introduzcan datos para contruir una fecha
         var diaNacimiento = parseInt(prompt("Introduzca el dia de tu nacimiento"));
         var mesNacimiento = parseInt(prompt("Introduzca el mes de tu nacimiento"));
         var anioNacimiento = parseInt(prompt("Introduzca el año de tu nacimiento"));
+        //Se pide el formato en el que queremos la solucion 
         var formato = prompt("En que formato quiere la respuesta, las opciones son: 'd' , 'h' , 'm' o 's'");
 
-        alert(diaNacimiento + " " + mesNacimiento + " " + anioNacimiento);
+        //Se crea la fecha con los datos del usuario
+        var nacimiento = new Date(anioNacimiento, mesNacimiento - 1, diaNacimiento);
+        //Se crea una fecha que es la actual
+        var hoy = new Date();
+        //Se crea una variable que guarda el tiempo transcurrido entre estas fechas en milisegundos
+        var tiempoPasado = hoy - nacimiento;
+
+        //Se crean variables que guardan el valor del tiempo en distintos formatos
+        var duracionSegundo = 1000;
+        var duracionMinuto = duracionSegundo * 60;
+        var duracionHora = duracionMinuto * 60;
+        var duracionDia = duracionHora * 24;
+
+        //Se evalua el formato pedido para dar una solucion
+        switch (formato) {
+            case "d":
+                //Se convierte a dias el tiempo pasado
+                var diasPasados = Math.floor(tiempoPasado / duracionDia);
+                //Se muestra la solucion
+                console.log("Han pasado " + diasPasados + " dias desde que naciste.")
+                break;
+            case "h":
+                //Se convierte a horas el tiempo pasado
+                var horasPasadas = Math.floor(tiempoPasado / duracionHora);
+                //Se muestra la solucion
+                console.log("Han pasado " + horasPasadas + " horas desde que naciste.")
+                break;
+            case "m":
+                //Se convierte a minutos el tiempo pasado
+                var minutosPasados = Math.floor(tiempoPasado / duracionMinuto);
+                //Se muestra la solucion
+                console.log("Han pasado " + minutosPasados + " minutos desde que naciste.")
+                break;
+            case "s":
+                //Se convierte a segundos el tiempo pasado
+                var segundosPasados = Math.floor(tiempoPasado / duracionSegundo);
+                //Se muestra la solucion
+                console.log("Han pasado " + segundosPasados + " segundos desde que naciste.")
+                break;
+            default:
+                //Se indica que el formato no es correcto
+                alert("El formato no es correcto");
+                break;
+        }
 
     </script>
 

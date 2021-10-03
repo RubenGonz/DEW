@@ -9,24 +9,39 @@
     <title>Actividad 9</title>
 
     <script>
+        //Se pide al usuario que introduzca una cantidad de dinero
         var cantidad = prompt("Indica la cantidad que quierer desglosar");
-        var cantidadInicial = cantidad;
-        var formatos = [500, 200, 100, 50, 20, 10, 5, 2, 1];
-        var cambio = Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
 
+        //Se guarda la cantidad introducida en una variable 
+        var cantidadInicial = cantidad;
+        //Se crea un array donde se guarden los formatos y el cambio actual
+        var formatos = [500, 200, 100, 50, 20, 10, 5, 2, 1];
+        var cambio = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        //Se crea un bucle que termina cuando no queden formatos disponibles
         for (var i = 0; i < formatos.length; i++) {
+            //Se evalua si la cantidad introducida es mayor que la cantidad soportada por el formato
             if (cantidad >= formatos[i]) {
+                //Se introduce en el array de cambio la cantidad de elementos que caben 
                 cambio[i] = parseInt(cantidad / formatos[i]);
+                //Se resta esto al resto de la cantidad evaluada
                 cantidad = cantidad - (cambio[i] * formatos[i]);
             }
         }
 
+        //Se muestra por pantalla la cantidad inicial
         console.log("El cambio de " + cantidadInicial + " es:");
+        
+        //Se crea un bucle que termina cuando no queden formatos disponibles
         for (i = 0; i < formatos.length; i++) {
+            //Se evalua si hay por lo menos un elemento de cada formato
             if (cambio[i] > 0) {
+                //Se evalua si es billete o moneda
                 if (formatos[i] >= 5) {
+                    //Se muestra el sobrante de este formato
                     console.log(cambio[i] + " billetes de " + formatos[i]);
                 } else {
+                    //Se muestra el sobrante de este formato
                     console.log(cambio[i] + " monedas de " + formatos[i]);
                 }
             }
