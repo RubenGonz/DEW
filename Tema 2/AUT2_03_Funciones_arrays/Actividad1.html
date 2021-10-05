@@ -9,7 +9,23 @@
     <title>Actividad 1</title>
 
     <script>
+        //Se piden los numeros del dni
+        var numerosDni = parseInt(prompt("Introduzca los numeros del dni"));
 
+        //Se crea la funcion que calcula la letra que le corresponde al dni
+        function calcularLetra() {
+            //Se crea un string con las posibles letras que puede tener
+            letras = "TRWAGMYFPDXBNJZSQVHLCKET";
+            //Se calcula el resto de dividir por 23 para hallar la posicion
+            posicion = numerosDni % 23;
+            //Se busca en el String la letra indicada
+            var letraDni = letras.substring(posicion, posicion + 1);
+            //Se devuelve la letra
+            return letraDni;
+        }
+
+        //Se imprime por pantalla la solucion
+        console.log("Su dni es: " + numerosDni + calcularLetra());
     </script>
 
 </head>

@@ -9,7 +9,54 @@
     <title>Actividad 5</title>
 
     <script>
+        //Se crea la funcion con parametros por defecto que crea un array de numeros aleatorios
+        function crearArray(numElementos = 20, valorMin = -100, valorMax = 100) {
 
+            //Se crea la funcion que genera un numero aleatorio entre dos numeros
+            function numeroAleatorio(valorMin, valorMax) {
+                return Math.floor((Math.random() * (valorMax - valorMin)) + valorMin);
+            }
+
+            //Se crea y rellena el array
+            const arrayAleatorio = [];
+            for (i = 0; i <= numElementos - 1; i++) {
+                arrayAleatorio[i] = numeroAleatorio(valorMin, valorMax);
+            }
+            //Se devuelve el array
+            return arrayAleatorio;
+        }
+
+        //Guardamos en un variable el array
+        var array = crearArray();
+
+        //Definimos variables predefinidas
+        var menorValor = 100;
+        var mayorValor = -100;
+        var indiceMenor = 0;
+        var indiceMayor = 0;
+
+        //Recorremos el array 
+        for (i = 0; i < array.length; i++) {
+            //Evaluamos si es el numero mas pequeño encontrado
+            if (array[i] < menorValor) {
+                //Se le asigna a menorValor el valor del elemento
+                menorValor = array[i];
+                //Se le asigna a indiceMenor el valor del indice
+                indiceMenor = i;
+            }
+            //Evaluamos si es el numero mas grande encontrado
+            if (array[i] > mayorValor) {
+                //Se le asigna a mayorValor el valor del elemento
+                mayorValor = array[i];
+                //Se le asigna a indiceMayor el valor del indice
+                indiceMayor = i;
+            }
+        }
+
+        //Se muestra el resultado
+        console.log("En el array: " + array);
+        console.log("El numero mas pequeño es " + menorValor + " encontrado en la " + indiceMenor + " posicion del array");
+        console.log("El numero mas grande es " + mayorValor + " encontrado en la " + indiceMayor + " posicion del array");
     </script>
 
 </head>

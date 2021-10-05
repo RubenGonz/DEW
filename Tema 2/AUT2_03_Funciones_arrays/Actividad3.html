@@ -9,28 +9,25 @@
     <title>Actividad 3</title>
 
     <script>
-        let numElementos = parseInt(prompt("Introduzca el numero de elementos del array"));
-        let valorMin = parseInt(prompt("Introduzca el valor minimo del array"));
-        let valorMax = parseInt(prompt("Introduzca el valor maximo del array"));
-
-        if (numElementos != Number) numElementos = 10;
-        if (valorMin != Number) valorMin = 100;
-        if (valorMax != Number) valorMax = 200;
-
+        //Se crea la funcion con parametros por defecto que crea un array de numeros aleatorios
         function crearArray(numElementos = 10, valorMin = 100, valorMax = 200) {
 
+            //Se crea la funcion que genera un numero aleatorio entre dos numeros
             function numeroAleatorio(valorMin, valorMax) {
                 return Math.floor((Math.random() * (valorMax - valorMin)) + valorMin);
             }
 
+            //Se crea y rellena el array
             const arrayAleatorio = [];
             for (i = 0; i <= numElementos - 1; i++) {
                 arrayAleatorio[i] = numeroAleatorio(valorMin, valorMax);
             }
+            //Se devuelve el array
             return arrayAleatorio;
         }
 
-        console.log(crearArray(numElementos, valorMin, valorMax));
+        //Se muestra por consola
+        console.log(crearArray());
     </script>
 
 </head>
