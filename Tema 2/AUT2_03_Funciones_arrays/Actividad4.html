@@ -9,6 +9,67 @@
     <title>Actividad 4</title>
 
     <script>
+        //Se crea la funcion con parametros por defecto que crea un array de numeros aleatorios
+        function crearArray(numElementos = 15, valorMin = -10, valorMax = 20) {
+
+            //Se crea la funcion que genera un numero aleatorio entre dos numeros
+            function numeroAleatorio(valorMin, valorMax) {
+                return Math.floor((Math.random() * (valorMax - valorMin)) + valorMin);
+            }
+
+            //Se crea y rellena el array
+            const arrayAleatorio = [];
+            for (i = 0; i <= numElementos - 1; i++) {
+                arrayAleatorio[i] = numeroAleatorio(valorMin, valorMax);
+            }
+            //Se devuelve el array
+            return arrayAleatorio;
+        }
+
+        //Guardamos en una variable el array
+        var arrayOriginal = crearArray();
+
+        //Mostramos el array para poder comparar
+        console.log(arrayOriginal);
+
+        //Guardamos una copia del array
+        var arrayCopiado = arrayOriginal.slice();
+
+        //Recorremos cada elemento del array
+        for (i = 0; i < arrayOriginal.length; i++) {
+
+            //Evaluamos si esta entre -10 y -5
+            if (arrayOriginal[i] <= -5) {
+                //Se borra el primer elemento del array
+                arrayCopiado.shift();
+                //Se muestra por pantalla el mensaje
+                console.log("El elemento " + arrayOriginal[i] + " borro el primer elemento del array");
+            
+                //Evaluamos si esta entre -4 y -0
+            } else if (-5 < arrayOriginal[i] && arrayOriginal[i] <= 0) {
+                //Se borra el ultimo elemento del array
+                arrayCopiado.pop();
+                //Se muestra por pantalla el mensaje
+                console.log("El elemento " + arrayOriginal[i] + " borro el ultimo elemento del array");
+            
+                //Evaluamos si esta entre 1 y 10
+            } else if (0 < arrayOriginal[i] && arrayOriginal[i] <= 10) {
+                //Se añade el elemento al principio del array
+                arrayCopiado.unshift(arrayOriginal[i]);
+                //Se muestra por pantalla el mensaje
+                console.log("El elemento " + arrayOriginal[i] + " se añadio al principio del array");
+            
+                //Evaluamos si esta entre 11 y 20
+            } else if (10 < arrayOriginal[i] && arrayOriginal[i] <= 20) {
+                //Se añade el elemento al final del array
+                arrayCopiado.push(arrayOriginal[i]);
+                //Se muestra por pantalla el mensaje
+                console.log("El elemento " + arrayOriginal[i] + " se añadio al final del array");
+            }
+        }
+
+        //Mostramos la copia para ver las diferencias
+        console.log(arrayCopiado);
 
     </script>
 
@@ -21,7 +82,7 @@
     x <= -5: Eliminar el primer elemento del array
     -5 < x <= 0: Eliminar el último elemento del array
     0 < x <=  10: Añadir x al principio del array
-    10 < x <=  10: Añadir x al final del array
+    10 < x <=  20: Añadir x al final del array
 
     Mostrar un mensaje de texto para cada número indicando 
     el valor de x, la operación realizada (eliminar o añadir, 
