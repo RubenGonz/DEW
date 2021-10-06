@@ -9,6 +9,56 @@
     <title>Actividad 6</title>
 
     <script>
+        //Se crea la funcion con parametros por defecto que crea un array de numeros aleatorios
+        function crearArray(numElementos = 50, valorMin = 10, valorMax = 20) {
+
+            //Se crea la funcion que genera un numero aleatorio entre dos numeros
+            function numeroAleatorio(valorMin, valorMax) {
+                return Math.floor((Math.random() * (valorMax - valorMin)) + valorMin);
+            }
+
+            //Se crea y rellena el array
+            const arrayAleatorio = [];
+            for (i = 0; i <= numElementos - 1; i++) {
+                arrayAleatorio[i] = numeroAleatorio(valorMin, valorMax);
+            }
+            //Se devuelve el array
+            return arrayAleatorio;
+        }
+
+        //Guardamos en una variable el array
+        var array = crearArray();
+        //Lo mostramos en pantalla para poder comparar 
+        console.log("El array original es: " + array)
+        //Lo ordenamos para trabajar con el de manera más comoda
+        var arrayOrdenado = array.sort();
+
+        //Recorremos cada elemento del array
+        for (i = 0; i < arrayOrdenado.length; i++) {
+            //Creamos una variable que contara las veces que se repite un numero
+            var contador = 0;
+            //Recorremos cada elemento del array para comparar con la primera vez que lo recorrimos
+            for (j = 0; j < arrayOrdenado.length; j++) {
+                //Se evalua si los numeros coinciden
+                if (arrayOrdenado[i] == arrayOrdenado[j]) {
+                    //Se suma uno al contador 
+                    contador++;
+                }
+            }
+
+            //Se evalua si el valor ha mostrar ya ha aparecido
+            if (arrayOrdenado[i] != arrayOrdenado[i - 1]) {
+                //Se evalua si aparece una o mas veces para mostrar un mensaje mas apropiado
+                if (contador == 1) {
+                    //Se muestra el resultado
+                    console.log("El valor " + arrayOrdenado[i] + " aparece 1 vez");
+                } else {
+                    //Se muestra el resultado
+                    console.log("El valor " + arrayOrdenado[i] + " aparece " + contador + " veces");
+                }
+            }
+
+        }
 
     </script>
 
