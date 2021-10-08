@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title>Ejercicio Piedras papel o tijeras</title>
+
+    <script>
+        //Se establece los valores del objeto juego
+        let juego = {
+            opciones: ["Piedra", "Papel", "Tijeras"],
+            jugador1: { nombre: "jugador1", puntos: 0, eleccion: "" },
+            jugador2: { nombre: "jugador2", puntos: 0, eleccion: "" }
+        }
+
+        //Se establece la prioridad de las opciones
+        let opcionesGanadoras = {
+            piedra: ["Tijeras"],
+            papel: ["Piedra"],
+            tijeras: ["Papel"]
+        }
+
+        //Función que le asigna nombres a los jugadores
+        function asignarNombres(nombreJugador1 = juego.jugador1.nombre, nombreJugador2 = juego.jugador2.nombre) {
+            juego.jugador1.nombre = nombreJugador1;
+            juego.jugador2.nombre = nombreJugador2;
+        }
+
+        //Función que muestra los nombres de los jugadores
+        function mostrarNombres() {
+            console.log("El jugador 1 se llamara: " + juego.jugador1.nombre);
+            console.log("El jugador 2 se llamara: " + juego.jugador2.nombre);
+        }
+
+        //Funcion que genera un numero aleatorio entre 1 y la longitud de opciones del juego
+        function numeroRandom(valorMin = 0, valorMax = juego.opciones.length) {
+            return Math.floor((Math.random() * (valorMax - valorMin)) + valorMin);
+        }
+
+        //Funcion que decide la eleccion de cada jugador
+        function elegirOpcion() {
+            juego.jugador1.eleccion = juego.opciones[numeroRandom()];
+            juego.jugador2.eleccion = juego.opciones[numeroRandom()];
+        }
+
+        //Funcion que muestra la eleccion de cada jugador
+        function mostrarEleccion() {
+            console.log("   " + juego.jugador1.nombre + " ha elegido " + juego.jugador1.eleccion);
+            console.log("   " + juego.jugador2.nombre + " ha elegido " + juego.jugador2.eleccion);
+        }
+
+        //Funcione que muestra el marcador actual
+        function mostrarMarcador() {
+            console.log("   " + juego.jugador1.nombre + ":" + juego.jugador1.puntos + " VS " + juego.jugador2.puntos + ":" + juego.jugador2.nombre);
+        }
+
+        //Funcion que decide quien gano la ronda
+        function evaluarRonda() {
+            if (juego.jugador1.eleccion != juego.jugador2.eleccion) {
+                switch (juego.jugador1.eleccion) {
+                    case "Piedra":
+                        for (i = 0; i < opcionesGanadoras.piedra.length; i++) {
+                            if (opcionesGanadoras.piedra[i] == juego.jugador2.eleccion) {
+                                juego.jugador1.puntos++;
+                            } else {
+                                juego.jugador2.puntos++;
+                            }
+                        }
+                        break;
+                    case "Papel":
+                        for (i = 0; i < opcionesGanadoras.papel.length; i++) {
+                            if (opcionesGanadoras.papel[i] == juego.jugador2.eleccion) {
+                                juego.jugador1.puntos++;
+                            } else {
+                                juego.jugador2.puntos++;
+                            }
+                        }
+                        break;
+                    case "Tijeras":
+                        for (i = 0; i < opcionesGanadoras.tijeras.length; i++) {
+                            if (opcionesGanadoras.tijeras[i] == juego.jugador2.eleccion) {
+                                juego.jugador1.puntos++;
+                            } else {
+                                juego.jugador2.puntos++;
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        //Funcion que restablece la puntucion inicial
+        function restablecerPuntos() {
+            juego.jugador1.puntos = 0;
+            juego.jugador2.puntos = 0;
+        }
+
+        //Funcion que da comienzo al juego
+        function Empezarjuego(rondasGanadoras = 2) {
+            console.log("Bienvenido a piedra, papel o tijeras " + juego.jugador1.nombre + " y " + juego.jugador2.nombre);
+            asignarNombres();
+            mostrarNombres();
+            console.log("Que empiece el juego!!");
+            restablecerPuntos();
+            contadorRondas = 0;
+            while (juego.jugador1.puntos < rondasGanadoras && juego.jugador2.puntos < rondasGanadoras) {
+                contadorRondas++;
+                console.log("Ronda " + contadorRondas + "!!")
+                elegirOpcion();
+                mostrarEleccion();
+                evaluarRonda();
+                mostrarMarcador();
+            }
+            if (juego.jugador1.puntos == rondasGanadoras) {
+                console.log("El ganador de la partida es " + juego.jugador1.nombre);
+            } else {
+                console.log("El ganador de la partida es " + juego.jugador2.nombre);
+            }
+        }
+
+    </script>
+
+</head>
+
+<!--  Vamos a crear un juego básico de Piedra, Papel y Tijera, 
+    donde se realizaran 'tiradas' entre dos jugadores y gana la 
+    partida el que gane 3 tiradas:
+
+    Primero vamos ha hacer que el juego sea random, es decir 
+    que la tirada de cada jugador sea aleatoria (por la maquina) 
+    para comprobar que todo es correcto y se escriben los 
+    resultados correctos.
+
+    Crearemos un objeto juego, que tenga como características 
+    las opciones ( en este caso: Piedra, papel y tijera), 
+    los nombre de los jugadores, y los puntos que tiene cada jugador.
+
+    Y tendremos las siguientes funciones:
+
+    preguntarNombre() - Preguntaremos el nombre del jugador/A
+
+    numeroRandom() - Escogeremos una opción ( p, p, t) random
+
+    tiradaJugador() - mostraremos el valor de una tirada de un jugador
+
+    imprimirResultados(jugador1, jugador2) – Devuelve que jugador ha ganado
+    
+    evaluaTirada( tiradajugador1, tiradajugador2) – Devuelve cual de los dos jugadores ha ganado la tirada ( piedra gana tijera, tijeras gana papel y papel gana piedra) y le da un punto al jugador ganador.
+    
+    juego() - Primero pedimos los nombres de los jugadores, y 
+    jugamos al mejor de 3. -->
+
+<body>
+    <p>
+        Este es el cuerpo
+    </p>
+</body>
+
+</html>
