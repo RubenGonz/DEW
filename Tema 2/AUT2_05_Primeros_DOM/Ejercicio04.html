@@ -1,0 +1,62 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ejercicio 4 - DOM</title>
+</head>
+
+<body>
+    <table id="tabla">
+        <tr>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+        </tr>
+    </table>
+    <input type="button" value="Añadir elemento" onclick="anade();">
+</body>
+
+<script type="text/javascript">
+
+    //Se almacena información en el objeto DOM
+    let DOM = {
+        tabla: document.getElementById("tabla"),
+        trTabla: document.getElementById("tabla").getElementsByTagName("tr")
+    }    
+
+    function asignarColores() {
+        for (i = 0; i < DOM.trTabla.length; i++) {
+            if (i % 2 == 0) {
+                DOM.trTabla[i].style.backgroundColor = "lightblue";
+            } else {
+                DOM.trTabla[i].style.backgroundColor = "lightgreen";
+            }
+        }
+    }
+
+    for (i = 0; i < DOM.trTabla.length; i++) {
+        DOM.trTabla[i].onmouseover = DOM.trTabla[i].style.backgroundColor = "blue";
+    }
+
+    
+    let contador = 4;
+    //Creamos la funcion que añade elemento
+    function anade() {
+        let nuevoTr = document.createElement("tr");
+        let nuevoTd = document.createElement("td");
+        nuevoTd.innerHTML = contador++;
+        nuevoTr.appendChild(nuevoTd);
+        DOM.tabla.appendChild(nuevoTr);
+        asignarColores();
+    }
+
+    asignarColores();
+</script>
+
+</html>
