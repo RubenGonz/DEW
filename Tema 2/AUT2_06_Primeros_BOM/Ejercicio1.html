@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 - BOM</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ventanaPrincipal {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(to bottom, #08088a, #5781f9);
+            color: white;
+        }
+
+        .ventanaPrincipal * {
+            margin: 5px;
+        }
+
+        .formulario {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ventanaPrincipal">
+        <h1>Ventana Principal</h1>
+        <div>
+            <input type="button" value="Ventana de Google" onclick="abrirVentana('https://www.google.com/');">
+            <input type="button" value="Cerrar ventana" onclick="cerrarVentana();">
+        </div>
+        <div>
+            <input type="button" value="Nueva ventana vacia" onclick="abrirVentana();">
+            <input type="button" value="Cerrar ventana vacia" onclick="cerrarVentana();">
+        </div>
+        <div>
+            <input type="button" value="Ampliar" onclick="ampliarVentana();">
+            <input type="button" value="Reducir" onclick="reducirVentana();">
+        </div>
+        <div class="formulario">
+            <div>
+                Indice la posición X:
+                <input type="number" id="posicionX">
+            </div>
+            <div>
+                Indice la posición Y:
+                <input type="number" id="posicionY">
+            </div>
+            <input type="button" value="Mover" onclick="mover();">
+        </div>
+    </div>
+</body>
+
+<script>
+
+    //Guardamos objetos de la web
+    let DOM = {
+        posicionX: document.getElementById("posicionX"),
+        posicionY: document.getElementById("posicionY"),
+        mitadX: screen.availWidth/2,
+        mitadY: screen.availHeight/2
+    }
+
+    //Declaramos una variable que guarde el estado de las ventanas
+    var ventana;
+
+    //Creamos una función que abra ventanas
+    function abrirVentana(url = "") {
+        //Habre una ventana con las características especificadas
+        ventana = window.open(url, "_blank", "width=400,height=400");
+        ventana.moveTo(DOM.mitadX,DOM.mitadY);
+    }
+
+    //Funcion que cierra la última ventana creada
+    function cerrarVentana() {
+        ventana.close();
+    }
+
+    //Funcion que amplia la pantalla en 30px
+    function ampliarVentana() {
+        //Evalua si se puede hacer mayor
+        if (ventana.outerHeight < screen.availHeight && ventana.outerWidth < screen.availWidth) {
+            //Amplia su tamanio
+            ventana.resizeBy(+30, +30);
+            ventana.focus();
+        } else {
+            //Manda mensaje de alerta
+            alert("Alcanzó el máximo de la ventana");
+        }
+    }
+
+    //Funcion que reduce la pantalla en 30px
+    function reducirVentana() {
+        //Evalua si se puede hacer menor
+        if (ventana.outerHeight > 300 && ventana.outerWidth > 300) {
+            //Reduce su tamanio
+            ventana.resizeBy(-30, -30);
+            ventana.focus();
+        } else {
+            //Manda mensaje de alerta
+            alert("Alcanzó el minimo de la ventana");
+        }
+    }
+
+    //Funcion que coloca la ventana en uns situación en específico
+    function mover() {
+        ventana.moveTo(DOM.posicionX.value,DOM.posicionY.value);
+        ventana.focus();
+    }
+</script>
+
+</html>
