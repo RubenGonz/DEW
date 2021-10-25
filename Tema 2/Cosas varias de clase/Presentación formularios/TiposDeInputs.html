@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de Inputs</title>
+
+    <script src="inputs.js"></script>
+    <style>
+        p {
+            margin-bottom: 2px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .columna1,
+        .columna2 {
+            display: grid;
+            grid-auto-rows: 80px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Atributos de los Input</h1>
+
+    <main>
+
+        <form action="./inputs.js" method="post">
+
+            <div class="columna1">
+                <h3>Atributo Type</h3>
+
+                <div>
+                    <p>Type text</p>
+                    <input type="text" id="inputText">
+                </div>
+                <div>
+                    <p>Type email</p>
+                    <input type="email" name="inputEmail" id="inputEmail">
+                </div>
+                <div>
+                    <p>Type month</p>
+                    <input type="month" name="inputMonth" id="inputMonth">
+                </div>
+                <div>
+                    <p>Type search</p>
+                    <input type="search" name="inputSearch" id="inputSearch">
+                </div>
+                <div>
+                    <p>Type tel</p>
+                    <input type="tel" name="inputTel" id="inputTel">
+                </div>
+                <div>
+                    <p>Type url</p>
+                    <input type="url" name="inputUrl" id="inputUrl">
+                </div>
+                <div>
+                    <p>Type week</p>
+                    <input type="week" name="inputWeek" id="inputWeek">
+                </div>
+                <div>
+                    <p>Type number</p>
+                    <input type="number" name="inputNumber" id="inputNumber">
+                </div>
+                <div>
+                    <p>Type password</p>
+                    <input type="password" name="inputPassword" id="inputPassword">
+                </div>
+                <div>
+                    <p>Type button</p>
+                    <input type="button" value="Soy un botón" id="inputButton">
+                </div>
+                <div>
+                    <p>Type checkbox</p>
+                    <input type="checkbox" name="opcionesCb" id="opcion1Cb">
+                    <input type="checkbox" name="opcionesCb" id="opcion2Cb">
+                </div>
+                <div>
+                    <p>Type radio</p>
+                    <input type="radio" name="opcionesR" id="opcion1R">
+                    <input type="radio" name="opcionesR" id="opcion2R">
+                </div>
+                <div>
+                    <p>Type color</p>
+                    <input type="color" name="color" id="inputColor">
+                </div>
+                <div>
+                    <p>Type time</p>
+                    <input type="time" name="inputTime" id="inputTime">
+                </div>
+                <div>
+                    <p>Type date</p>
+                    <input type="date" name="inputDate" id="inputDate">
+                </div>
+                <div>
+                    <p>Type datetime-local</p>
+                    <input type="datetime-local" name="inputDateTimeLocal" id="inputDateTimeLocal">
+                </div>
+                <div>
+                    <p>Type file</p>
+                    <input type="file" name="inputFile" id="inputFile">
+                </div>
+                <div>
+                    <p>Type hidden</p>
+                    <input type="hidden" name="inputHidden" id="inputHidden">
+                </div>
+                <div>
+                    <p>Type image</p>
+                    <input type="image" src="Campo.jpg" alt="Imagen de un campo" height="50px" id="inputImage">
+                </div>
+                <div>
+                    <p>Type range</p>
+                    <input type="range" name="inputRange" id="inputRange" min="0" max="100">
+                </div>
+                <div>
+                    <p>Type reset</p>
+                    <input type="reset" value="Vaciar formulario" id="inputReset">
+                </div>
+                <div>
+                    <p>Type submit</p>
+                    <input type="submit" value="Enviar formulario" id="inputSubmit">
+                </div>
+
+                <h3>Atributo Accept</h3>
+
+                <input type="file" name="inputAccept" id="inputAccept" accept=".pdf">
+
+                <h3>Atributo AutoFocus</h3>
+                <h3>Atributo Checked</h3>
+                <h3>Atributo Defaultchecked</h3>
+                <h3>Atributo Diasabled</h3>
+                <h3>Atributo Min</h3>
+                <h3>Atributo Minlenght</h3>
+                <h3>Atributo Max</h3>
+                <h3>Atributo Maxlenght</h3>
+                <h3>Atributo Multiple</h3>
+                <h3>Atributo Placeholder</h3>
+                <h3>Atributo Readonly</h3>
+                <h3>Atributo Required</h3>
+                <h3>Atributo Size</h3>
+                <h3>Atributo Value</h3>
+            </div>
+
+            <div class="columna2">
+
+                <h3>Atributo Type</h3>
+
+                <div id="resultadoText">
+                    Sol
+                </div>
+                <div id="resultadoEmail">
+                    Sol
+                </div>
+                <div id="resultadoMonth">
+                    Sol
+                </div>
+                <div id="resultadoSearch">
+                    Sol
+                </div>
+                <div id="resultadoTel">
+                    Sol
+                </div>
+                <div id="resultadoUrl">
+                    Sol
+                </div>
+                <div id="resultadoWeek">
+                    Sol
+                </div>
+                <div id="resultadoNumber">
+                    Sol
+                </div>
+                <div id="resultadoPassword">
+                    Sol
+                </div>
+                <div id="resultadoBoton">
+                    Sol
+                </div>
+                <div id="resultadoCheckbox">
+                    Sol
+                </div>
+                <div id="resultadoRadio">
+                    Sol
+                </div>
+                <div id="resultadoColor">
+                    Sol
+                </div>
+                <div id="resultadoTime">
+                    Sol
+                </div>
+                <div id="resultadoDate">
+                    Sol
+                </div>
+                <div id="resultadoDateTimeLocal">
+                    Sol
+                </div>
+                <div id="resultadoFile">
+                    Sol
+                </div>
+                <div id="resultadoHidden">
+                    Sol
+                </div>
+                <div id="resultadoImage">
+                    Sol
+                </div>
+                <div id="resultadoRange">
+                    Sol
+                </div>
+                <div id="resultadoReset">
+                    Sol
+                </div>
+                <div id="resultadoSubmit">
+                    Sol
+                </div>
+
+                <h3>Atributo Accept</h3>
+
+                <div id="resultadoAccept">
+                    Sol
+                </div>
+
+                <h3>Atributo AutoFocus</h3>
+
+                <div id="resultadoAutoFocus">
+                    Sol
+                </div>
+
+                <h3>Atributo Checked</h3>
+
+                <div id="resultadoChecked">
+                    Sol
+                </div>
+
+                <h3>Atributo Defaultchecked</h3>
+
+                <div id="resultadoDefaultchecked">
+                    Sol
+                </div>
+
+                <h3>Atributo Diasabled</h3>
+
+                <div id="resultadoDiasabled">
+                    Sol
+                </div>
+
+                <h3>Atributo Min</h3>
+
+                <div id="resultadoMin">
+                    Sol
+                </div>
+
+                <h3>Atributo Minlenght</h3>
+
+                <div id="resultadoMinlenght">
+                    Sol
+                </div>
+
+                <h3>Atributo Max</h3>
+
+                <div id="resultadoMax">
+                    Sol
+                </div>
+
+                <h3>Atributo Maxlenght</h3>
+
+                <div id="resultadoMaxlenght">
+                    Sol
+                </div>
+
+                <h3>Atributo Multiple</h3>
+
+                <div id="resultadoMultiple">
+                    Sol
+                </div>
+
+                <h3>Atributo Placeholder</h3>
+
+                <div id="resultadoPlaceholder">
+                    Sol
+                </div>
+
+                <h3>Atributo Readonly</h3>
+
+                <div id="resultadoReadonly">
+                    Sol
+                </div>
+
+                <h3>Atributo Required</h3>
+
+                <div id="resultadoRequired">
+                    Sol
+                </div>
+
+                <h3>Atributo Size</h3>
+
+                <div id="resultadoSize">
+                    Sol
+                </div>
+
+                <h3>Atributo Value</h3>
+
+                <div id="resultadoValue">
+                    Sol
+                </div>
+
+            </div>
+        </form>
+
+    </main>
+
+</body>
+
+</html>
