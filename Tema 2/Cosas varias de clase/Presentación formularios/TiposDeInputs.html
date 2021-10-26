@@ -13,24 +13,19 @@
         }
 
         p {
-            margin-bottom: 2px;
+            margin: 2px;
         }
 
-        form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        section {
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid lightgray;
         }
 
-        .columna1,
-        .columna2 {
-            display: grid;
-            grid-auto-rows: 100px;
-
-        }
-
-        .columna1>*,
-        .columna2>* {
-            border-bottom: 1px solid lightgrey;
+        section>div {
+            margin: 10px;
+            width: 50%;
         }
     </style>
 </head>
@@ -40,326 +35,415 @@
     <h1>Atributos de los Input</h1>
 
     <main>
+        <h3>Atributo Type</h3>
 
-        <form action="./inputs.js" method="post">
-
-            <div class="columna1">
-                <h3>Atributo Type</h3>
-
-                <div>
-                    <p>Type text</p>
-                    <input type="text" id="inputText">
-                </div>
-                <div>
-                    <p>Type email</p>
-                    <input type="email" name="inputEmail" id="inputEmail">
-                </div>
-                <div>
-                    <p>Type month</p>
-                    <input type="month" name="inputMonth" id="inputMonth">
-                </div>
-                <div>
-                    <p>Type search</p>
-                    <input type="search" name="inputSearch" id="inputSearch">
-                </div>
-                <div>
-                    <p>Type tel</p>
-                    <input type="tel" name="inputTel" id="inputTel">
-                </div>
-                <div>
-                    <p>Type url</p>
-                    <input type="url" name="inputUrl" id="inputUrl">
-                </div>
-                <div>
-                    <p>Type week</p>
-                    <input type="week" name="inputWeek" id="inputWeek">
-                </div>
-                <div>
-                    <p>Type number</p>
-                    <input type="number" name="inputNumber" id="inputNumber">
-                </div>
-                <div>
-                    <p>Type password</p>
-                    <input type="password" name="inputPassword" id="inputPassword">
-                </div>
-                <div>
-                    <p>Type button</p>
-                    <input type="button" value="Soy un botón" id="inputButton">
-                </div>
-                <div>
-                    <p>Type checkbox</p>
-                    <input type="checkbox" name="opcionesCb" id="opcion1Cb" value="Primera opcion"> <label
-                        for="opcion1Cb">Primera opcion</label>
-                    <input type="checkbox" name="opcionesCb" id="opcion2Cb" value="Segunda opcion"> <label
-                        for="opcion2Cb">Segunda opcion</label>
-                </div>
-                <div>
-                    <p>Type radio</p>
-                    <input type="radio" name="opcionesR" id="opcion1R" value="Primera opcion"> <label
-                        for="opcion1R">Primera opcion</label>
-                    <input type="radio" name="opcionesR" id="opcion2R" value="Segunda opcion"> <label
-                        for="opcion2R">Segunda opcion</label>
-                </div>
-                <div>
-                    <p>Type color</p>
-                    <input type="color" name="color" id="inputColor">
-                </div>
-                <div>
-                    <p>Type time</p>
-                    <input type="time" name="inputTime" id="inputTime">
-                </div>
-                <div>
-                    <p>Type date</p>
-                    <input type="date" name="inputDate" id="inputDate">
-                </div>
-                <div>
-                    <p>Type datetime-local</p>
-                    <input type="datetime-local" name="inputDateTimeLocal" id="inputDateTimeLocal">
-                </div>
-                <div>
-                    <p>Type file</p>
-                    <input type="file" name="inputFile" id="inputFile">
-                </div>
-                <div>
-                    <p>Type hidden</p>
-                    <input type="hidden" name="inputHidden" id="inputHidden" value="Sorpresa">
-                </div>
-                <div>
-                    <p>Type image</p>
-                    <input type="image" src="Campo.jpg" alt="Imagen de un campo" height="50px" id="inputImage"
-                        value="El campo">
-                </div>
-                <div>
-                    <p>Type range</p>
-                    <input type="range" name="inputRange" id="inputRange" min="0" max="100">
-                </div>
-                <div>
-                    <p>Type reset</p>
-                    <input type="reset" value="Vaciar formulario" id="inputReset">
-                </div>
-                <div>
-                    <p>Type submit</p>
-                    <input type="button" value="Enviar formulario" onclick="rellenarFormulario()" id="inputSubmit">
-                </div>
-
-                <h3>Atributo Accept</h3>
-
-                <div>
-                    <input type="file" name="inputAccept" id="inputAccept" accept=".pdf">
-                </div>
-
-                <h3>Atributo AutoFocus</h3>
-
-                <div>
-                    <input type="text" name="inputAutoFocus" id="inputAutoFocus" autofocus="true">
-                </div>
-
-                <h3>Atributo Checked</h3>
-
-                <div>
-                    <input type="checkbox" name="opcion1Ck" id="opcion1Ck" value="Opcion marcada" checked="true"> <label
-                        for="opcion1Ck">Opcion marcada</label>
-                    <input type="checkbox" name="opcion2Ck" id="opcion2Ck" value="Opcion sin marcar"> <label
-                        for="opcion2Ck">Opcion sin marcar</label>
-                </div>
-
-                <h3>Atributo Disabled</h3>
-
-                <div>
-                    <input type="text" name="inputDisabled" id="inputDisabled" disabled>
-                </div>
-
-                <h3>Atributo Min</h3>
-
-                <div>
-                    <input type="number" name="inputMin" id="inputMin" min="10">
-                </div>
-
-                <h3>Atributo Minlenght</h3>
-
-                <div>
-                    <input type="text" name="inputMinlenght" id="inputMinlenght" minlength="10">
-                </div>
-
-                <h3>Atributo Max</h3>
-
-                <div>
-                    <input type="number" name="inputMax" id="inputMax" max="20">
-                </div>
-
-                <h3>Atributo Maxlenght</h3>
-
-                <div>
-                    <input type="text" name="inputMaxlenght" id="inputMaxlenght" maxlength="20">
-                </div>
-
-                <h3>Atributo Multiple</h3>
-                <h3>Atributo Placeholder</h3>
-                <h3>Atributo Readonly</h3>
-                <h3>Atributo Required</h3>
-                <h3>Atributo Size</h3>
-                <h3>Atributo Value</h3>
+        <section>
+            <div>
+                <p>Type text</p>
+                <input type="text" id="inputText"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputText()">
             </div>
-
-            <div class="columna2">
-
-                <h3>Atributo Type</h3>
-
-                <div id="resultadoText">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoEmail">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoMonth">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoSearch">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoTel">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoUrl">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoWeek">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoNumber">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoPassword">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoBoton">
-                    Este boton no ha sido pulsado
-                </div>
-                <div id="resultadoCheckbox">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoRadio">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoColor">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoTime">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoDate">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoDateTimeLocal">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoFile">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoHidden">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoImage">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoRange">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoReset">
-                    Este campo del formulario está vacio
-                </div>
-                <div id="resultadoSubmit">
-                    Este campo del formulario está vacio
-                </div>
-
-                <h3>Atributo Accept</h3>
-
-                <div id="resultadoAccept">
-                    Este atributo hace que este input solo acepte archivos de la extensión que queramos, por ejemplo
-                    .pdf
-                </div>
-
-                <h3>Atributo AutoFocus</h3>
-
-                <div id="resultadoAutoFocus">
-                    Este atributo esta establecido para que sea lo primero que veas en el formulario
-                </div>
-
-                <h3>Atributo Checked</h3>
-
-                <div id="resultadoChecked">
-                    Este atributo hace que una casilla este marcada inicialmente
-                </div>
-
-                <h3>Atributo Diasabled</h3>
-
-                <div id="resultadoDiasabled">
-                    Este campo no se puede rellenar
-                </div>
-
-                <h3>Atributo Min</h3>
-
-                <div id="resultadoMin">
-                    Este campo tiene que tener un valor minimo de 10 (numerico)
-                </div>
-
-                <h3>Atributo Minlenght</h3>
-
-                <div id="resultadoMinlenght">
-                    Este campo tiene que tener una longitud minima de 10 (letras)
-                </div>
-
-                <h3>Atributo Max</h3>
-
-                <div id="resultadoMax">
-                    Este campo tiene que tener un valor máximo de 20 (numerico)
-                </div>
-
-                <h3>Atributo Maxlenght</h3>
-
-                <div id="resultadoMaxlenght">
-                    Este campo tiene que tener una longitud máxima de 20 (letras)
-                </div>
-
-                <h3>Atributo Multiple</h3>
-
-                <div id="resultadoMultiple">
-                    Este campo del formulario está vacio
-                </div>
-
-                <h3>Atributo Placeholder</h3>
-
-                <div id="resultadoPlaceholder">
-                    Este campo del formulario está vacio
-                </div>
-
-                <h3>Atributo Readonly</h3>
-
-                <div id="resultadoReadonly">
-                    Este campo del formulario está vacio
-                </div>
-
-                <h3>Atributo Required</h3>
-
-                <div id="resultadoRequired">
-                    Este campo del formulario está vacio
-                </div>
-
-                <h3>Atributo Size</h3>
-
-                <div id="resultadoSize">
-                    Este campo del formulario está vacio
-                </div>
-
-                <h3>Atributo Value</h3>
-
-                <div id="resultadoValue">
-                    Este campo del formulario está vacio
-                </div>
-
+            <div id="resultadoText">
+                Este campo del formulario está vacio
             </div>
-        </form>
+        </section>
 
+        <section>
+            <div>
+                <p>Type email</p>
+                <input type="email" name="inputEmail" id="inputEmail"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputEmail()">
+            </div>
+            <div id="resultadoEmail">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type month</p>
+                <input type="month" name="inputMonth" id="inputMonth"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputMonth()">
+            </div>
+            <div id="resultadoMonth">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type search</p>
+                <input type="search" name="inputSearch" id="inputSearch"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputSearch()">
+            </div>
+            <div id="resultadoSearch">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type tel</p>
+                <input type="tel" name="inputTel" id="inputTel"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputTel()">
+            </div>
+            <div id="resultadoTel">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type url</p>
+                <input type="url" name="inputUrl" id="inputUrl"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputUrl()">
+            </div>
+            <div id="resultadoUrl">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type week</p>
+                <input type="week" name="inputWeek" id="inputWeek"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputWeek()">
+            </div>
+            <div id="resultadoWeek">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type number</p>
+                <input type="number" name="inputNumber" id="inputNumber"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputNumber()">
+            </div>
+            <div id="resultadoNumber">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type password</p>
+                <input type="password" name="inputPassword" id="inputPassword"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputPassword()">
+            </div>
+            <div id="resultadoPassword">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type button</p>
+                <input type="button" value="Soy un botón" id="inputButton" onclick="ejecutarInputButton()"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputButton()">
+            </div>
+            <div id="resultadoBoton">
+                Este boton no ha sido pulsado
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type checkbox</p>
+                <input type="checkbox" name="opcionesCb" id="opcion1Cb" value="Primera opcion"> <label
+                    for="opcion1Cb">Primera opcion</label>
+                <input type="checkbox" name="opcionesCb" id="opcion2Cb" value="Segunda opcion"> <label
+                    for="opcion2Cb">Segunda opcion</label><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputCheckbox()">
+            </div>
+            <div id="resultadoCheckbox">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type radio</p>
+                <input type="radio" name="opcionesR" id="opcion1R" value="Primera opcion"> <label for="opcion1R">Primera
+                    opcion</label>
+                <input type="radio" name="opcionesR" id="opcion2R" value="Segunda opcion"> <label for="opcion2R">Segunda
+                    opcion</label><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputRadio()">
+            </div>
+            <div id="resultadoRadio">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type color</p>
+                <input type="color" name="color" id="inputColor"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputColor()">
+            </div>
+            <div id="resultadoColor">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type time</p>
+                <input type="time" name="inputTime" id="inputTime"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputTime()">
+            </div>
+            <div id="resultadoTime">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type date</p>
+                <input type="date" name="inputDate" id="inputDate"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputDate()">
+            </div>
+            <div id="resultadoDate">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type datetime-local</p>
+                <input type="datetime-local" name="inputDateTimeLocal" id="inputDateTimeLocal"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputDateTimeLocal()">
+            </div>
+            <div id="resultadoDateTimeLocal">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type file</p>
+                <input type="file" name="inputFile" id="inputFile"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputFile()">
+            </div>
+            <div id="resultadoFile">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type hidden</p>
+                <input type="hidden" name="inputHidden" id="inputHidden" value="Sorpresa"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputHidden()">
+            </div>
+            <div id="resultadoHidden">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type image</p>
+                <input type="image" src="Campo.jpg" alt="Imagen de un campo" height="50px" id="inputImage"
+                    value="El campo"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputImage()">
+            </div>
+            <div id="resultadoImage">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type range</p>
+                <input type="range" name="inputRange" id="inputRange" min="0" max="100"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputRange()">
+            </div>
+            <div id="resultadoRange">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type reset</p>
+                <input type="reset" value="Vaciar formulario" id="inputReset"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputReset()">
+            </div>
+            <div id="resultadoReset">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <p>Type submit</p>
+                <input type="button" value="Enviar formulario" onclick="rellenarFormulario()" id="inputSubmit"><br>
+                <input type="button" value="Enviar" onclick="ejecutarInputSubmit()">
+            </div>
+            <div id="resultadoSubmit">
+                Este campo del formulario está vacio
+            </div>
+        </section>
+
+        <h3>Atributo Accept</h3>
+
+        <section>
+            <div>
+                <input type="file" name="inputAccept" id="inputAccept" accept=".pdf">
+            </div>
+            <div id="resultadoAccept">
+                Este atributo hace que este input solo acepte archivos de la extensión que queramos, por ejemplo
+                .pdf
+            </div>
+        </section>
+
+        <h3>Atributo AutoFocus</h3>
+
+        <section>
+            <div>
+                <input type="text" name="inputAutoFocus" id="inputAutoFocus" autofocus="true">
+            </div>
+            <div id="resultadoAutoFocus">
+                Este atributo esta establecido para que sea lo primero que veas en el formulario
+            </div>
+        </section>
+
+
+        <h3>Atributo Checked</h3>
+
+        <section>
+            <div>
+                <input type="checkbox" name="opcion1Ck" id="opcion1Ck" value="Opcion marcada" checked="true"> <label
+                    for="opcion1Ck">Opcion marcada</label>
+                <input type="checkbox" name="opcion2Ck" id="opcion2Ck" value="Opcion sin marcar"> <label
+                    for="opcion2Ck">Opcion sin marcar</label>
+            </div>
+            <div id="resultadoChecked">
+                Este atributo hace que una casilla este marcada inicialmente
+            </div>
+        </section>
+
+        <h3>Atributo Disabled</h3>
+
+        <section>
+            <div>
+                <input type="text" name="inputDisabled" id="inputDisabled" disabled>
+            </div>
+            <div id="resultadoDiasabled">
+                Este campo no se puede rellenar
+            </div>
+        </section>
+
+        <h3>Atributo Min</h3>
+
+        <section>
+            <div>
+                <input type="number" name="inputMin" id="inputMin" min="10">
+            </div>
+            <div id="resultadoMin">
+                Este campo tiene que tener un valor minimo de 10 (numerico)
+            </div>
+        </section>
+
+        <h3>Atributo Minlenght</h3>
+
+        <section>
+            <div>
+                <input type="text" name="inputMinlenght" id="inputMinlenght" minlength="10">
+            </div>
+            <div id="resultadoMinlenght">
+                Este campo tiene que tener una longitud minima de 10 (letras)
+            </div>
+        </section>
+
+        <h3>Atributo Max</h3>
+
+        <section>
+            <div>
+                <input type="number" name="inputMax" id="inputMax" max="20">
+            </div>
+            <div id="resultadoMax">
+                Este campo tiene que tener un valor máximo de 20 (numerico)
+            </div>
+        </section>
+
+        <h3>Atributo Maxlenght</h3>
+
+        <section>
+            <div>
+                <input type="text" name="inputMaxlenght" id="inputMaxlenght" maxlength="20">
+            </div>
+            <div id="resultadoMaxlenght">
+                Este campo tiene que tener una longitud máxima de 20 (letras)
+            </div>
+        </section>
+
+        <h3>Atributo Multiple</h3>
+
+        <section>
+            <div>
+                <input type="file" name="inputMultiple" id="inputMultiple" multiple>
+            </div>
+            <div id="resultadoMultiple">
+                Este campo puede soportar más de un fichero
+            </div>
+        </section>
+
+        <h3>Atributo Placeholder</h3>
+
+        <section>
+            <div>
+                <input type="text" name="inputPlaceholder" id="inputPlaceholder" placeholder="Escribe y me iré">
+            </div>
+            <div id="resultadoPlaceholder">
+                Este campo muestra un texto que desaparece al escribir en el input
+            </div>
+        </section>
+
+        <h3>Atributo Readonly</h3>
+
+        <section>
+            <div>
+                <input type="text" name="inputReadonly" id="inputReadonly" readonly>
+            </div>
+            <div id="resultadoReadonly">
+                Este campo muestra un texto que no puedes modificar
+            </div>
+        </section>
+
+        <h3>Atributo Required</h3>
+
+        <section>
+            <div>
+                <input type="text" name="inputRequired" id="inputRequired" required>
+            </div>
+            <div id="resultadoRequired">
+                Este campo es obligatorio para poder enviar el formulario
+            </div>
+        </section>
+
+        <h3>Atributo Size</h3>
+
+        <section>
+            <div>
+                <input type="text" name="inputSize" id="inputSize" size="30">
+            </div>
+            <div id="resultadoSize">
+                El ancho de este input esta determinado por size
+            </div>
+        </section>
+
+        <h3>Atributo Value</h3>
+
+        <section>
+            <div>
+                <input type="text" name="inputValue" id="inputValue" value="Soy un valor escrito usando Value">
+            </div>
+            <div id="resultadoValue">
+                El value es la información que manda un input al formulario
+            </div>
+        </section>
     </main>
 
     <script>
@@ -412,18 +496,47 @@
             resultadoSubmit: document.getElementById("resultadoSubmit")
         }
 
-        function rellenarFormulario() {
+        function ejecutarInputText() {
             DOM.resultadoText.innerHTML = "El texto recibido es: " + DOM.inputText.value;
-            DOM.resultadoEmail.innerHTML = "Mandando un correo a: " + DOM.inputEmail.value;
-            DOM.resultadoMonth.innerHTML = "Estamos en: " + DOM.inputMonth.value;
-            DOM.resultadoSearch.innerHTML = "El texto a buscar es: " + DOM.inputSearch.value;
-            DOM.resultadoTel.innerHTML = "LLamando a: " + DOM.inputTel.value;
-            DOM.resultadoUrl.innerHTML = "Redirigiendo a: " + DOM.inputUrl.value;
-            DOM.resultadoWeek.innerHTML = "Estamos a: " + DOM.inputWeek.value;
-            DOM.resultadoNumber.innerHTML = "El numero recibido es: " + DOM.inputNumber.value;
-            DOM.resultadoPassword.innerHTML = "La contraseña recibida es: " + DOM.inputPassword.value;
-            DOM.resultadoBoton.innerHTML = "El botón ha sido pulsado";
+        }
 
+        function ejecutarInputEmail() {
+            DOM.resultadoEmail.innerHTML = "Mandando un correo a: " + DOM.inputEmail.value;
+        }
+
+        function ejecutarInputMonth() {
+            DOM.resultadoMonth.innerHTML = "Estamos en: " + DOM.inputMonth.value;
+        }
+
+        function ejecutarInputSearch() {
+            DOM.resultadoSearch.innerHTML = "El texto a buscar es: " + DOM.inputSearch.value;
+        }
+
+        function ejecutarInputTel() {
+            DOM.resultadoTel.innerHTML = "LLamando a: " + DOM.inputTel.value;
+        }
+
+        function ejecutarInputUrl() {
+            DOM.resultadoUrl.innerHTML = "Redirigiendo a: " + DOM.inputUrl.value;
+        }
+
+        function ejecutarInputWeek() {
+            DOM.resultadoWeek.innerHTML = "Estamos a: " + DOM.inputWeek.value;
+        }
+
+        function ejecutarInputNumber() {
+            DOM.resultadoNumber.innerHTML = "El numero recibido es: " + DOM.inputNumber.value;
+        }
+
+        function ejecutarInputPassword() {
+            DOM.resultadoPassword.innerHTML = "La contraseña recibida es: " + DOM.inputPassword.value;
+        }
+
+        function ejecutarInputButton() {
+            DOM.resultadoBoton.innerHTML = "El botón ha sido pulsado";
+        }
+
+        function ejecutarInputCheckbox() {
             if (DOM.opcion1Cb.checked == true && DOM.opcion2Cb.checked == true) {
                 DOM.resultadoCheckbox.innerHTML = "Las dos opciones estan marcadas";
             } else if (DOM.opcion1Cb.checked == true) {
@@ -433,7 +546,9 @@
             } else {
                 DOM.resultadoCheckbox.innerHTML = "No hay opciones marcadas";
             }
+        }
 
+        function ejecutarInputRadio() {
             if (DOM.opcion1R.checked == false && DOM.opcion2R.checked == false) {
                 DOM.resultadoRadio.innerHTML = "No hay opciones marcadas";
             } else if (DOM.opcion1R.checked == true) {
@@ -441,19 +556,49 @@
             } else if (DOM.opcion2R.checked == true) {
                 DOM.resultadoRadio.innerHTML = "La segunda opción esta marcada";
             }
+        }
 
+        function ejecutarInputColor() {
             DOM.resultadoColor.innerHTML = "Las letras son de color: " + DOM.inputColor.value;
             DOM.resultadoColor.style.color = DOM.inputColor.value;
+        }
 
+        function ejecutarInputTime() {
             DOM.resultadoTime.innerHTML = "Son las: " + DOM.inputTime.value;
+        }
+
+        function ejecutarInputDate() {
             DOM.resultadoDate.innerHTML = "Hoy es: " + DOM.inputDate.value;
+        }
+
+        function ejecutarInputDateTimeLocal() {
             DOM.resultadoDateTimeLocal.innerHTML = "Momento actual: " + DOM.inputDateTimeLocal.value;
+        }
+
+        function ejecutarInputFile() {
             DOM.resultadoFile.innerHTML = "El archivo enviado es: " + DOM.inputFile.value;
+        }
+
+        function ejecutarInputHidden() {
             DOM.resultadoHidden.innerHTML = "El valor que tenía hidden es: " + DOM.inputHidden.value;
+        }
+
+        function ejecutarInputImage() {
             DOM.resultadoImage.innerHTML = "Este input imagen representa: " + DOM.inputImage.value;
+        }
+
+        function ejecutarInputRange() {
             DOM.resultadoRange.innerHTML = "El valor de este rango es: " + DOM.inputRange.value;
+        }
+
+        function ejecutarInputReset() {
             DOM.resultadoReset.innerHTML = "El formulario ya no está vacio";
         }
+
+        function ejecutarInputSubmit() {
+            DOM.resultadoSubmit.innerHTML = "Con este input mandariamos la información del formulario";
+        }
+
     </script>
 
 </body>
