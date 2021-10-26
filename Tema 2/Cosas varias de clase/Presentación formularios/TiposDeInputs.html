@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tipos de Inputs</title>
 
-    <script src="inputs.js"></script>
     <style>
+        h3 {
+            margin: 0;
+        }
+
         p {
             margin-bottom: 2px;
         }
@@ -21,7 +24,13 @@
         .columna1,
         .columna2 {
             display: grid;
-            grid-auto-rows: 80px;
+            grid-auto-rows: 100px;
+
+        }
+
+        .columna1>*,
+        .columna2>* {
+            border-bottom: 1px solid lightgrey;
         }
     </style>
 </head>
@@ -79,13 +88,17 @@
                 </div>
                 <div>
                     <p>Type checkbox</p>
-                    <input type="checkbox" name="opcionesCb" id="opcion1Cb">
-                    <input type="checkbox" name="opcionesCb" id="opcion2Cb">
+                    <input type="checkbox" name="opcionesCb" id="opcion1Cb" value="Primera opcion"> <label
+                        for="opcion1Cb">Primera opcion</label>
+                    <input type="checkbox" name="opcionesCb" id="opcion2Cb" value="Segunda opcion"> <label
+                        for="opcion2Cb">Segunda opcion</label>
                 </div>
                 <div>
                     <p>Type radio</p>
-                    <input type="radio" name="opcionesR" id="opcion1R">
-                    <input type="radio" name="opcionesR" id="opcion2R">
+                    <input type="radio" name="opcionesR" id="opcion1R" value="Primera opcion"> <label
+                        for="opcion1R">Primera opcion</label>
+                    <input type="radio" name="opcionesR" id="opcion2R" value="Segunda opcion"> <label
+                        for="opcion2R">Segunda opcion</label>
                 </div>
                 <div>
                     <p>Type color</p>
@@ -109,11 +122,12 @@
                 </div>
                 <div>
                     <p>Type hidden</p>
-                    <input type="hidden" name="inputHidden" id="inputHidden">
+                    <input type="hidden" name="inputHidden" id="inputHidden" value="Sorpresa">
                 </div>
                 <div>
                     <p>Type image</p>
-                    <input type="image" src="Campo.jpg" alt="Imagen de un campo" height="50px" id="inputImage">
+                    <input type="image" src="Campo.jpg" alt="Imagen de un campo" height="50px" id="inputImage"
+                        value="El campo">
                 </div>
                 <div>
                     <p>Type range</p>
@@ -125,21 +139,60 @@
                 </div>
                 <div>
                     <p>Type submit</p>
-                    <input type="submit" value="Enviar formulario" id="inputSubmit">
+                    <input type="button" value="Enviar formulario" onclick="rellenarFormulario()" id="inputSubmit">
                 </div>
 
                 <h3>Atributo Accept</h3>
 
-                <input type="file" name="inputAccept" id="inputAccept" accept=".pdf">
+                <div>
+                    <input type="file" name="inputAccept" id="inputAccept" accept=".pdf">
+                </div>
 
                 <h3>Atributo AutoFocus</h3>
+
+                <div>
+                    <input type="text" name="inputAutoFocus" id="inputAutoFocus" autofocus="true">
+                </div>
+
                 <h3>Atributo Checked</h3>
-                <h3>Atributo Defaultchecked</h3>
-                <h3>Atributo Diasabled</h3>
+
+                <div>
+                    <input type="checkbox" name="opcion1Ck" id="opcion1Ck" value="Opcion marcada" checked="true"> <label
+                        for="opcion1Ck">Opcion marcada</label>
+                    <input type="checkbox" name="opcion2Ck" id="opcion2Ck" value="Opcion sin marcar"> <label
+                        for="opcion2Ck">Opcion sin marcar</label>
+                </div>
+
+                <h3>Atributo Disabled</h3>
+
+                <div>
+                    <input type="text" name="inputDisabled" id="inputDisabled" disabled>
+                </div>
+
                 <h3>Atributo Min</h3>
+
+                <div>
+                    <input type="number" name="inputMin" id="inputMin" min="10">
+                </div>
+
                 <h3>Atributo Minlenght</h3>
+
+                <div>
+                    <input type="text" name="inputMinlenght" id="inputMinlenght" minlength="10">
+                </div>
+
                 <h3>Atributo Max</h3>
+
+                <div>
+                    <input type="number" name="inputMax" id="inputMax" max="20">
+                </div>
+
                 <h3>Atributo Maxlenght</h3>
+
+                <div>
+                    <input type="text" name="inputMaxlenght" id="inputMaxlenght" maxlength="20">
+                </div>
+
                 <h3>Atributo Multiple</h3>
                 <h3>Atributo Placeholder</h3>
                 <h3>Atributo Readonly</h3>
@@ -153,166 +206,255 @@
                 <h3>Atributo Type</h3>
 
                 <div id="resultadoText">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoEmail">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoMonth">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoSearch">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoTel">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoUrl">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoWeek">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoNumber">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoPassword">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoBoton">
-                    Sol
+                    Este boton no ha sido pulsado
                 </div>
                 <div id="resultadoCheckbox">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoRadio">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoColor">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoTime">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoDate">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoDateTimeLocal">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoFile">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoHidden">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoImage">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoRange">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoReset">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
                 <div id="resultadoSubmit">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
 
                 <h3>Atributo Accept</h3>
 
                 <div id="resultadoAccept">
-                    Sol
+                    Este atributo hace que este input solo acepte archivos de la extensión que queramos, por ejemplo
+                    .pdf
                 </div>
 
                 <h3>Atributo AutoFocus</h3>
 
                 <div id="resultadoAutoFocus">
-                    Sol
+                    Este atributo esta establecido para que sea lo primero que veas en el formulario
                 </div>
 
                 <h3>Atributo Checked</h3>
 
                 <div id="resultadoChecked">
-                    Sol
-                </div>
-
-                <h3>Atributo Defaultchecked</h3>
-
-                <div id="resultadoDefaultchecked">
-                    Sol
+                    Este atributo hace que una casilla este marcada inicialmente
                 </div>
 
                 <h3>Atributo Diasabled</h3>
 
                 <div id="resultadoDiasabled">
-                    Sol
+                    Este campo no se puede rellenar
                 </div>
 
                 <h3>Atributo Min</h3>
 
                 <div id="resultadoMin">
-                    Sol
+                    Este campo tiene que tener un valor minimo de 10 (numerico)
                 </div>
 
                 <h3>Atributo Minlenght</h3>
 
                 <div id="resultadoMinlenght">
-                    Sol
+                    Este campo tiene que tener una longitud minima de 10 (letras)
                 </div>
 
                 <h3>Atributo Max</h3>
 
                 <div id="resultadoMax">
-                    Sol
+                    Este campo tiene que tener un valor máximo de 20 (numerico)
                 </div>
 
                 <h3>Atributo Maxlenght</h3>
 
                 <div id="resultadoMaxlenght">
-                    Sol
+                    Este campo tiene que tener una longitud máxima de 20 (letras)
                 </div>
 
                 <h3>Atributo Multiple</h3>
 
                 <div id="resultadoMultiple">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
 
                 <h3>Atributo Placeholder</h3>
 
                 <div id="resultadoPlaceholder">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
 
                 <h3>Atributo Readonly</h3>
 
                 <div id="resultadoReadonly">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
 
                 <h3>Atributo Required</h3>
 
                 <div id="resultadoRequired">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
 
                 <h3>Atributo Size</h3>
 
                 <div id="resultadoSize">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
 
                 <h3>Atributo Value</h3>
 
                 <div id="resultadoValue">
-                    Sol
+                    Este campo del formulario está vacio
                 </div>
 
             </div>
         </form>
 
     </main>
+
+    <script>
+        let DOM = {
+            inputText: document.getElementById("inputText"),
+            inputEmail: document.getElementById("inputEmail"),
+            inputMonth: document.getElementById("inputMonth"),
+            inputSearch: document.getElementById("inputSearch"),
+            inputTel: document.getElementById("inputTel"),
+            inputUrl: document.getElementById("inputUrl"),
+            inputWeek: document.getElementById("inputWeek"),
+            inputNumber: document.getElementById("inputNumber"),
+            inputPassword: document.getElementById("inputPassword"),
+            inputButton: document.getElementById("inputButton"),
+            opcion1Cb: document.getElementById("opcion1Cb"),
+            opcion2Cb: document.getElementById("opcion2Cb"),
+            opcion1R: document.getElementById("opcion1R"),
+            opcion2R: document.getElementById("opcion2R"),
+            inputColor: document.getElementById("inputColor"),
+            inputTime: document.getElementById("inputTime"),
+            inputDate: document.getElementById("inputDate"),
+            inputDateTimeLocal: document.getElementById("inputDateTimeLocal"),
+            inputFile: document.getElementById("inputFile"),
+            inputHidden: document.getElementById("inputHidden"),
+            inputImage: document.getElementById("inputImage"),
+            inputRange: document.getElementById("inputRange"),
+            inputReset: document.getElementById("inputReset"),
+            inputSubmit: document.getElementById("inputSubmit"),
+            resultadoText: document.getElementById("resultadoText"),
+            resultadoEmail: document.getElementById("resultadoEmail"),
+            resultadoMonth: document.getElementById("resultadoMonth"),
+            resultadoSearch: document.getElementById("resultadoSearch"),
+            resultadoTel: document.getElementById("resultadoTel"),
+            resultadoUrl: document.getElementById("resultadoUrl"),
+            resultadoWeek: document.getElementById("resultadoWeek"),
+            resultadoNumber: document.getElementById("resultadoNumber"),
+            resultadoPassword: document.getElementById("resultadoPassword"),
+            resultadoBoton: document.getElementById("resultadoBoton"),
+            resultadoCheckbox: document.getElementById("resultadoCheckbox"),
+            resultadoRadio: document.getElementById("resultadoRadio"),
+            resultadoColor: document.getElementById("resultadoColor"),
+            resultadoTime: document.getElementById("resultadoTime"),
+            resultadoDate: document.getElementById("resultadoDate"),
+            resultadoDateTimeLocal: document.getElementById("resultadoDateTimeLocal"),
+            resultadoFile: document.getElementById("resultadoFile"),
+            resultadoHidden: document.getElementById("resultadoHidden"),
+            resultadoImage: document.getElementById("resultadoImage"),
+            resultadoRange: document.getElementById("resultadoRange"),
+            resultadoReset: document.getElementById("resultadoReset"),
+            resultadoSubmit: document.getElementById("resultadoSubmit")
+        }
+
+        function rellenarFormulario() {
+            DOM.resultadoText.innerHTML = "El texto recibido es: " + DOM.inputText.value;
+            DOM.resultadoEmail.innerHTML = "Mandando un correo a: " + DOM.inputEmail.value;
+            DOM.resultadoMonth.innerHTML = "Estamos en: " + DOM.inputMonth.value;
+            DOM.resultadoSearch.innerHTML = "El texto a buscar es: " + DOM.inputSearch.value;
+            DOM.resultadoTel.innerHTML = "LLamando a: " + DOM.inputTel.value;
+            DOM.resultadoUrl.innerHTML = "Redirigiendo a: " + DOM.inputUrl.value;
+            DOM.resultadoWeek.innerHTML = "Estamos a: " + DOM.inputWeek.value;
+            DOM.resultadoNumber.innerHTML = "El numero recibido es: " + DOM.inputNumber.value;
+            DOM.resultadoPassword.innerHTML = "La contraseña recibida es: " + DOM.inputPassword.value;
+            DOM.resultadoBoton.innerHTML = "El botón ha sido pulsado";
+
+            if (DOM.opcion1Cb.checked == true && DOM.opcion2Cb.checked == true) {
+                DOM.resultadoCheckbox.innerHTML = "Las dos opciones estan marcadas";
+            } else if (DOM.opcion1Cb.checked == true) {
+                DOM.resultadoCheckbox.innerHTML = "La primera opción esta marcada";
+            } else if (DOM.opcion2Cb.checked == true) {
+                DOM.resultadoCheckbox.innerHTML = "La segunda opción esta marcada";
+            } else {
+                DOM.resultadoCheckbox.innerHTML = "No hay opciones marcadas";
+            }
+
+            if (DOM.opcion1R.checked == false && DOM.opcion2R.checked == false) {
+                DOM.resultadoRadio.innerHTML = "No hay opciones marcadas";
+            } else if (DOM.opcion1R.checked == true) {
+                DOM.resultadoRadio.innerHTML = "La primera opción esta marcada";
+            } else if (DOM.opcion2R.checked == true) {
+                DOM.resultadoRadio.innerHTML = "La segunda opción esta marcada";
+            }
+
+            DOM.resultadoColor.innerHTML = "Las letras son de color: " + DOM.inputColor.value;
+            DOM.resultadoColor.style.color = DOM.inputColor.value;
+
+            DOM.resultadoTime.innerHTML = "Son las: " + DOM.inputTime.value;
+            DOM.resultadoDate.innerHTML = "Hoy es: " + DOM.inputDate.value;
+            DOM.resultadoDateTimeLocal.innerHTML = "Momento actual: " + DOM.inputDateTimeLocal.value;
+            DOM.resultadoFile.innerHTML = "El archivo enviado es: " + DOM.inputFile.value;
+            DOM.resultadoHidden.innerHTML = "El valor que tenía hidden es: " + DOM.inputHidden.value;
+            DOM.resultadoImage.innerHTML = "Este input imagen representa: " + DOM.inputImage.value;
+            DOM.resultadoRange.innerHTML = "El valor de este rango es: " + DOM.inputRange.value;
+            DOM.resultadoReset.innerHTML = "El formulario ya no está vacio";
+        }
+    </script>
 
 </body>
 
