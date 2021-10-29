@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ValidaciĂ³n Formulario</title>
+    <style type="text/css">
+        label {
+            width: 150px;
+            float: left;
+            margin-bottom: 5px;
+        }
+
+        input {
+            float: left;
+        }
+
+        input,
+        select {
+            width: 150px;
+            margin-bottom: 5px;
+        }
+
+        fieldset {
+            background-color: burlywood;
+            width: 350px;
+        }
+
+        .error {
+            border: solid 2px #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+    <fieldset>
+        <legend>Validar Formulario</legend>
+        <form action="http://github.com/shakarr" method="get" name="formulario" id="formulario">
+            <table>
+                <tr>
+                    <td>
+                        <label for="nombre">Nombre</label>
+                    </td>
+                    <td>
+                        <input type="text" name="nombre" id="nombre" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="apellidos">Apellidos</label>
+                    </td>
+                    <td>
+                        <input type="text" name="apellido" id="apellido" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="sexo">Sexo</label>
+                    </td>
+                    <td>
+                        <input type="text" name="sexo" id="sexo" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="edad">Edad</label>
+                    </td>
+                    <td>
+                        <input type="text" name="edad" id="edad" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="color">Color favorito</label>
+                    </td>
+                    <td>
+                        <input type="color" name="color" id="color" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="reset" name="limpiar" id="limpiar" value="Limpiar" />
+                    </td>
+                    <td>
+                        <input type="submit" name="enviar" id="enviar" value="Enviar" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <form name="formularioCiclos" onchange="mostrarCursos()">
+        </form>
+        <form name="formularioCursos" onchange="mostrarModulos()">
+        </form>
+        <form name="formularioModulos" action="">
+        </form>
+    </fieldset>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
