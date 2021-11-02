@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <!-- Pinta los nodos pares de la primera lista en rojo. Sin tocar HTML. -->
     <ul id="lista">
@@ -24,5 +26,21 @@
         <li>Prueba 5</li>
         <li>Prueba 6</li>
     </ul>
+
+    <script>
+        //Cogemos los li de la lista con el Id lista y los guardamos en el objeto DOM
+        let DOM = {
+            liPrimeraLista: document.getElementById("lista").getElementsByTagName("li")
+        }
+
+        //Recorremos cada li de la lista
+        for (let i = 0; i < DOM.liPrimeraLista.length; i++) {
+            //Si es par lo pintamos de rojo
+            if (i % 2 != 0) DOM.liPrimeraLista[i].style.color = "Red";
+        }
+
+
+    </script>
 </body>
+
 </html>

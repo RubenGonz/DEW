@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title></title>
+
+</head>
+
+<!-- Crea un objeto o clase Persona, con 6 propiedades como: nombre (string), edad (int), sexo (Boolean). 
+    Validar que el nombre sea siempre una cadena y cumpla unos requisitos mínimos y que la edad no sea negativa. 
+    Cada vez que seteemos una propiedad, validar los datos entrantes.
+
+Mostrar todos sus atributos que sean enteros. -->
+
+<body>
+
+    <script>
+
+        //Construccion de la clase persona
+        class Persona {
+
+            //Atributos
+            dni;
+            nombre;
+            edad;
+            nacionalidadEspaniola;
+            domicilio;
+            idiomas;
+
+            //Constructor
+            constructor(dni, nombre, edad, nacionalidadEspaniola, domicilio, idiomas) {
+                this.dni= validarDni(dni);
+                this.nombre = validarNombre(nombre);
+                this.edad = validarEdad(edad);
+                this.nacionalidadEspaniola = validarNacionalidadEspaniola(nacionalidadEspaniola);
+                this.domicilio = validarDomicilio(domicilio);
+                this.idiomas = validarIdiomas(idiomas);
+            };
+
+            //Getters
+            get getDni() {
+                return this.dni;
+            };
+            get getNombre() {
+                return this.nombre;
+            };
+            get getEdad() {
+                return this.edad;
+            };
+            get getNacionalidadEspaniola() {
+                return this.nacionalidadEspaniola;
+            };
+            get getDomicilio() {
+                return this.domicilio;
+            };
+            get getIdiomas() {
+                return this.idiomas;
+            };
+
+            //Setters
+            set setDni(dni) {
+                this.dni = validarDni(dni);
+            };
+            set setNombre(nombre) {
+                this.nombre = validarNombre(nombre);
+            };
+            set setEdad(edad) {
+                this.edad = validarEdad(edad);
+            };
+            set setNacionalidadEspaniola(nacionalidadEspaniola) {
+                this.nacionalidadEspaniola = validarNacionalidadEspaniola(nacionalidadEspaniola);
+            };
+            set setDomicilio(domicilio) {
+                this.domicilio = validarDomicilio(domicilio);
+            };
+            set setIdiomas(idiomas) {
+                this.idiomas = validarIdiomas(idiomas);
+            };
+
+        }
+
+        //Validaciones
+        function validarDni(dni) {
+            if (typeof dni === "string") {
+                return dni;
+            } else {
+                console.warn("El dni '" + dni + "' no es correcto y no se ha introducido");
+            }
+        }
+
+        function validarNombre(nombre) {
+            if ((typeof nombre === "string") && (nombre.charAt(0) === nombre.charAt(0).toUpperCase())) {
+                return nombre;
+            } else {
+                console.warn("El nombre '" + nombre + "' no es correcto y no se ha introducido");
+            }
+        }
+
+        function validarEdad(edad) {
+            if ((typeof edad === "number") && (edad >= 0)) {
+                return edad;
+            } else {
+                console.warn("La edad '" + edad + "' no es correcta y no se ha introducido");
+            }
+        }
+
+        function validarNacionalidadEspaniola(nacionalidadEspaniola) {
+            if (typeof nacionalidadEspaniola === "boolean") {
+                return nacionalidadEspaniola;
+            } else {
+                console.warn("La nacionalidad '" + nacionalidadEspaniola + "' no es correcta y no se ha introducido");
+            }
+        }
+
+        function validarDomicilio(domicilio) {
+            if (typeof domicilio === "string") {
+                return domicilio;
+            } else {
+                console.warn("El domicilio '" + domicilio + "' no es correcto y no se ha introducido");
+            }
+        }
+
+        function validarIdiomas(idiomas) {
+            if (typeof idiomas === "object") {
+                return idiomas;
+            } else {
+                console.warn("Los idiomas '" + idiomas + "' no son correctos y no se han introducido");
+            }
+        }
+
+        //Mostramos todos los datos
+
+        const persona = new Persona("12345678A","Juan",25,true,"Calle La Avenida",["Espaniol,Ingles"]);
+        console.log(persona);
+
+        //Mostramos solo las propiedades que sean Number
+        if (persona.getDni.constructor == Number) console.log(persona.getDni);
+        if (persona.getNombre.constructor == Number) console.log(persona.getNombre);
+        if (persona.getEdad.constructor == Number) console.log(persona.getEdad);
+        if (persona.getNacionalidadEspaniola.constructor == Number) console.log(persona.getNacionalidadEspaniola);
+        if (persona.getDomicilio.constructor == Number) console.log(persona.getDomicilio);
+        if (persona.getIdiomas.constructor == Number) console.log(persona.getIdiomas);
+
+    </script>
+
+</body>
+
+</html>

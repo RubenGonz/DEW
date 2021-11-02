@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title></title>
+
+</head>
+
+<!-- Grupo 1.- Recorrer arrays: Cristo y Delmiro
+
+Ejercicio 1:
+
+Usando el bucle que prefieras, recorre el siguiente array, ordenándolo alfabéticamente, y muestra el resultado
+
+var array1 = ['Prosper Chigumba', 'Jorum Muchambo', 'Valentine Musarurwa', 'Cabby Kamhapa', 'John Takudzwa','Carlton Munzabwa', 'Justice Jangano', 'Hardlife Zvirekwi'] -->
+
+<body>
+    <script>
+        //Array original
+        var array1 = ['Prosper Chigumba', 'Jorum Muchambo', 'Valentine Musarurwa', 'Cabby Kamhapa', 'John Takudzwa', 'Carlton Munzabwa', 'Justice Jangano', 'Hardlife Zvirekwi'];
+
+        /**
+         * Funcion que crea un titulo h3 pasandole un texto
+        */
+        function crearH3(texto) {
+            let h3 = document.createElement("h3");
+            h3.innerHTML = texto;
+            document.body.appendChild(h3);
+        }
+
+        /**
+         * Funcion que crea una lista no ordenada pasandole un array
+        */
+        function crearLista(array) {
+            let ul = document.createElement("ul");
+            for (let jugador of array) {
+                let li = document.createElement("li");
+                li.innerHTML = jugador;
+                ul.appendChild(li);
+            };
+            document.body.appendChild(ul);
+        }
+
+        //Mostramos un titulo y la lista original
+        crearH3("Lista original");
+        crearLista(array1);
+
+        //Mostramos un titulo y la lista ordenada
+        crearH3("Lista ordenada");
+        crearLista(array1.sort());
+
+    </script>
+</body>
+
+
+</html>

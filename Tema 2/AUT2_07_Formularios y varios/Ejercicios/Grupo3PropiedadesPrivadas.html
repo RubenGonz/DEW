@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='author' content='Ruben Gonzalez Rodriguez'>
+    <title></title>
+
+</head>
+
+<!-- Crea una clase usuario con propiedades "usuario" y "contraseña". La contraseña debe ser privada.
+
+Crea un método privado que permita modificar la contraseña y un método cambiarContraseña()  público que pida la contraseña vieja y la cambie por una nueva usando el anterior.
+
+Crea un usuario y comprueba que sólo puedes cambiar la contraseña con el método cambiarContraseña() -->
+
+<body>
+    <script>
+
+        //Construccion de la clase Usuario
+        class Usuario {
+
+            //Atributos
+            nombreUsuario;
+            #contrasenia;
+
+            //Constructor
+            constructor(nombreUsuario, contrasenia) {
+                this.nombreUsuario = validarNombreUsuario(nombreUsuario);
+                this.#contrasenia = validarContrasenia(contrasenia);
+            };
+
+            //Getters
+            getNombreUsuario() {
+                return this.nombreUsuario;
+            };
+            #getContrasenia() {
+                return this.#contrasenia;
+            };
+
+            //Setters
+            set setNombreUsuario(nombreUsuario) {
+                this.nombreUsuario = validarNombreUsuario(nombreUsuario);
+            };
+            set setContrasenia(contrasenia) {
+                this.#contrasenia = validarContrasenia(contrasenia);
+            };
+
+            //Funcion que cambia la contrasenia de un usuario
+            #cambiarConstrasenia() {
+                let intentoContrasenia = prompt("Introduzca la contrasenia actual");
+                if (intentoContrasenia == this.#contrasenia) {
+                    let contraseniaNueva = prompt("Introduzca la nueva contrasenia");
+                    let contraseniaNueva2 = prompt("Introduzca la nueva contrasenia de nuevo por seguridad");
+                    if (contraseniaNueva == contraseniaNueva2) {
+                        this.#contrasenia = validarContrasenia(contraseniaNueva);
+                    } else {
+                        alert("La nueva contrasenia no se introdujo igual las dos veces");
+                    }
+                } else {
+                    alert("Contraseña incorrecta");
+                }
+            }
+
+        }
+
+        //Validaciones
+        function validarNombreUsuario(nombreUsuario) {
+            if (typeof nombreUsuario === "string") {
+                return nombreUsuario;
+            } else {
+                console.warn("El nombre de usuario '" + nombreUsuario + "' no es correcto y no se ha introducido");
+            }
+        }
+
+        function validarContrasenia(contrasenia) {
+            if (typeof contrasenia === "string") {
+                return contrasenia;
+            } else {
+                console.warn("La contrasenia '" + contrasenia + "' no es correcta y no se ha introducido");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

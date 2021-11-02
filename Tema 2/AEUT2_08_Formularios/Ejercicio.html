@@ -7,29 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ValidaciĂ³n Formulario</title>
     <style type="text/css">
-        label {
-            width: 150px;
-            float: left;
-            margin-bottom: 5px;
-        }
-
-        input {
-            float: left;
-        }
-
-        input,
-        select {
-            width: 150px;
-            margin-bottom: 5px;
-        }
-
         fieldset {
             background-color: burlywood;
-            width: 350px;
+            width: 360px;
+        }
+
+        input[type="color"] {
+            width: 175px;
+        }
+
+        input[type="radio"] {
+            display: inline;
         }
 
         .error {
             border: solid 2px #ff0000;
+        }
+
+        #trCursos,
+        #trModulos {
+            display: none;
         }
     </style>
 </head>
@@ -52,7 +49,7 @@
                         <label for="apellidos">Apellidos</label>
                     </td>
                     <td>
-                        <input type="text" name="apellido" id="apellido" />
+                        <input type="text" name="apellidos" id="apellidos" />
                     </td>
                 </tr>
                 <tr>
@@ -60,7 +57,10 @@
                         <label for="sexo">Sexo</label>
                     </td>
                     <td>
-                        <input type="text" name="sexo" id="sexo" />
+                        <input type="radio" name="sexo" id="Hombre" value="Hombre" />
+                        <label for="Hombre">Hombre</label>
+                        <input type="radio" name="sexo" id="Mujer" value="Mujer" />
+                        <label for="Mujer">Mujer</label>
                     </td>
                 </tr>
                 <tr>
@@ -68,7 +68,7 @@
                         <label for="edad">Edad</label>
                     </td>
                     <td>
-                        <input type="text" name="edad" id="edad" />
+                        <input type="number" name="edad" id="edad" />
                     </td>
                 </tr>
                 <tr>
@@ -79,25 +79,193 @@
                         <input type="color" name="color" id="color" />
                     </td>
                 </tr>
+                <tr id="trCiclos" onchange="mostrarCursos()">
+                    <td>
+                        <label for="ciclos">Ciclo</label>
+                    </td>
+                    <td>
+                        <input type="radio" name="ciclos" id="ASIR" value="ASIR" />
+                        <label for="ASIR">ASIR</label>
+                        <input type="radio" name="ciclos" id="DAM" value="DAM" />
+                        <label for="DAM">DAM</label>
+                        <input type="radio" name="ciclos" id="DAW" value="DAW" />
+                        <label for="DAW">DAW</label>
+                    </td>
+                </tr>
+                <tr id="trCursos" onchange="mostrarModulos()">
+                    <td>
+                        <label for="cursos">Curso</label>
+                    </td>
+                    <td>
+                        <select name="cursos" id="cursos">
+                            <option value="" disabled selected>"¿Donde te vas a matricular?"</option>
+                            <option value="Primero">Primero</option>
+                            <option value="Segundo">Segundo</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr id="trModulos">
+                    <td>
+                        <label for="modulos">Modulos</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="modulos" id="PRO" value="PRO" />
+                        <label for="PRO">PRO</label>
+                        <input type="checkbox" name="modulos" id="DEW" value="DEW" />
+                        <label for="DEW">DEW</label>
+                        <input type="checkbox" name="modulos" id="FOL" value="FOL" />
+                        <label for="FOL">FOL</label>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <input type="reset" name="limpiar" id="limpiar" value="Limpiar" />
                     </td>
                     <td>
-                        <input type="submit" name="enviar" id="enviar" value="Enviar" />
+                        <input type="button" name="enviar" id="enviar" value="Matricular" onclick="mostrarDatos()" />
                     </td>
                 </tr>
             </table>
         </form>
-        <form name="formularioCiclos" onchange="mostrarCursos()">
-        </form>
-        <form name="formularioCursos" onchange="mostrarModulos()">
-        </form>
-        <form name="formularioModulos" action="">
-        </form>
-    </fieldset>
 
-    <script src="main.js"></script>
+        <hr>
+
+        <div id="resultado">
+
+        </div>
+
+        <script>
+
+            //Construcción del objeto DOM
+            let DOM = {
+                formulario: document.getElementsByTagName("form")[0],
+                nombre: document.getElementById("nombre"),
+                apellidos: document.getElementById("apellidos"),
+                sexo: document.getElementsByName("sexo"),
+                edad: document.getElementById("edad"),
+                color: document.getElementById("color"),
+                trCiclos: document.getElementById("trCiclos"),
+                ciclos: document.getElementsByName("ciclos"),
+                trCursos: document.getElementById("trCursos"),
+                cursos: document.getElementById("cursos"),
+                trModulos: document.getElementById("trModulos"),
+                modulos: document.getElementsByName("modulos"),
+                errores: document.getElementsByClassName("error"),
+                resultado: document.getElementById("resultado")
+            }
+
+            //Función que muestra los cursos
+            function mostrarCursos() {
+                DOM.trCursos.style.display = "table-row";
+            }
+
+            //Función que muestra los cursos
+            function mostrarModulos() {
+                DOM.trModulos.style.display = "table-row";
+            }
+
+            /**
+             * Funcion que valida cada campo del formulario 
+             * y si es un valor incorrecto le asigan la clase
+             * error 
+            */
+            function validarCampos() {
+
+                //Validacion de nombre
+                if (DOM.nombre.value == "") {
+                    DOM.nombre.className = "error";
+                } else {
+                    DOM.nombre.className = "";
+                }
+
+                //Validacion de apellidos
+                if (DOM.apellidos.value == "") {
+                    DOM.apellidos.className = "error";
+                } else {
+                    DOM.apellidos.className = "";
+                }
+
+                //Validacion de sexo
+                if (document.querySelector("input[name=sexo]:checked") == null) {
+                    for (i = 0; i < DOM.sexo.length; i++) DOM.sexo[i].className = "error";
+                } else {
+                    for (i = 0; i < DOM.sexo.length; i++) DOM.sexo[i].className = "";
+                }
+
+                //Validacion de edad
+                if ((parseInt(DOM.edad.value) == "NaN") || (DOM.edad.value > 125) || (DOM.edad.value < 18)) {
+                    DOM.edad.className = "error";
+                } else {
+                    DOM.edad.className = "";
+                }
+
+                //Validacion de ciclos
+                if (document.querySelector("input[name=ciclos]:checked") == null) {
+                    for (i = 0; i < DOM.ciclos.length; i++) DOM.ciclos[i].className = "error";
+                } else {
+                    for (i = 0; i < DOM.ciclos.length; i++) DOM.ciclos[i].className = "";
+                }
+
+                //Validacion de cursos
+                if (DOM.cursos.value == "") {
+                    DOM.cursos.className = "error"
+                } else {
+                    DOM.cursos.className = "";
+                }
+
+                //Validacion de modulos
+                if (document.querySelector("input[name=modulos]:checked") == null) {
+                    for (i = 0; i < DOM.modulos.length; i++) DOM.modulos[i].className = "error";
+                } else {
+                    for (i = 0; i < DOM.modulos.length; i++) DOM.modulos[i].className = "";
+                }
+            }
+
+            /**
+             * Funcion que guarda en un mensaje los valores
+             * de los modulos que estan marcados para despues
+             * retornalos en un string
+            */
+            function escribirModulos() {
+                modulos = "";
+                for (i = 0; i < DOM.modulos.length; i++) {
+                    if (DOM.modulos[i].checked == true) modulos += DOM.modulos[i].value + " ";
+                }
+                return modulos;
+            }
+
+            /**
+             * Funcion que crea un parrafo y le mete un texto
+             * pasado por parametro
+            */
+            function crearP(texto) {
+                let p = document.createElement("p");
+                p.innerHTML = texto;
+                return p;
+            }
+
+            /**
+             * Funcion que muestra ejecuta la validacion de los datos y
+             * en el caso de que no haya datos erroneos escribe
+             * la indormación en un div
+            */
+            function mostrarDatos() {
+                validarCampos();
+                if (DOM.errores.length == 0) {
+                    if (DOM.resultado.innerHTML != "") DOM.resultado.innerHTML = "";
+                    DOM.resultado.appendChild(crearP("El nombre introducido es: " + DOM.nombre.value));
+                    DOM.resultado.appendChild(crearP("Los apellidos introducidos son: " + DOM.apellidos.value));
+                    DOM.resultado.appendChild(crearP("El sexo es: " + document.querySelector("input[name=sexo]:checked").value));
+                    DOM.resultado.appendChild(crearP("Tienes: " + DOM.edad.value + " años"));
+                    DOM.resultado.appendChild(crearP("Tu color favorito es el que se corresponde a: " + DOM.color.value));
+                    DOM.resultado.appendChild(crearP("El ciclo elegido es: " + document.querySelector("input[name=ciclos]:checked").value));
+                    DOM.resultado.appendChild(crearP("El curso elegido es: " + DOM.cursos.value));
+                    DOM.resultado.appendChild(crearP("Modulos elegidos: " + escribirModulos()));
+                    DOM.resultado.appendChild(crearP("Hay: " + document.getElementsByTagName("form").length + " formulario y " + document.getElementsByTagName("input").length + " inputs"));
+                }
+            }
+        </script>
+    </fieldset>
 </body>
 
 </html>
