@@ -48,27 +48,16 @@ body {
 }
 
 /*-------------------- Form --------------------*/
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 .form fieldset {
   border: none;
   padding: 0;
   padding: 10px 5px;
-  position: relative;
-  float: left;
-}
-.form fieldset.fieldset_surename {
-  clear: none;
-  float: left;
-  width: 86px;
-}
-.form fieldset.fieldset_postalcode {
-  clear: none;
-  float: left;
-  width: 90px;
-}
-.form fieldset.fieldset_postalcode .select {
-  width: 90px;
-  margin-right: 12px;
-  float: left;
 }
 
 .form fieldset label {
@@ -132,7 +121,7 @@ font-family: 'Open Sans', sans-serif !important;
   color: transparent;
   text-shadow: 0 0 0 #000;
 }
-.form button {
+.form input[type="button"] {
   width: 100%;
   outline: none !important;
   background: linear-gradient(180deg, #49a09b, #3d8291);

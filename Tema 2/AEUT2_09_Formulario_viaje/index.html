@@ -16,41 +16,101 @@
             <p class="title"> Datos del pasajero </p>
         </div>
         <form class="form" autocomplete="off" novalidate>
-            <fieldset>
+            <fieldset id="fieldsetNombre">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" class="input-form" maxlength="20" />
             </fieldset>
 
-            <fieldset>
+            <fieldset id="fieldsetApellidos">
                 <label for="apellidos">Apellidos</label>
                 <input type="text" id="apellidos" class="input-form" maxlength="20" />
             </fieldset>
 
-            <fieldset>
+            <fieldset id="fieldsetDniNie">
                 <label for="dniNie">DNI/NIE</label>
                 <input type="text" id="dniNie" class="input-form" maxlength="9" />
             </fieldset>
 
-            <fieldset>
-                <label for="codigoPostal">Codigo postal</label>
+            <fieldset id="fieldsetCodPostal">
+                <label for="codPostal">Codigo postal</label>
                 <div class="select">
-                    <select id="codigoPostal">
-                        <option>Otro</option>
+                    <select id="codPostal">
+                        <option value="" disabled selected></option>
                         <option>38400</option>
                         <option>38311</option>
                         <option>38450</option>
+                        <option>Nuevo</option>
                     </select>
                 </div>
             </fieldset>
 
-            <fieldset>
-                <label for="btn_submit">Others ...</label>
-                <input type="text" id="btn_submit" />
+            <fieldset id="fieldsetTelFijo">
+                <label for="telFijo">Telefono Fijo</label>
+                <input type="text" id="telFijo" class="input-form" maxlength="20" />
             </fieldset>
 
-            <button class="btn"> submit</button>
+            <fieldset id="fieldsetTelMovil">
+                <label for="telMovil">Telefono Movil</label>
+                <input type="text" id="telMovil" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetFechaIda">
+                <label for="fechaIda">Fecha de ida</label>
+                <input type="text" id="fechaIda" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetResidencia">
+                <label for="residencia">Residente</label>
+                <div class="select">
+                    <select id="residencia">
+                        <option value="" disabled selected></option>
+                        <option>Si</option>
+                        <option>No</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset id="fieldsetPasajeros">
+                <label for="pasajeros">Cantidad de Pasajeros</label>
+                <input type="text" id="pasajeros" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetEmail">
+                <label for="email">Email</label>
+                <input type="text" id="email" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetRedesSociales">
+                <label for="redesSociales">Twiter / Instagram</label>
+                <input type="text" id="redesSociales" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetCoche">
+                <label for="coche">Vehiculo</label>
+                <div class="select">
+                    <select id="coche">
+                        <option value="" disabled selected></option>
+                        <option>Si</option>
+                        <option>No</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset id="fieldsetIp">
+                <label for="ip">IP</label>
+                <input type="text" id="ip" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetMotivo">
+                <label for="motivo">Motivo de su viaje</label>
+                <input type="text" id="motivo" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <input type="button" class="btn" id="submit" value="Enviar">
         </form>
     </div>
+
+    <script src="./Assets/script.js"></script>
 </body>
 
 </html>
