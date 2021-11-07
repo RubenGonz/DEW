@@ -10,6 +10,7 @@ const DOM = {
         },
         select: {
             codPostal: document.getElementById("codPostal"),
+            residencia: document.getElementById("residencia"),
             vehiculo: document.getElementById("vehiculo")
         }
     },
@@ -24,14 +25,14 @@ const EXPRESIONES = {
     nombre: "([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+(\s)?){1,2}",
     apellidos: "([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+(\s)?){1,2}",
     codPostal: "[0-9]{5}",
-    telFijo: "",
-    telMovil: "",
+    telFijo: "(\+[0-9]{1,4}[ -])?(6|7)([0-9]){2}([ -]([0-9]){3}){2}",
+    telMovil: "(\+[0-9]{1,4}[ -]?)?(8|9)([0-9]){2}([ -]?([0-9]){3}){2}",
     fechaIda: "",
-    pasajeros: "",
-    email: "/[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+/gm",
+    pasajeros: "[1-5]",
+    email: "[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+",
     redesSociales: "",
-    marca: "",
-    matricula: "",
+    marca: "[A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+",
+    matricula: "[0-9]{4}-[A-Z]{3}",
     ip: "",
     motivo: ""
 }
@@ -43,7 +44,7 @@ const EXPRESIONES = {
  * @param id El id del contenedor donde se aniadirá el mensaje
  * @param mensajeError El mensaje que será aniadido
  */
- const crearAviso = (id, mensajeError) => {
+const crearAviso = (id, mensajeError) => {
     let elemento = document.createElement("div");
     elemento.setAttribute("name", "aviso");
     elemento.style.width = "182px";
@@ -61,7 +62,7 @@ const EXPRESIONES = {
  * @param texto texto a validar
  * @returns true si es valido o false si no lo es
  */
- const validarTexto = (expresion, texto) => {
+const validarTexto = (expresion, texto) => {
     let patron = new RegExp(expresion);
     return patron.test(texto);
 }
@@ -74,7 +75,7 @@ const EXPRESIONES = {
  * @param expresion expresion regular que debe cumplir el input
  * @param mensajeError mensaje de aviso a mostrar
  */
- const validarInputText = (idInput, expresion, mensajeError) => {
+const validarInputText = (idInput, expresion, mensajeError) => {
     let idContenedor = "fieldset" + idInput.charAt(0).toUpperCase() + idInput.slice(1);
     let texto = document.getElementById(idInput).value;
     if (!validarTexto(expresion, texto)) crearAviso(idContenedor, mensajeError);
@@ -87,7 +88,7 @@ const EXPRESIONES = {
  * @param nombreVisible Este sera el texto que verá el usuario sobre el input
  * @returns Un fieldset con id englobando un label y un input identificado
  */
- const generarCampo = (idCampo, nombreVisible) => {
+const generarCampo = (idCampo, nombreVisible) => {
     let fieldset = document.createElement("fieldset");
     fieldset.setAttribute("id", "fieldset" + idCampo.charAt(0).toUpperCase() + idCampo.slice(1));
 
@@ -112,7 +113,7 @@ const EXPRESIONES = {
  * si la opcion marcada es "Si" y en el caso de que no sea asi elimina
  * estos campos
  */
- const generarInputsVehiculo = () => {
+const generarInputsVehiculo = () => {
     if (DOM.inputs.select.vehiculo.value == "Si") {
         document.getElementById("fieldsetVehiculo").insertAdjacentElement("afterend", generarCampo("matricula", "Matricula"));
         document.getElementById("fieldsetVehiculo").insertAdjacentElement("afterend", generarCampo("marca", "Marca"));
@@ -132,7 +133,7 @@ const EXPRESIONES = {
  * Se aniaden despues del select del codifgo postal
  * Si la opcion no esta marcada y estos campos estan creados se eliminan
  */
- const generarInputPostal = () => {
+const generarInputPostal = () => {
     if (DOM.inputs.select.codPostal.value == "Nuevo") {
         document.getElementById("fieldsetCodPostal").insertAdjacentElement("afterend", generarCampo("inputNuevoCodigo", "Nuevo codigo"));
 
@@ -161,7 +162,7 @@ const EXPRESIONES = {
  * Si es valido comprueba que ese codigo no este ya en las opciones
  * del select y si no esta lo aniade antes de la opcion "Nuevo"
  */
- const agregarCodigo = () => {
+const agregarCodigo = () => {
     let codigo = document.getElementById("inputNuevoCodigo").value;
 
     if (document.querySelector("#fieldsetInputNuevoCodigo").childNodes.length == 4) {
@@ -195,15 +196,30 @@ const EXPRESIONES = {
  * un aviso
  */
 const validarFormulario = () => {
-    while(DOM.avisos.length != 0) {
+    while (DOM.avisos.length != 0) {
         DOM.avisos[0].remove();
     }
 
     validarInputText("nombre", EXPRESIONES.nombre, "El nombre introducido no es válido");
     validarInputText("apellidos", EXPRESIONES.apellidos, "Los apellidos introducidos no son válidos");
-    validarInputText("email", EXPRESIONES.email, "El email introducido no es válido");
-}
 
+    if (DOM.inputs.select.codPostal.value == "" || DOM.inputs.select.codPostal.value == "Nuevo") crearAviso("fieldsetCodPostal", "Introduzca un codigo postal válido");
+    validarInputText("telFijo", EXPRESIONES.telFijo, "El numero de telefono fijo introducido no es válido");
+    validarInputText("telMovil", EXPRESIONES.telMovil, "El numero de telefono movil introducido no es válido");
+    validarInputText("fechaIda", EXPRESIONES.fechaIda, "La fecha introducida no es válida");
+    if (DOM.inputs.select.residencia.value == "") crearAviso("fieldsetResidencia", "Introduzca si es residente o no");
+    validarInputText("pasajeros", EXPRESIONES.pasajeros, "El numero de pasajeros no es válido");
+    validarInputText("email", EXPRESIONES.email, "El email introducido no es válido");
+    /*validarInputText("redesSociales", EXPRESIONES.redesSociales, "El usuario introducido no es válido");*/
+    if (DOM.inputs.select.vehiculo.value == "") {
+        crearAviso("fieldsetVehiculo", "Introduzca si tiene o no vehiculo");
+    } else if (DOM.inputs.select.vehiculo.value == "Si") {
+        validarInputText("marca", EXPRESIONES.marca, "La marca introducida no es válida");
+        validarInputText("matricula", EXPRESIONES.matricula, "La matricula introducida no es válida");
+    }
+    /*validarInputText("ip", EXPRESIONES.ip, "La ip introducida no es válida");
+    validarInputText("motivo", EXPRESIONES.motivo, "El motivo introducido no es válido");*/
+}
 
 DOM.submit.addEventListener("click", validarFormulario);
 DOM.inputs.select.codPostal.addEventListener("change", generarInputPostal);
