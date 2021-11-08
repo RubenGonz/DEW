@@ -5,8 +5,9 @@ const DOM = {
     avisos: document.getElementsByName("aviso"),
     inputs: {
         text: {
-            nombre: document.getElementById("nombre"),
-            apellidos: document.getElementById("apellidos")
+            dni: document.getElementById("dni"),
+            telFijo: document.getElementById("telFijo"),
+            telMovil: document.getElementById("telMovil")
         },
         select: {
             codPostal: document.getElementById("codPostal"),
@@ -14,7 +15,6 @@ const DOM = {
             vehiculo: document.getElementById("vehiculo")
         }
     },
-    opcionNuevoCodigo: document.getElementById("opcionNuevoCodigo"),
     submit: document.getElementById("submit")
 }
 
@@ -22,36 +22,22 @@ const DOM = {
  * Constante donde se guardan todas las expresiones regulares 
  */
 const EXPRESIONES = {
-    nombre: "([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+(\s)?){1,2}",
-    apellidos: "([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+(\s)?){1,2}",
-    codPostal: "[0-9]{5}",
-    telFijo: "(\+[0-9]{1,4}[ -])?(6|7)([0-9]){2}([ -]([0-9]){3}){2}",
-    telMovil: "(\+[0-9]{1,4}[ -]?)?(8|9)([0-9]){2}([ -]?([0-9]){3}){2}",
-    fechaIda: "",
-    pasajeros: "[1-5]",
-    email: "[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+",
-    redesSociales: "",
-    marca: "[A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+",
-    matricula: "[0-9]{4}-[A-Z]{3}",
-    ip: "",
-    motivo: ""
-}
-
-/**
- * Constante que crea aniade un mensaje de aviso 
- * en un contenedor
- * 
- * @param id El id del contenedor donde se aniadirá el mensaje
- * @param mensajeError El mensaje que será aniadido
- */
-const crearAviso = (id, mensajeError) => {
-    let elemento = document.createElement("div");
-    elemento.setAttribute("name", "aviso");
-    elemento.style.width = "182px";
-    elemento.style.fontSize = "0.75rem";
-    elemento.style.color = "Red";
-    elemento.innerHTML = mensajeError;
-    document.getElementById(id).appendChild(elemento);
+    nombre: "^([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+[ ]?){1,2}$",
+    apellidos: "^([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+(\s)?){1,2}$",
+    dni: "^[0-9]{8}[A-Z]$",
+    codPostal: "^[0-9]{5}$",
+    telFijo: "^(\\+34[ -]?)?(8|9)([0-9]){2}([ -]?([0-9]){3}){2}$",
+    telMovil: "^(\\+34[ -]?)?(6|7)([0-9]){2}([ -]?([0-9]){3}){2}$",
+    telInter: "^(\\+[0-9]{1,4}[ -]?)?([0-9][ -]?)+$",
+    fechaIda: "^[0-9]{1,2}$",
+    pasajeros: "^[1-5]$",
+    email: "^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$",
+    twiter: "^@[A-Za-z0-9_\\-]+$",
+    instagram: "^[A-Za-z0-9_\\-]+$",
+    marca: "^[A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+$",
+    matricula: "^[0-9]{4}-[A-Z]{3}$",
+    ip: "^$",
+    motivo: "^$"
 }
 
 /**
@@ -65,6 +51,23 @@ const crearAviso = (id, mensajeError) => {
 const validarTexto = (expresion, texto) => {
     let patron = new RegExp(expresion);
     return patron.test(texto);
+}
+
+/**
+ * Constante que crea aniade un mensaje de aviso 
+ * en un contenedor
+ * 
+ * @param idContenedor El id del contenedor donde se aniadirá el mensaje
+ * @param mensajeError El mensaje que será aniadido
+ */
+const crearAviso = (idContenedor, mensajeError) => {
+    let elemento = document.createElement("div");
+    elemento.setAttribute("name", "aviso");
+    elemento.style.width = "182px";
+    elemento.style.fontSize = "0.75rem";
+    elemento.style.color = "Red";
+    elemento.innerHTML = mensajeError;
+    document.getElementById(idContenedor).appendChild(elemento);
 }
 
 /**
@@ -117,7 +120,8 @@ const generarInputsVehiculo = () => {
     if (DOM.inputs.select.vehiculo.value == "Si") {
         document.getElementById("fieldsetVehiculo").insertAdjacentElement("afterend", generarCampo("matricula", "Matricula"));
         document.getElementById("fieldsetVehiculo").insertAdjacentElement("afterend", generarCampo("marca", "Marca"));
-    } else {
+        document.getElementById("matricula").setAttribute("placeholder", "0000-XXX");
+    } else if (document.getElementById("fieldsetMatricula") != null && document.getElementById("fieldsetMarca") != null) {
         document.getElementById("fieldsetMatricula").remove();
         document.getElementById("fieldsetMarca").remove();
     }
@@ -181,11 +185,42 @@ const agregarCodigo = () => {
         if (!opciones.includes(codigo)) {
             let option = document.createElement("option");
             option.innerHTML = codigo;
-            DOM.opcionNuevoCodigo.insertAdjacentElement("beforebegin", option);
+            document.getElementById("opcionNuevoCodigo").insertAdjacentElement("beforebegin", option);
         }
     } else {
         validarInputText("inputNuevoCodigo", EXPRESIONES.codPostal, "El codigo introducido no es válido");
     }
+}
+
+const validarDocumento = () => {
+    let documento = DOM.inputs.text.dni.value;
+    if (validarTexto(EXPRESIONES.dni, documento)) {
+        let numDoc = documento.substring(0, documento.length - 1);
+        let letrasPosibles = "TRWAGMYFPDXBNJZSQVHLCKET";
+        let posicion = numDoc % 23;
+        let letraCorrecta = letrasPosibles.substring(posicion, posicion + 1);
+        if (documento.charAt(8) == letraCorrecta) {
+            return true;
+        }
+    } else {
+        return false;
+    };
+}
+
+const reconocerTelefono = (telefono) => {
+    if (validarTexto(EXPRESIONES.telMovil, telefono)) {
+        return "telMovil";
+    } else if (validarTexto(EXPRESIONES.telFijo, telefono)) {
+        return "telFijo";
+    } else if (validarTexto(EXPRESIONES.telInter, telefono)) {
+        return "telInter";
+    } else {
+        return "telInvalido"
+    }
+}
+
+const validarFecha = (fecha) => {
+
 }
 
 /**
@@ -202,15 +237,16 @@ const validarFormulario = () => {
 
     validarInputText("nombre", EXPRESIONES.nombre, "El nombre introducido no es válido");
     validarInputText("apellidos", EXPRESIONES.apellidos, "Los apellidos introducidos no son válidos");
-
+    if (!validarDocumento()) crearAviso("fieldsetDni", "El dni introducido no es válido");
     if (DOM.inputs.select.codPostal.value == "" || DOM.inputs.select.codPostal.value == "Nuevo") crearAviso("fieldsetCodPostal", "Introduzca un codigo postal válido");
-    validarInputText("telFijo", EXPRESIONES.telFijo, "El numero de telefono fijo introducido no es válido");
-    validarInputText("telMovil", EXPRESIONES.telMovil, "El numero de telefono movil introducido no es válido");
-    validarInputText("fechaIda", EXPRESIONES.fechaIda, "La fecha introducida no es válida");
+    if ((reconocerTelefono(DOM.inputs.text.telFijo.value) != "telFijo") && (reconocerTelefono(DOM.inputs.text.telFijo.value) != "telInter")) crearAviso("fieldsetTelFijo", "El numero introducido no es un fijo español o un numero internacional");
+    if ((reconocerTelefono(DOM.inputs.text.telMovil.value) != "telMovil") && (reconocerTelefono(DOM.inputs.text.telMovil.value) != "telInter")) crearAviso("fieldsetTelMovil", "El numero introducido no es un movil español o un numero internacional");
+    /* validarFecha; */
     if (DOM.inputs.select.residencia.value == "") crearAviso("fieldsetResidencia", "Introduzca si es residente o no");
     validarInputText("pasajeros", EXPRESIONES.pasajeros, "El numero de pasajeros no es válido");
     validarInputText("email", EXPRESIONES.email, "El email introducido no es válido");
-    /*validarInputText("redesSociales", EXPRESIONES.redesSociales, "El usuario introducido no es válido");*/
+    validarInputText("twiter", EXPRESIONES.twiter, "El  usuario introducido no es válido");
+    validarInputText("instagram", EXPRESIONES.instagram, "El  usuario introducido no es válido");
     if (DOM.inputs.select.vehiculo.value == "") {
         crearAviso("fieldsetVehiculo", "Introduzca si tiene o no vehiculo");
     } else if (DOM.inputs.select.vehiculo.value == "Si") {
@@ -219,6 +255,8 @@ const validarFormulario = () => {
     }
     /*validarInputText("ip", EXPRESIONES.ip, "La ip introducida no es válida");
     validarInputText("motivo", EXPRESIONES.motivo, "El motivo introducido no es válido");*/
+
+    if (DOM.avisos.length == 0) console.log("Funciona");
 }
 
 DOM.submit.addEventListener("click", validarFormulario);
