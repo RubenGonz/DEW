@@ -7,7 +7,8 @@ const DOM = {
         text: {
             dni: document.getElementById("dni"),
             telFijo: document.getElementById("telFijo"),
-            telMovil: document.getElementById("telMovil")
+            telMovil: document.getElementById("telMovil"),
+            ip: document.getElementById("ip")
         },
         select: {
             codPostal: document.getElementById("codPostal"),
@@ -23,20 +24,21 @@ const DOM = {
  */
 const EXPRESIONES = {
     nombre: "^([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+[ ]?){1,2}$",
-    apellidos: "^([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+(\s)?){1,2}$",
+    apellidos: "^([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+[ ]?){1,2}$",
     dni: "^[0-9]{8}[A-Z]$",
     codPostal: "^[0-9]{5}$",
     telFijo: "^(\\+34[ -]?)?(8|9)([0-9]){2}([ -]?([0-9]){3}){2}$",
     telMovil: "^(\\+34[ -]?)?(6|7)([0-9]){2}([ -]?([0-9]){3}){2}$",
     telInter: "^(\\+[0-9]{1,4}[ -]?)?([0-9][ -]?)+$",
-    fechaIda: "^[0-9]{1,2}$",
+    fechaIda: "^$",
     pasajeros: "^[1-5]$",
     email: "^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$",
     twiter: "^@[A-Za-z0-9_\\-]+$",
     instagram: "^[A-Za-z0-9_\\-]+$",
     marca: "^[A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+$",
     matricula: "^[0-9]{4}-[A-Z]{3}$",
-    ip: "^$",
+    ipV4: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$",
+    ipV6: "^$",
     motivo: "^$"
 }
 
@@ -192,8 +194,15 @@ const agregarCodigo = () => {
     }
 }
 
-const validarDocumento = () => {
-    let documento = DOM.inputs.text.dni.value;
+/**
+ * Constante que valida si un documento es valido usando una 
+ * expresion regular y despues asegurando que la letra del documento
+ * sea la correcta
+ * 
+ * @param documento documento a validar
+ * @returns true si es valido o false si no lo es
+ */
+const validarDocumento = (documento) => {
     if (validarTexto(EXPRESIONES.dni, documento)) {
         let numDoc = documento.substring(0, documento.length - 1);
         let letrasPosibles = "TRWAGMYFPDXBNJZSQVHLCKET";
@@ -207,6 +216,18 @@ const validarDocumento = () => {
     };
 }
 
+const validarFecha = (fecha) => {
+
+}
+
+/**
+ * Constante que reconoce que tipo de telefono le estamos introduciendo
+ * entre un telefono fijo espaniol, un telefono movil espaniol,
+ * un telefono internacional o uno que no es valido
+ * 
+ * @param telefono telefono a reconocer
+ * @returns nombre del tipo de telefono introducido
+ */
 const reconocerTelefono = (telefono) => {
     if (validarTexto(EXPRESIONES.telMovil, telefono)) {
         return "telMovil";
@@ -219,8 +240,21 @@ const reconocerTelefono = (telefono) => {
     }
 }
 
-const validarFecha = (fecha) => {
-
+/**
+ * Constante que reconoce que tipo de Ip le estamos introduciendo
+ * entre una IPv4, una IPv6 o una ip que no es valida
+ * 
+ * @param ip ip a reconocer
+ * @returns nombre del tipo de ip introducida
+ */
+const reconocerIp = (ip) => {
+    if (validarTexto(EXPRESIONES.ipV4, ip)) {
+        return "ipV4";
+    } else if (validarTexto(EXPRESIONES.ipV6, ip)) {
+        return "ipV6";
+    } else {
+        return "ipInvalida"
+    }
 }
 
 /**
@@ -237,7 +271,7 @@ const validarFormulario = () => {
 
     validarInputText("nombre", EXPRESIONES.nombre, "El nombre introducido no es válido");
     validarInputText("apellidos", EXPRESIONES.apellidos, "Los apellidos introducidos no son válidos");
-    if (!validarDocumento()) crearAviso("fieldsetDni", "El dni introducido no es válido");
+    if (!validarDocumento(DOM.inputs.text.dni)) crearAviso("fieldsetDni", "El dni introducido no es válido");
     if (DOM.inputs.select.codPostal.value == "" || DOM.inputs.select.codPostal.value == "Nuevo") crearAviso("fieldsetCodPostal", "Introduzca un codigo postal válido");
     if ((reconocerTelefono(DOM.inputs.text.telFijo.value) != "telFijo") && (reconocerTelefono(DOM.inputs.text.telFijo.value) != "telInter")) crearAviso("fieldsetTelFijo", "El numero introducido no es un fijo español o un numero internacional");
     if ((reconocerTelefono(DOM.inputs.text.telMovil.value) != "telMovil") && (reconocerTelefono(DOM.inputs.text.telMovil.value) != "telInter")) crearAviso("fieldsetTelMovil", "El numero introducido no es un movil español o un numero internacional");
@@ -253,8 +287,9 @@ const validarFormulario = () => {
         validarInputText("marca", EXPRESIONES.marca, "La marca introducida no es válida");
         validarInputText("matricula", EXPRESIONES.matricula, "La matricula introducida no es válida");
     }
-    /*validarInputText("ip", EXPRESIONES.ip, "La ip introducida no es válida");
-    validarInputText("motivo", EXPRESIONES.motivo, "El motivo introducido no es válido");*/
+    if (reconocerIp(DOM.inputs.text.ip.value) == "ipInvalida") crearAviso("fieldsetIp", "La Ip introducida no es válida");
+
+    /*validarInputText("motivo", EXPRESIONES.motivo, "El motivo introducido no es válido");*/
 
     if (DOM.avisos.length == 0) console.log("Funciona");
 }
