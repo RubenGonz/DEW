@@ -8,6 +8,7 @@ const DOM = {
             dni: document.getElementById("dni"),
             telFijo: document.getElementById("telFijo"),
             telMovil: document.getElementById("telMovil"),
+            fechaIda: document.getElementById("fechaIda"),
             ip: document.getElementById("ip")
         },
         select: {
@@ -23,23 +24,23 @@ const DOM = {
  * Constante donde se guardan todas las expresiones regulares 
  */
 const EXPRESIONES = {
-    nombre: "^([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+[ ]?){1,2}$",
-    apellidos: "^([A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+[ ]?){1,2}$",
+    nombre: "^([A-ZÁÉÍÓÚÑ]{1}[a-záéíóúüñ]+[ ]?){1,2}$",
+    apellidos: "^([A-ZÁÉÍÓÚÑ]{1}[a-záéíóúüñ]+[ ]?){1,2}$",
     dni: "^[0-9]{8}[A-Z]$",
     codPostal: "^[0-9]{5}$",
     telFijo: "^(\\+34[ -]?)?(8|9)([0-9]){2}([ -]?([0-9]){3}){2}$",
     telMovil: "^(\\+34[ -]?)?(6|7)([0-9]){2}([ -]?([0-9]){3}){2}$",
     telInter: "^(\\+[0-9]{1,4}[ -]?)?([0-9][ -]?)+$",
-    fechaIda: "^$",
+    fechaIda: "^([0-9]){1,2}\\/([0-9]){1,2}\\/([0-9]){4}$",
     pasajeros: "^[1-5]$",
-    email: "^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$",
-    twiter: "^@[A-Za-z0-9_\\-]+$",
-    instagram: "^[A-Za-z0-9_\\-]+$",
-    marca: "^[A-ZÁÉÍÓÚ]{1}[a-záéíóúü]+$",
+    email: "^[a-zA-Z0-9._-Ññ]+@[a-zA-Z0-9._-Ññ]+\.[a-zA-ZÑñ]+$",
+    twitter: "^@[A-Za-z0-9_\\-Ññ]+$",
+    instagram: "^[A-Za-z0-9_\\-Ññ]+$",
+    marca: "^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúüñ]+$",
     matricula: "^[0-9]{4}-[A-Z]{3}$",
-    ipV4: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$",
-    ipV6: "^$",
-    motivo: "^$"
+    ipV4: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9]))$",
+    ipV6: "^([0-9a-f]{1,4}:){7}([0-9a-f]{1,4})$",
+    motivo: "^([A-ZÁÉÍÓÚÑ]){1}([A-ZÁÉÍÓÚÜa-záéíóúüÑñ0-9\\-\\\/\\ ])+$"
 }
 
 /**
@@ -216,8 +217,35 @@ const validarDocumento = (documento) => {
     };
 }
 
-const validarFecha = (fecha) => {
+/**
+ * Constante que convierte una cadena de texto en un
+ * objeto de tipo fecha con la fecha introducida
+ * 
+ * @param fecha fecha a convertir
+ * @returns fecha convertida o undefined
+ */
+const convertirFecha = (fecha) => {
+    if (validarTexto(EXPRESIONES.fechaIda, fecha)) {
+        let partesFecha = fecha.split("/");
+        let fechaParseada = partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0];
+        if (!isNaN(Date.parse(fechaParseada))) {
+            return new Date(fechaParseada);
+        }
+    }
+}
 
+/**
+ * Constante que valida si una fecha introducida es valida 
+ * 
+ * @param fecha a validar
+ * @returns true si es valida o false si no lo es
+ */
+const validarFecha = (fecha) => {
+    if (typeof convertirFecha(fecha) != "undefined") {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -257,6 +285,30 @@ const reconocerIp = (ip) => {
     }
 }
 
+const validarMotivo = (motivo) => {
+    if (validarTexto(EXPRESIONES.motivo, motivo)) {
+        let motivoFragmentado = motivo.split("");
+        motivo = "";        
+
+        if (motivoFragmentado[motivoFragmentado.length - 1] == " ") motivoFragmentado[motivoFragmentado.length - 1] = "";
+
+        for (let i = 0; i < motivoFragmentado.length; i++) {
+            if (motivoFragmentado[i] == " " && motivoFragmentado[i+1] == " ") {
+                motivoFragmentado[i] = "";
+            }
+            motivo += motivoFragmentado[i];
+        }
+        
+        let resultado = [];
+        let palabras = motivo.split(" ").length;
+        resultado.push(motivo);
+        resultado.push(palabras);
+        return resultado;
+    } else {
+        return null;
+    }
+}
+
 /**
  * Constante que valida todos los campos del formulario
  * 
@@ -268,27 +320,42 @@ const validarFormulario = () => {
     while (DOM.avisos.length != 0) {
         DOM.avisos[0].remove();
     }
-
+    //Nombre
     validarInputText("nombre", EXPRESIONES.nombre, "El nombre introducido no es válido");
+    //Apellidos
     validarInputText("apellidos", EXPRESIONES.apellidos, "Los apellidos introducidos no son válidos");
-    if (!validarDocumento(DOM.inputs.text.dni)) crearAviso("fieldsetDni", "El dni introducido no es válido");
+    //Dni
+    if (!validarDocumento(DOM.inputs.text.dni.value)) crearAviso("fieldsetDni", "El dni introducido no es válido");
+    //Codigo postal
     if (DOM.inputs.select.codPostal.value == "" || DOM.inputs.select.codPostal.value == "Nuevo") crearAviso("fieldsetCodPostal", "Introduzca un codigo postal válido");
+    //Telefono fijo
     if ((reconocerTelefono(DOM.inputs.text.telFijo.value) != "telFijo") && (reconocerTelefono(DOM.inputs.text.telFijo.value) != "telInter")) crearAviso("fieldsetTelFijo", "El numero introducido no es un fijo español o un numero internacional");
+    //Telefono movil
     if ((reconocerTelefono(DOM.inputs.text.telMovil.value) != "telMovil") && (reconocerTelefono(DOM.inputs.text.telMovil.value) != "telInter")) crearAviso("fieldsetTelMovil", "El numero introducido no es un movil español o un numero internacional");
-    /* validarFecha; */
+    //Fecha
+    if (validarFecha(DOM.inputs.text.fechaIda.value)) crearAviso("fieldsetFechaIda", "La fecha introducida no es valida")
+    //Residencia
     if (DOM.inputs.select.residencia.value == "") crearAviso("fieldsetResidencia", "Introduzca si es residente o no");
+    //Pasajeros
     validarInputText("pasajeros", EXPRESIONES.pasajeros, "El numero de pasajeros no es válido");
+    //Email
     validarInputText("email", EXPRESIONES.email, "El email introducido no es válido");
-    validarInputText("twiter", EXPRESIONES.twiter, "El  usuario introducido no es válido");
+    //Twitter
+    validarInputText("twitter", EXPRESIONES.twitter, "El  usuario introducido no es válido");
+    //Instagram
     validarInputText("instagram", EXPRESIONES.instagram, "El  usuario introducido no es válido");
+    //Vehiculo
     if (DOM.inputs.select.vehiculo.value == "") {
         crearAviso("fieldsetVehiculo", "Introduzca si tiene o no vehiculo");
     } else if (DOM.inputs.select.vehiculo.value == "Si") {
+        //Marca
         validarInputText("marca", EXPRESIONES.marca, "La marca introducida no es válida");
+        //Matricula
         validarInputText("matricula", EXPRESIONES.matricula, "La matricula introducida no es válida");
     }
+    //Ip
     if (reconocerIp(DOM.inputs.text.ip.value) == "ipInvalida") crearAviso("fieldsetIp", "La Ip introducida no es válida");
-
+    //Motivo
     /*validarInputText("motivo", EXPRESIONES.motivo, "El motivo introducido no es válido");*/
 
     if (DOM.avisos.length == 0) console.log("Funciona");

@@ -137,9 +137,17 @@ font-family: 'Open Sans', sans-serif !important;
 .checkout {
   margin: 20px auto 50%;
   position: relative;
-  width: 850px;
+  width: 1000px;
   background: white;
   border-radius: 15px;
   padding: 20px 45px 30px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, .1);
+}
+ 
+/*-------------------- Motivo --------------------*/
+
+.form fieldset input.motivo {
+  width: 800px;
+  display: inline-block;
+  margin-right: 8px;
 }
