@@ -8,8 +8,9 @@ const DOM = {
             dni: document.getElementById("dni"),
             telFijo: document.getElementById("telFijo"),
             telMovil: document.getElementById("telMovil"),
-            fechaIda: document.getElementById("fechaIda"),
-            ip: document.getElementById("ip")
+            fecha: document.getElementById("fecha"),
+            ip: document.getElementById("ip"),
+            motivo : document.getElementById("motivo")
         },
         select: {
             codPostal: document.getElementById("codPostal"),
@@ -31,7 +32,7 @@ const EXPRESIONES = {
     telFijo: "^(\\+34[ -]?)?(8|9)([0-9]){2}([ -]?([0-9]){3}){2}$",
     telMovil: "^(\\+34[ -]?)?(6|7)([0-9]){2}([ -]?([0-9]){3}){2}$",
     telInter: "^(\\+[0-9]{1,4}[ -]?)?([0-9][ -]?)+$",
-    fechaIda: "^([0-9]){1,2}\\/([0-9]){1,2}\\/([0-9]){4}$",
+    fecha: "^([0-9]){1,2}\\/([0-9]){1,2}\\/([0-9]){4}$",
     pasajeros: "^[1-5]$",
     email: "^[a-zA-Z0-9._-Ññ]+@[a-zA-Z0-9._-Ññ]+\.[a-zA-ZÑñ]+$",
     twitter: "^@[A-Za-z0-9_\\-Ññ]+$",
@@ -41,6 +42,13 @@ const EXPRESIONES = {
     ipV4: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9]))$",
     ipV6: "^([0-9a-f]{1,4}:){7}([0-9a-f]{1,4})$",
     motivo: "^([A-ZÁÉÍÓÚÑ]){1}([A-ZÁÉÍÓÚÜa-záéíóúüÑñ0-9\\-\\\/\\ ])+$"
+}
+
+/**TODO: Crear clase informacion donde se guardará la informacion del formulario*/
+class informacion {
+    constructor(nombre,apellidos,dni,codPostal,telFijo,telMovil,fecha,email,matricula,motivo) {
+        this.hola = hola;
+    }
 }
 
 /**
@@ -225,7 +233,7 @@ const validarDocumento = (documento) => {
  * @returns fecha convertida o undefined
  */
 const convertirFecha = (fecha) => {
-    if (validarTexto(EXPRESIONES.fechaIda, fecha)) {
+    if (validarTexto(EXPRESIONES.fecha, fecha)) {
         let partesFecha = fecha.split("/");
         let fechaParseada = partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0];
         if (!isNaN(Date.parse(fechaParseada))) {
@@ -285,24 +293,38 @@ const reconocerIp = (ip) => {
     }
 }
 
+/**
+ * Constante que valida si el motivo es valido, y si tuviese 
+ * si no lo fuese lo intenta hacer valido
+ * @param motivo motivo a validar 
+ * @returns retorna null en el caso de que no se pueda validar
+ *          y si se pusiese validar devuelve un array con el 
+ *          motivo validado, la cantidad de palabras del motivo y
+ *          un array con las fechas encontradas en el
+ */
 const validarMotivo = (motivo) => {
     if (validarTexto(EXPRESIONES.motivo, motivo)) {
         let motivoFragmentado = motivo.split("");
-        motivo = "";        
-
+        motivo = "";
         if (motivoFragmentado[motivoFragmentado.length - 1] == " ") motivoFragmentado[motivoFragmentado.length - 1] = "";
-
         for (let i = 0; i < motivoFragmentado.length; i++) {
-            if (motivoFragmentado[i] == " " && motivoFragmentado[i+1] == " ") {
+            if (motivoFragmentado[i] == " " && motivoFragmentado[i + 1] == " ") {
                 motivoFragmentado[i] = "";
             }
             motivo += motivoFragmentado[i];
         }
-        
+
+        let palabras = motivo.split(" ");
+
+        let fechas = [];
+        palabras.forEach(palabra => {
+            if (validarFecha(palabra)) fechas.push(convertirFecha(palabra));
+        });
+
         let resultado = [];
-        let palabras = motivo.split(" ").length;
         resultado.push(motivo);
-        resultado.push(palabras);
+        resultado.push(palabras.length);
+        resultado.push(fechas);
         return resultado;
     } else {
         return null;
@@ -333,7 +355,7 @@ const validarFormulario = () => {
     //Telefono movil
     if ((reconocerTelefono(DOM.inputs.text.telMovil.value) != "telMovil") && (reconocerTelefono(DOM.inputs.text.telMovil.value) != "telInter")) crearAviso("fieldsetTelMovil", "El numero introducido no es un movil español o un numero internacional");
     //Fecha
-    if (validarFecha(DOM.inputs.text.fechaIda.value)) crearAviso("fieldsetFechaIda", "La fecha introducida no es valida")
+    if (!validarFecha(DOM.inputs.text.fecha.value)) crearAviso("fieldsetFecha", "La fecha introducida no es valida")
     //Residencia
     if (DOM.inputs.select.residencia.value == "") crearAviso("fieldsetResidencia", "Introduzca si es residente o no");
     //Pasajeros
@@ -356,9 +378,16 @@ const validarFormulario = () => {
     //Ip
     if (reconocerIp(DOM.inputs.text.ip.value) == "ipInvalida") crearAviso("fieldsetIp", "La Ip introducida no es válida");
     //Motivo
-    /*validarInputText("motivo", EXPRESIONES.motivo, "El motivo introducido no es válido");*/
+    if (validarMotivo(DOM.inputs.text.motivo.value) == null) crearAviso("fieldsetMotivo", "El motivo introducido no es válido");
 
-    if (DOM.avisos.length == 0) console.log("Funciona");
+    if (DOM.avisos.length == 0) guardarDatos;
+}
+
+/**TODO: Crear metodo que guarde la informacion del usuario en la clase */
+const guardarDatos = () => {
+    let hola = "Hola";
+    
+    return informacion;
 }
 
 DOM.submit.addEventListener("click", validarFormulario);
