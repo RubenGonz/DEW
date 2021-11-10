@@ -11,7 +11,11 @@ const DOM = {
             telFijo: document.getElementById("telFijo"),
             telMovil: document.getElementById("telMovil"),
             fecha: document.getElementById("fecha"),
+            residente: document.getElementById("residente"),
+            pasajeros: document.getElementById("pasajeros"),
             email: document.getElementById("email"),
+            twitter: document.getElementById("twitter"),
+            instagram: document.getElementById("instagram"),
             ip: document.getElementById("ip"),
             motivo : document.getElementById("motivo")
         },
@@ -51,7 +55,7 @@ const EXPRESIONES = {
  * Clase que engloba la informacion que se quiere recoger del formulario
  */
 class informacion {
-    constructor(nombre,apellidos,dni,codPostal,telFijo,telMovil,fecha,email,matricula,motivo) {
+    constructor(nombre,apellidos,dni,codPostal,telFijo,telMovil,fecha,residente,pasajeros,email,twitter,instagram,vehiculo,marca,matricula,ip,motivo) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.dni = dni;
@@ -59,9 +63,16 @@ class informacion {
         this.telFijo = telFijo;
         this.telMovil = telMovil;
         this.fecha = fecha;
+        this.residente = residente;
+        this.pasajeros = pasajeros;
         this.email = email;
+        this.twitter = twitter;
+        this.instagram = instagram;
+        this.vehiculo = vehiculo;
+        this.marca = marca;
         this.matricula = matricula;
-        this.motivo = validarMotivo(motivo);
+        this.ip = ip;
+        this.motivo = motivo;
     }
 }
 
@@ -407,8 +418,18 @@ const validarFormulario = () => {
  * @returns clase con la informacion introducida
  */
 const guardarDatos = () => {
+    let marca = "El usuario no ha introducido un vehiculo";
+    if (document.getElementById("marca") != null) marca = document.getElementById("marca").value;
+
     let matricula = "El usuario no ha introducido un vehiculo";
     if (document.getElementById("matricula") != null) matricula = document.getElementById("matricula").value;
+    
+    let ip = [];
+    ip.push(reconocerIp(DOM.inputs.text.ip.value));
+    ip.push(DOM.inputs.text.ip.value);
+
+    let motivo = validarMotivo(DOM.inputs.text.motivo.value);
+
     let datos = new informacion(
         DOM.inputs.text.nombre.value,
         DOM.inputs.text.apellidos.value,
@@ -417,9 +438,16 @@ const guardarDatos = () => {
         DOM.inputs.text.telFijo.value,
         DOM.inputs.text.telMovil.value,
         DOM.inputs.text.fecha.value,
+        DOM.inputs.select.residencia.value,
+        DOM.inputs.text.pasajeros.value,
         DOM.inputs.text.email.value,
+        DOM.inputs.text.twitter.value,
+        DOM.inputs.text.instagram.value,
+        DOM.inputs.select.vehiculo.value,
+        marca,
         matricula,
-        DOM.inputs.text.motivo.value
+        ip,
+        motivo
         );
     return datos;
 }
