@@ -5,10 +5,13 @@ const DOM = {
     avisos: document.getElementsByName("aviso"),
     inputs: {
         text: {
+            nombre: document.getElementById("nombre"),
+            apellidos: document.getElementById("apellidos"),
             dni: document.getElementById("dni"),
             telFijo: document.getElementById("telFijo"),
             telMovil: document.getElementById("telMovil"),
             fecha: document.getElementById("fecha"),
+            email: document.getElementById("email"),
             ip: document.getElementById("ip"),
             motivo : document.getElementById("motivo")
         },
@@ -44,10 +47,21 @@ const EXPRESIONES = {
     motivo: "^([A-ZÁÉÍÓÚÑ]){1}([A-ZÁÉÍÓÚÜa-záéíóúüÑñ0-9\\-\\\/\\ ])+$"
 }
 
-/**TODO: Crear clase informacion donde se guardará la informacion del formulario*/
+/**
+ * Clase que engloba la informacion que se quiere recoger del formulario
+ */
 class informacion {
     constructor(nombre,apellidos,dni,codPostal,telFijo,telMovil,fecha,email,matricula,motivo) {
-        this.hola = hola;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.dni = dni;
+        this.codPostal = codPostal;
+        this.telFijo = telFijo;
+        this.telMovil = telMovil;
+        this.fecha = fecha;
+        this.email = email;
+        this.matricula = matricula;
+        this.motivo = validarMotivo(motivo);
     }
 }
 
@@ -175,7 +189,8 @@ const generarInputPostal = () => {
  * Evalua si hay un mensaje de aviso y si asi es lo elimina
  * Valida que el codigo sea correcto y si no lo es manda un aviso
  * Si es valido comprueba que ese codigo no este ya en las opciones
- * del select y si no esta lo aniade antes de la opcion "Nuevo"
+ * del select y si no esta lo aniade antes de la opcion "Nuevo", la 
+ * marca y elimina el fieldset de aniadir nuevo codigo
  */
 const agregarCodigo = () => {
     let codigo = document.getElementById("inputNuevoCodigo").value;
@@ -197,6 +212,8 @@ const agregarCodigo = () => {
             let option = document.createElement("option");
             option.innerHTML = codigo;
             document.getElementById("opcionNuevoCodigo").insertAdjacentElement("beforebegin", option);
+            DOM.inputs.select.codPostal.value = codigo;
+            document.getElementById("fieldsetInputNuevoCodigo").remove();
         }
     } else {
         validarInputText("inputNuevoCodigo", EXPRESIONES.codPostal, "El codigo introducido no es válido");
@@ -380,16 +397,36 @@ const validarFormulario = () => {
     //Motivo
     if (validarMotivo(DOM.inputs.text.motivo.value) == null) crearAviso("fieldsetMotivo", "El motivo introducido no es válido");
 
-    if (DOM.avisos.length == 0) guardarDatos;
+    if (DOM.avisos.length == 0) console.log(guardarDatos());
 }
 
-/**TODO: Crear metodo que guarde la informacion del usuario en la clase */
+/**
+ * Constante que crea una clase con la informacion 
+ * recibida del formulario
+ * 
+ * @returns clase con la informacion introducida
+ */
 const guardarDatos = () => {
-    let hola = "Hola";
-    
-    return informacion;
+    let matricula = "El usuario no ha introducido un vehiculo";
+    if (document.getElementById("matricula") != null) matricula = document.getElementById("matricula").value;
+    let datos = new informacion(
+        DOM.inputs.text.nombre.value,
+        DOM.inputs.text.apellidos.value,
+        DOM.inputs.text.dni.value,
+        DOM.inputs.select.codPostal.value,
+        DOM.inputs.text.telFijo.value,
+        DOM.inputs.text.telMovil.value,
+        DOM.inputs.text.fecha.value,
+        DOM.inputs.text.email.value,
+        matricula,
+        DOM.inputs.text.motivo.value
+        );
+    return datos;
 }
 
+/**
+ * Eventos introducidos
+ */
 DOM.submit.addEventListener("click", validarFormulario);
 DOM.inputs.select.codPostal.addEventListener("change", generarInputPostal);
 DOM.inputs.select.vehiculo.addEventListener("change", generarInputsVehiculo);
