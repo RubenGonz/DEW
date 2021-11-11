@@ -326,7 +326,7 @@ const reconocerIp = (ip) => {
  * si no lo fuese lo intenta hacer valido
  * @param motivo motivo a validar 
  * @returns retorna null en el caso de que no se pueda validar
- *          y si se pusiese validar devuelve un array con el 
+ *          y si se pusiese validar devuelve un objeto con el 
  *          motivo validado, la cantidad de palabras del motivo y
  *          un array con las fechas encontradas en el
  */
@@ -349,10 +349,11 @@ const validarMotivo = (motivo) => {
             if (validarFecha(palabra)) fechas.push(convertirFecha(palabra));
         });
 
-        let resultado = [];
-        resultado.push(motivo);
-        resultado.push(palabras.length);
-        resultado.push(fechas);
+        let resultado = {
+            motivo: motivo,
+            palabras: palabras.length,
+            fechas: fechas
+        };
         return resultado;
     } else {
         return null;
