@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contenedores>
+    <contenedor tipo="Grande">
+        <envase tipo="Grande Ancho">
+            <liquido tipo="alimento">Agua</liquido>
+            <liquido tipo="alimento">Leche</liquido>
+            <liquido tipo="alimento">Aceite</liquido>
+            <liquido tipo="alimento">Vinagre</liquido>
+        </envase>
+        <envase tipo="Grande Alto">
+            <liquido tipo="alimento">Agua</liquido>
+            <liquido tipo="alimento">Leche</liquido>
+            <liquido tipo="alimento">Aceite</liquido>
+            <liquido tipo="alimento">Vinagre</liquido>
+        </envase>
+    </contenedor>
+    <contenedor tipo="Mediano">
+        <envase tipo="Mediano Ancho">
+            <liquido tipo="alimento">Agua</liquido>
+            <liquido tipo="alimento">Leche</liquido>
+            <liquido tipo="alimento">Aceite</liquido>
+            <liquido tipo="alimento">Vinagre</liquido>
+        </envase>
+        <envase tipo="Mediano Alto">
+            <liquido tipo="corrosivo">Lejía</liquido>
+            <liquido tipo="corrosivo">Amoniaco</liquido>
+            <liquido tipo="corrosivo">Jabón</liquido>
+            <liquido tipo="corrosivo">Aguarrás</liquido>
+            <liquido tipo="corrosivo">Gasolina</liquido>
+            <liquido tipo="corrosivo">Alcohol</liquido>
+        </envase>
+        <envase tipo="Pequeño">
+            <liquido tipo="corrosivo">Lejía</liquido>
+            <liquido tipo="corrosivo">Amoniaco</liquido>
+            <liquido tipo="corrosivo">Jabón</liquido>
+            <liquido tipo="corrosivo">Aguarrás</liquido>
+            <liquido tipo="corrosivo">Gasolina</liquido>
+            <liquido tipo="corrosivo">Alcohol</liquido>
+        </envase>
+    </contenedor>
+    <contenedor tipo="Vertical">
+        <envase tipo="Grande Alto">
+            <liquido tipo="alimento">Agua</liquido>
+            <liquido tipo="alimento">Leche</liquido>
+            <liquido tipo="alimento">Aceite</liquido>
+            <liquido tipo="alimento">Vinagre</liquido>
+        </envase>
+        <envase tipo="Mediano Alto">
+            <liquido tipo="corrosivo">Lejía</liquido>
+            <liquido tipo="corrosivo">Amoniaco</liquido>
+            <liquido tipo="corrosivo">Jabón</liquido>
+            <liquido tipo="corrosivo">Aguarrás</liquido>
+            <liquido tipo="corrosivo">Gasolina</liquido>
+            <liquido tipo="corrosivo">Alcohol</liquido>
+        </envase>
+    </contenedor>
+</contenedores>

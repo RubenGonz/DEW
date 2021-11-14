@@ -1,0 +1,190 @@
+{
+  "contenedores": [
+    {
+      "tipo": "Grande",
+      "envases": [
+        {
+          "tipo": "Grande Ancho",
+          "liquidos": [
+            {
+              "tipo": "alimento",
+              "nombre": "Agua"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Leche"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Aceite"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Vinagre"
+            }
+          ]
+        },
+        {
+          "tipo": "Grande Alto",
+          "liquidos": [
+            {
+              "tipo": "alimento",
+              "nombre": "Agua"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Leche"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Aceite"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Vinagre"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "Mediano",
+      "envases": [
+        {
+          "tipo": "Mediano Ancho",
+          "liquidos": [
+            {
+              "tipo": "alimento",
+              "nombre": "Agua"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Leche"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Aceite"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Vinagre"
+            }
+          ]
+        },
+        {
+          "tipo": "Mediano Alto",
+          "liquidos": [
+            {
+              "tipo": "corrosivo",
+              "nombre": "Lejía"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Amoniaco"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Jabón"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Aguarrás"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Gasolina"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Alcohol"
+            }
+          ]
+        },
+        {
+          "tipo": "Pequeño",
+          "liquidos": [
+            {
+              "tipo": "corrosivo",
+              "nombre": "Lejía"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Amoniaco"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Jabón"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Aguarrás"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Gasolina"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Alcohol"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "Vertical",
+      "envases": [
+        {
+          "tipo": "Grande Alto",
+          "liquidos": [
+            {
+              "tipo": "alimento",
+              "nombre": "Agua"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Leche"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Aceite"
+            },
+            {
+              "tipo": "alimento",
+              "nombre": "Vinagre"
+            }
+          ]
+        },
+        {
+          "tipo": "Mediano Alto",
+          "liquidos": [
+            {
+              "tipo": "corrosivo",
+              "nombre": "Lejía"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Amoniaco"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Jabón"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Aguarrás"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Gasolina"
+            },
+            {
+              "tipo": "corrosivo",
+              "nombre": "Alcohol"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
