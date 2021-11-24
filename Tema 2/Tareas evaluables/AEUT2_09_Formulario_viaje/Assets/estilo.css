@@ -1,0 +1,153 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html, body {
+  min-height: 100%;
+  font-family: 'Open Sans', sans-serif;
+}
+body {
+  background: linear-gradient(50deg, #f3c680, rgba(161, 227, 226, 1));
+}
+/*-------------------- Buttons --------------------*/
+.btn {
+  /*display: block;*/
+  background: #bded7d;
+  color: #fff;
+  text-decoration: none;
+  margin: 20px 7px 0px;
+  padding: 15px 15px;
+  border-radius: 5px;
+  position: relative;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.2s ease-in-out;
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0), 0 3px 3px rgba(0, 0, 0, .2);
+  border-radius: 5px;
+}
+.btn:hover::after {
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+.title {
+  display: block;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, .6);
+  margin: 15px;
+  text-align:center;
+  font-weight: bold;
+  color: #3d8291;
+  font-size: 24px !important;
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+/*-------------------- Form --------------------*/
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.form fieldset {
+  border: none;
+  padding: 0;
+  padding: 10px 5px;
+}
+
+.form fieldset label {
+  display: block;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: rgba(0, 0, 0, .6);
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #3d8291;
+  font-size: 12px !important;
+font-family: 'Open Sans', sans-serif !important;
+}
+.form fieldset input, .form fieldset .select {
+  width: 100%;
+  height: 38px;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 15px;
+  outline: none !important;
+  color: #3d8291;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.form fieldset input.input-form, .form fieldset .select.input-form {
+  width: 182px;
+  display: inline-block;
+  margin-right: 8px;
+}
+.form fieldset input.input-form:last-child, .form fieldset .select.input-form:last-child {
+  margin-right: 0;
+}
+.form fieldset .select {
+  position: relative;
+}
+.form fieldset .select::after {
+  content: '';
+  border-top: 8px solid #222;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  position: absolute;
+  z-index: 2;
+  top: 14px;
+  right: 10px;
+  pointer-events: none;
+}
+.form fieldset .select select {
+  appearance: none;
+  position: absolute;
+  padding: 0;
+  border: none;
+  width: 100%;
+  outline: none !important;
+  color: rgba(0, 0, 0, .6);
+  font-size: 14px !important;
+  font-family: 'Open Sans', sans-serif !important;
+  background: none;
+}
+.form fieldset .select select :-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+.form input[type="button"] {
+  width: 100%;
+  outline: none !important;
+  background: linear-gradient(180deg, #49a09b, #3d8291);
+  text-transform: uppercase;
+  font-weight: bold;
+  border: none;
+  box-shadow: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+/*-------------------- Checkout --------------------*/
+.checkout {
+  margin: 20px auto 50%;
+  position: relative;
+  width: 1000px;
+  background: white;
+  border-radius: 15px;
+  padding: 20px 45px 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .1);
+}
+ 
+/*-------------------- Motivo --------------------*/
+
+.form fieldset input.motivo {
+  width: 800px;
+  display: inline-block;
+  margin-right: 8px;
+}

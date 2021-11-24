@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Solicitud Viaje en Barco</title>
+    <link rel="stylesheet" type="text/css" href="./Assets/estilo.css" />
+</head>
+
+<body>
+
+    <div class="checkout">
+        <div>
+            <p class="title"> Datos del pasajero </p>
+        </div>
+        <form class="form" autocomplete="off" novalidate>
+            <fieldset id="fieldsetNombre">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetApellidos">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetDni">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" class="input-form" maxlength="9" placeholder="12345678A" />
+            </fieldset>
+
+            <fieldset id="fieldsetCodPostal">
+                <label for="codPostal">Codigo postal</label>
+                <div class="select">
+                    <select id="codPostal">
+                        <option value="" disabled selected></option>
+                        <option>38400</option>
+                        <option>38311</option>
+                        <option>38450</option>
+                        <option id="opcionNuevoCodigo">Nuevo</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset id="fieldsetTelFijo">
+                <label for="telFijo">Telefono Fijo</label>
+                <input type="text" id="telFijo" class="input-form" maxlength="20" placeholder="XXX XXX XXX" />
+            </fieldset>
+
+            <fieldset id="fieldsetTelMovil">
+                <label for="telMovil">Telefono Movil</label>
+                <input type="text" id="telMovil" class="input-form" maxlength="20" placeholder="XXX XXX XXX" />
+            </fieldset>
+
+            <fieldset id="fieldsetFecha">
+                <label for="fecha">Fecha de ida</label>
+                <input type="text" id="fecha" class="input-form" maxlength="20" placeholder="dd/mm/aaaa" />
+            </fieldset>
+
+            <fieldset id="fieldsetResidencia">
+                <label for="residencia">Residente</label>
+                <div class="select">
+                    <select id="residencia">
+                        <option value="" disabled selected></option>
+                        <option>Si</option>
+                        <option>No</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset id="fieldsetPasajeros">
+                <label for="pasajeros">Cantidad de Pasajeros</label>
+                <input type="text" id="pasajeros" class="input-form" maxlength="20" placeholder="Hasta 5" />
+            </fieldset>
+
+            <fieldset id="fieldsetEmail">
+                <label for="email">Email</label>
+                <input type="text" id="email" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetTwitter">
+                <label for="twitter">Twitter</label>
+                <input type="text" id="twitter" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetInstagram">
+                <label for="instagram">Instagram</label>
+                <input type="text" id="instagram" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetVehiculo">
+                <label for="vehiculo">Vehiculo</label>
+                <div class="select">
+                    <select id="vehiculo">
+                        <option value="" disabled selected></option>
+                        <option>Si</option>
+                        <option>No</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset id="fieldsetIp">
+                <label for="ip">IP</label>
+                <input type="text" id="ip" class="input-form" maxlength="20" />
+            </fieldset>
+
+            <fieldset id="fieldsetMotivo">
+                <label for="motivo">Motivo de su viaje</label>
+                <input type="text" id="motivo" class="input-form motivo"/>
+            </fieldset>
+
+            <input type="button" class="btn motivo" id="submit" value="Enviar">
+        </form>
+    </div>
+
+    <script src="./Assets/script.js"></script>
+</body>
+
+</html>
