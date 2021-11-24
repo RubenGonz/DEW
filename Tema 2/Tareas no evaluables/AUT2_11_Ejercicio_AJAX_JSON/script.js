@@ -34,10 +34,10 @@ const crearAjax = () => {
  * lo consigue la manda al metodo 'mostrarDatos' y sino 
  * manda un mensaje de error
  */
-const traer = () => {
+const traer = (url) => {
     let ajax = crearAjax();
     if (ajax != null) {
-        ajax.open("GET", "https://jsonplaceholder.typicode.com/users", true);
+        ajax.open("GET", url, true);
         ajax.send(null);
         ajax.onreadystatechange = () => {
             if (ajax.readyState == 4 && ajax.status == 200) {
@@ -60,16 +60,7 @@ const mostrarDatos = (respuestaAjax) => {
 
     let datos = JSON.parse(respuestaAjax);
 
-    datos.forEach(elemento => {
-        let tr = document.createElement("tr");
-
-        tr.appendChild(crearElemento("td", elemento.id));
-        tr.appendChild(crearElemento("td", elemento.name));
-        tr.appendChild(crearElemento("td", elemento.email));
-        tr.appendChild(crearElemento("td", elemento.username));
-
-        DOM.contenido.appendChild(tr);
-    });
+    console.log(datos.data);
 }
 
 /**
