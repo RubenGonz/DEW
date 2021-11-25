@@ -1,3 +1,7 @@
+const DOM = {
+    cartas: document.getElementById("cartas")
+}
+
 const apis = ["https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&unique=prints",
     "https://api.scryfall.com/cards/search?order=set&q=e%3Azne&unique=prints",
     "https://api.scryfall.com/cards/search?order=set&q=e%3Aw17&unique=prints",
@@ -25,42 +29,54 @@ const recibirCartas = () => {
                     cartas.push(carta);
                 });
             })
-            .catch(error => {
-                console.error(error);
-            });
+            .catch(error => { return error; });
     })
     return cartas;
 }
 
-const crearCarta = (carta) => {
-    let plantilla = document.getElementById("contenido");
-    let fragmento = new DocumentFragment();
-    
-
+const mostrarCartas = () => {
+    let plantilla = document.getElementById("cartas");
+    let cartas = recibirCartas();
+    cartas.forEach(carta => {
+        let contenedor = crearCarta(carta);
+        plantilla.appendChild(contenedor);
+    });
 }
 
+const crearCarta = (carta) => {
+    let general = crearElemento("div", "", ["carta"]);
 
-function tabla_template(datos) {
+    if (carta.imagen != null) {
+        let imagen = crearElemento("img", "", ["imgCarta"]);
+        imagen.setAttribute("src", carta.imagen);
+        general.appendChild(imagen);
+    }
 
-    const respuestas = JSON.parse(datos);
-    console.log(respuestas);
+    let info = crearElemento("div", "", ["info"]);
+    if (carta.baraja != null) {
+        let baraja = crearElemento("div", "", ["elementoCarta"]);
+        baraja.appendChild(crearElemento("span", "Baraja:"));
+        baraja.appendChild(crearElemento("span", carta.baraja));
+        info.appendChild(crearElemento("div", baraja));
+    }
 
-    //creamos el fragmento
-    const fragment = document.createDocumentFragment();
-    //buscamos en template
-    const template = document.querySelector("#template-fila").content;
+    info.appendChild(crearElemento("div", carta.tipo));
+    info.appendChild(crearElemento("div", carta.coste));
+    info.appendChild(crearElemento("div", carta.colorIdentificador));
+    info.appendChild(crearElemento("div", carta.precio));
     
-    respuestas.forEach((item) => {
-       //añadimos los valores a cada elemento
-       template.querySelectorAll("td")[0].textContent = item.id;
-       template.querySelectorAll("td")[1].textContent = item.name;
-       template.querySelectorAll("td")[2].textContent = item.email;
-       template.querySelectorAll("td")[3].textContent = item.username;
-       //Clonamos el template para tener un elemento nuevo
-       const clone = template.cloneNode(true);
-       //añadimos el clone del template al fragment
-       fragment.appendChild(clone);
-    });
-    //añadimos el fragment al html
-    contenido.appendChild(fragment);
+    general.appendChild(crearElemento("h3", carta.nombre));
+    general.appendChild(info);
+    return general;
+}
+
+const crearElemento = (etiqueta, contenido = "", clases = []) => {
+    let elemento = document.createElement(etiqueta);
+    elemento.innerHTML = contenido;
+    if (clases.length != 0) {
+        clases.forEach(clase => {
+            elemento.classList.add(clase);
+        })
+    }
+    return elemento;
 }
