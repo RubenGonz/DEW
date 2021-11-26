@@ -8,7 +8,7 @@ const apisBasicas = ["https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&
     "https://api.scryfall.com/cards/search?order=set&q=e%3Aw16&unique=prints",
     "https://api.scryfall.com/cards/search?order=set&q=e%3Augin&unique=prints"];
 
-const traducirApi = (idioma) => {
+const traducirApi = (idioma = "en") => {
     let apisTraducidas = [];
     apisBasicas.forEach(api => {
         let seccionIdioma = api.indexOf("e%");
@@ -17,51 +17,51 @@ const traducirApi = (idioma) => {
     return apisTraducidas;
 }
 
-const recibirCartas = (idioma) => {
-    let cartas = [];
-    traducirApi(idioma).forEach(api => {
-        fetch(api)
-            .then(response => { return response.json(); })
-            .then(data => {
-                data.data.forEach(elemento => {
-                    let carta = {
-                        nombre: elemento.printed_name,
-                        precio: elemento.prices.eur,
-                        baraja: elemento.set_name,
-                        colorIdentificador: elemento.color_identity,
-                        tipo: elemento.type_line,
-                        coste: elemento.mana_cost,
-                        imagen: elemento.image_uris.png
-                    };
-                    cartas.push(carta);
-                });
-            })
-            .catch(error => { return error; });
-    })
-    return cartas;
-}
-
-const ordenarCartas = (cualidad, tipo, idioma) => {
-    let cartas = recibirCartas(idioma);
-    let cartasOrdenadas = [];
-    switch (cualidad) {
-        case "nombre":
-            cartas.sort(function (a, b) {
-                return (b.nombre < a.nombre)
-            })
-            return cartasOrdenadas;
-            break;
-        default:
-            break;
+async function recibirCartas(idioma) {
+    let cartasFinales = [];
+    for (let api of traducirApi(idioma)) {
+        let respuesta = await fetch(api);
+        let cartasApi = await respuesta.json();
+        for (let cartaApi of cartasApi.data) {
+            let cartaFinal = {
+                nombre: cartaApi.printed_name,
+                precio: cartaApi.prices.eur,
+                baraja: cartaApi.set_name,
+                colorIdentificador: cartaApi.color_identity,
+                tipo: cartaApi.type_line,
+                coste: cartaApi.mana_cost,
+                imagen: cartaApi.image_uris.png
+            };
+            cartasFinales.push(cartaFinal);
+        }
     }
+    return cartasFinales;
 }
 
-const mostrarCartas = (cartas = "") => {
-    if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
-    if (cartas == "") cartas = recibirCartas(idioma);
-    cartas.forEach(carta => {
-        let contenedor = crearCarta(carta);
-        DOM.cartas.appendChild(contenedor);
+window.onload = () => {
+    mostrarCartas();
+}
+
+const ordenarCartas = (cartas, cualidad = "nombre", tipo = "Asc") => {
+    let cartasOrdenadas = cartas.sort(function (a, b) {
+        return (eliminarAcentos(b[cualidad]) < eliminarAcentos(a[cualidad]));
+    })
+    if (tipo == "Desc") cartasOrdenadas = cartasOrdenadas.reverse();
+    return cartasOrdenadas;
+}
+
+const eliminarAcentos = (texto) => {
+    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+}
+
+const mostrarCartas = (idioma = "es", cualidad = "nombre", tipo = "Asc") => {
+    recibirCartas(idioma).then(cartas => {
+        if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
+        let cartasOrdenadas = ordenarCartas(cartas,cualidad,tipo);
+        cartasOrdenadas.forEach(carta => {
+            let contenedor = crearCarta(carta);
+            DOM.cartas.appendChild(contenedor);
+        });
     });
 }
 
