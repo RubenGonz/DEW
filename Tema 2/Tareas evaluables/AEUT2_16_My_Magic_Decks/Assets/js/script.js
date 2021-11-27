@@ -8,6 +8,26 @@ const apisBasicas = ["https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&
     "https://api.scryfall.com/cards/search?order=set&q=e%3Aw16&unique=prints",
     "https://api.scryfall.com/cards/search?order=set&q=e%3Augin&unique=prints"];
 
+class cartaNormal {
+    constructor(nombre, precio, baraja, colorIdentificador, tipo, mana, imagen) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.baraja = baraja;
+        this.colorIdentificador = colorIdentificador;
+        this.tipo = tipo;
+        this.mana = mana;
+        this.imagen = imagen;
+    }
+}
+
+class cartaCriatura extends cartaNormal {
+    constructor(nombre, precio, baraja, colorIdentificador, tipo, mana, imagen, fuerza, resistencia) {
+        super(nombre, precio, baraja, colorIdentificador, tipo, mana, imagen);
+        this.fuerza = fuerza;
+        this.resistencia = resistencia;
+    }
+}
+
 const traducirApi = (idioma = "en") => {
     let apisTraducidas = [];
     apisBasicas.forEach(api => {
@@ -23,15 +43,38 @@ async function recibirCartas(idioma) {
         let respuesta = await fetch(api);
         let cartasApi = await respuesta.json();
         for (let cartaApi of cartasApi.data) {
-            let cartaFinal = {
-                nombre: cartaApi.printed_name,
-                precio: cartaApi.prices.eur,
-                baraja: cartaApi.set_name,
-                colorIdentificador: cartaApi.color_identity,
-                tipo: cartaApi.type_line,
-                coste: cartaApi.mana_cost,
-                imagen: cartaApi.image_uris.png
-            };
+
+            let nombreCarta;
+            if (idioma == "es" || idioma == undefined) {
+                nombreCarta = cartaApi.name;
+            } else {
+                nombreCarta = cartaApi.printed_name;
+            }
+
+            let cartaFinal;
+            if (!cartaApi.type_line.toLowerCase().includes("creature")) {
+                cartaFinal = new cartaNormal(
+                    nombreCarta,
+                    cartaApi.prices.eur,
+                    cartaApi.set_name,
+                    cartaApi.color_identity,
+                    cartaApi.type_line,
+                    cartaApi.mana_cost,
+                    cartaApi.image_uris.png
+                );
+            } else {
+                cartaFinal = new cartaCriatura(
+                    nombreCarta,
+                    cartaApi.prices.eur,
+                    cartaApi.set_name,
+                    cartaApi.color_identity,
+                    cartaApi.type_line,
+                    cartaApi.mana_cost,
+                    cartaApi.image_uris.png,
+                    cartaApi.power,
+                    cartaApi.toughness
+                );
+            }
             cartasFinales.push(cartaFinal);
         }
     }
@@ -57,7 +100,7 @@ const eliminarAcentos = (texto) => {
 const mostrarCartas = (idioma = "es", cualidad = "nombre", tipo = "Asc") => {
     recibirCartas(idioma).then(cartas => {
         if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
-        let cartasOrdenadas = ordenarCartas(cartas,cualidad,tipo);
+        let cartasOrdenadas = ordenarCartas(cartas, cualidad, tipo);
         cartasOrdenadas.forEach(carta => {
             let contenedor = crearCarta(carta);
             DOM.cartas.appendChild(contenedor);
@@ -68,25 +111,15 @@ const mostrarCartas = (idioma = "es", cualidad = "nombre", tipo = "Asc") => {
 const crearCarta = (carta) => {
     let general = crearElemento("div", "", ["carta"]);
 
-    if (carta.imagen != null) {
-        let imagen = crearElemento("img", "", ["imgCarta"]);
-        imagen.setAttribute("src", carta.imagen);
-        general.appendChild(imagen);
-    }
+    let imagen = crearElemento("img", "", ["imgCarta"]);
+    imagen.setAttribute("src", carta.imagen);
+    general.appendChild(imagen);
+    general.appendChild(crearElemento("h4", carta.nombre));
 
     let info = crearElemento("div", "", ["info"]);
-    if (carta.baraja != null) {
-        let baraja = crearElemento("div", "", ["elementoCarta"]);
-        baraja.appendChild(crearElemento("span", "Baraja:"));
-        baraja.appendChild(crearElemento("span", carta.baraja));
-        info.appendChild(baraja);
+    for (let i = 2; i < carta.length; i++) {
+        info.appendChild(crearElemento("div", carta));
     }
-
-    info.appendChild(crearElemento("div", carta.tipo));
-    info.appendChild(crearElemento("div", carta.coste));
-    info.appendChild(crearElemento("div", carta.colorIdentificador));
-    info.appendChild(crearElemento("div", carta.precio));
-    general.appendChild(crearElemento("h3", carta.nombre));
     general.appendChild(info);
     return general;
 }
