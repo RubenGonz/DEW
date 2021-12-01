@@ -63,13 +63,13 @@ async function recibirCartas(idioma) {
     return cartasFinales;
 }
 
-window.onload = () => {
-    mostrarCartas("es");
-}
-
 const ordenarCartas = (cartas, cualidad = "nombre", tipo = "Asc") => {
     let cartasOrdenadas = cartas.sort(function (a, b) {
-        return (eliminarAcentos(b[cualidad]) < eliminarAcentos(a[cualidad]));
+        if (typeof cualidad == "string") {
+            return (eliminarAcentos(b[cualidad]) < eliminarAcentos(a[cualidad]));
+        } else {
+            return (eliminarAcentos(b[cualidad]) - eliminarAcentos(a[cualidad]));
+        }
     })
     if (tipo == "Desc") cartasOrdenadas = cartasOrdenadas.reverse();
     return cartasOrdenadas;
@@ -77,19 +77,6 @@ const ordenarCartas = (cartas, cualidad = "nombre", tipo = "Asc") => {
 
 const eliminarAcentos = (texto) => {
     return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
-}
-
-const mostrarCartas = (idioma = "es", cualidad = "nombre", tipo = "Asc") => {
-    recibirCartas(idioma).then(cartas => {
-        if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
-        let cartasOrdenadas = ordenarCartas(cartas, cualidad, tipo);
-        cartasOrdenadas.forEach(carta => {
-            let contenedor = crearCarta(carta);
-            DOM.cartas.appendChild(contenedor);
-        });
-    }).catch(error => {
-        console.log("Hubo un error: " + error)
-    })
 }
 
 const crearCarta = (carta) => {
@@ -113,8 +100,24 @@ const crearElemento = (etiqueta, contenido = "", clases = []) => {
     return elemento;
 }
 
+const mostrarCartas = (idioma = "es", cualidad = "nombre", tipo = "Asc") => {
+    recibirCartas(idioma).then(cartas => {
+        if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
+        let cartasOrdenadas = ordenarCartas(cartas, cualidad, tipo);
+        cartasOrdenadas.forEach(carta => {
+            let contenedor = crearCarta(carta);
+            DOM.cartas.appendChild(contenedor);
+        });
+    }).catch(error => {
+        console.log("Hubo un error: " + error)
+    })
+}
 
 DOM.idiomas.addEventListener("click", (e) => {
     mostrarCartas(e.target.id, "nombre");
-    DOM.seleccionIdioma.innerHTML = "Idioma: " + e.target.innerHTML;
+    DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
 });
+
+window.onload = () => {
+    mostrarCartas("es");
+}

@@ -21,11 +21,11 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <div class="d-flex">
                     <img src="Assets/img/Logo.png" alt="Logo" class="imgTitulo">
-                    <a class="navbar-brand" href="../AEUT2_16_My_Magic_Decks/index.html">
+                    <a class="navbar-brand my-auto" href="../AEUT2_16_My_Magic_Decks/index.html">
                         <h1 class="d-inline m-2">Magic</h1>
                     </a>
                 </div>
@@ -38,15 +38,37 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle fw-bold" id="seleccionIdioma" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Español
                             </a>
-                            <ul id="idiomas" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><button class="dropdown-item" id="en">English</button></li>
-                                <li><button class="dropdown-item" id="es">Español</button></li>
-                                <li><button class="dropdown-item" id="fr">Français</button></li>
-                                <li><button class="dropdown-item" id="de">Deutsch</button></li>
+                            <ul id="idiomas" class="dropdown-menu bg-dark" aria-labelledby="seleccionIdioma">
+                                <li><button class="dropdown-item bg-dark text-light" id="en">English</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="es">Español</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="fr">Français</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="de">Deutsch</button></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" id="seleccionIdioma" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Nombre
+                            </a>
+                            <ul id="idiomas" class="dropdown-menu bg-dark" aria-labelledby="seleccionIdioma">
+                                <li><button class="dropdown-item bg-dark text-light" id="nombre">Nombre</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="precio">Precio</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="fr">Français</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="de">Deutsch</button></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" id="seleccionIdioma" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Asc
+                            </a>
+                            <ul id="idiomas" class="dropdown-menu bg-dark" aria-labelledby="seleccionIdioma">
+                                <li><button class="dropdown-item bg-dark text-light" id="Asc">Asc</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="Desc">Desc</button></li>
                             </ul>
                         </li>
                     </ul>
@@ -58,7 +80,6 @@
             </div>
         </nav>
     </header>
-
 
     <main>
         <div class="container">
