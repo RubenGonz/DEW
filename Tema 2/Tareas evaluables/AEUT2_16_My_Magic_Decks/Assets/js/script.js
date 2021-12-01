@@ -1,5 +1,7 @@
 const DOM = {
-    cartas: document.getElementById("cartas")
+    cartas: document.getElementById("cartas"),
+    seleccionIdioma: document.getElementById("seleccionIdioma"),
+    idiomas: document.getElementById("idiomas")
 }
 
 const apisBasicas = ["https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&unique=prints",
@@ -43,37 +45,17 @@ async function recibirCartas(idioma) {
         let respuesta = await fetch(api);
         let cartasApi = await respuesta.json();
         for (let cartaApi of cartasApi.data) {
-
             let nombreCarta;
-            if (idioma == "es" || idioma == undefined) {
+            if (idioma == "en" || idioma == undefined) {
                 nombreCarta = cartaApi.name;
             } else {
                 nombreCarta = cartaApi.printed_name;
             }
-
             let cartaFinal;
             if (!cartaApi.type_line.toLowerCase().includes("creature")) {
-                cartaFinal = new cartaNormal(
-                    nombreCarta,
-                    cartaApi.prices.eur,
-                    cartaApi.set_name,
-                    cartaApi.color_identity,
-                    cartaApi.type_line,
-                    cartaApi.mana_cost,
-                    cartaApi.image_uris.png
-                );
+                cartaFinal = new cartaNormal(nombreCarta, cartaApi.prices.eur, cartaApi.set_name, cartaApi.color_identity, cartaApi.type_line, cartaApi.mana_cost, cartaApi.image_uris.png);
             } else {
-                cartaFinal = new cartaCriatura(
-                    nombreCarta,
-                    cartaApi.prices.eur,
-                    cartaApi.set_name,
-                    cartaApi.color_identity,
-                    cartaApi.type_line,
-                    cartaApi.mana_cost,
-                    cartaApi.image_uris.png,
-                    cartaApi.power,
-                    cartaApi.toughness
-                );
+                cartaFinal = new cartaCriatura(nombreCarta, cartaApi.prices.eur, cartaApi.set_name, cartaApi.color_identity, cartaApi.type_line, cartaApi.mana_cost, cartaApi.image_uris.png, cartaApi.power, cartaApi.toughness);
             }
             cartasFinales.push(cartaFinal);
         }
@@ -82,7 +64,7 @@ async function recibirCartas(idioma) {
 }
 
 window.onload = () => {
-    mostrarCartas();
+    mostrarCartas("es");
 }
 
 const ordenarCartas = (cartas, cualidad = "nombre", tipo = "Asc") => {
@@ -105,7 +87,9 @@ const mostrarCartas = (idioma = "es", cualidad = "nombre", tipo = "Asc") => {
             let contenedor = crearCarta(carta);
             DOM.cartas.appendChild(contenedor);
         });
-    });
+    }).catch(error => {
+        console.log("Hubo un error: " + error)
+    })
 }
 
 const crearCarta = (carta) => {
@@ -115,12 +99,6 @@ const crearCarta = (carta) => {
     imagen.setAttribute("src", carta.imagen);
     general.appendChild(imagen);
     general.appendChild(crearElemento("h4", carta.nombre));
-
-    let info = crearElemento("div", "", ["info"]);
-    for (let i = 2; i < carta.length; i++) {
-        info.appendChild(crearElemento("div", carta));
-    }
-    general.appendChild(info);
     return general;
 }
 
@@ -134,3 +112,9 @@ const crearElemento = (etiqueta, contenido = "", clases = []) => {
     }
     return elemento;
 }
+
+
+DOM.idiomas.addEventListener("click", (e) => {
+    mostrarCartas(e.target.id, "nombre");
+    DOM.seleccionIdioma.innerHTML = "Idioma: " + e.target.innerHTML;
+});
