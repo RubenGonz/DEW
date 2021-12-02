@@ -1,7 +1,11 @@
 const DOM = {
     cartas: document.getElementById("cartas"),
     seleccionIdioma: document.getElementById("seleccionIdioma"),
-    idiomas: document.getElementById("idiomas")
+    idiomas: document.getElementById("idiomas"),
+    seleccionCualidad: document.getElementById("seleccionCualidad"),
+    cualidad: document.getElementById("cualidad"),
+    seleccionOrden: document.getElementById("seleccionOrden"),
+    orden: document.getElementById("orden")
 }
 
 const apisBasicas = ["https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&unique=prints",
@@ -80,6 +84,7 @@ const eliminarAcentos = (texto) => {
 }
 
 const crearCarta = (carta) => {
+    
     let general = crearElemento("div", "", ["carta"]);
 
     let imagen = crearElemento("img", "", ["imgCarta"]);
@@ -116,6 +121,16 @@ const mostrarCartas = (idioma = "es", cualidad = "nombre", tipo = "Asc") => {
 DOM.idiomas.addEventListener("click", (e) => {
     mostrarCartas(e.target.id, "nombre");
     DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
+});
+
+DOM.cualidad.addEventListener("click", (e) => {
+    mostrarCartas(e.target.id, "nombre");
+    DOM.seleccionCualidad.innerHTML = e.target.innerHTML;
+});
+
+DOM.orden.addEventListener("click", (e) => {
+    mostrarCartas(e.target.id, "nombre");
+    DOM.seleccionOrden.innerHTML = e.target.innerHTML;
 });
 
 window.onload = () => {
