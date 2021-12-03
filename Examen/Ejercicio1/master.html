@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="Assets/css/styles.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cookieconsent.min.css" />
+    <script type="text/javascript"
+        src="https://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cookieconsent.min.js"></script>
+    <script type="text/javascript"
+        src="https://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cauce_cookie.js"></script>
+    <script type="text/javascript"
+        src="https://www3.gobiernodecanarias.org/educacion/cau_ce/estadisticasweb/scripts/piwik-base.js"></script>
+    <script type="text/javascript"
+        src="https://www3.gobiernodecanarias.org/educacion/cau_ce/estadisticasweb/scripts/piwik-eforma.js"></script>
+        
+    </head>
+<body>
+
+    <div class="container align-items-center">
+        <h1>Bienvenido/a al Mastermind!</h1>
+        <br>
+        <div class="align-items-center" id="opciones">
+            Estos son los colors para escoger:
+            <button type="button" class="btn color-A btn-color">A</button>
+            <button type="button" class="btn color-B btn-color">B</button>
+            <button type="button" class="btn color-C btn-color">C</button>
+            <button type="button" class="btn color-D btn-color">D</button>
+            <button type="button" class="btn color-E btn-color">E</button>
+            <button type="button" class="btn color-F btn-color">F</button>
+        </div>
+        <br>
+        <div class="align-items-center" id="intento">
+            <form>
+                Inteta con una combinación:
+                <input class="error" type="text" size="1" maxlength="1" id="parametro1">
+                <input class="error" type="text" size="1" maxlength="1" id="parametro2">
+                <input class="error" type="text" size="1" maxlength="1" id="parametro3">
+                <input class="error" type="text" size="1" maxlength="1" id="parametro4">
+                <input id="enviarIntento" type="button" value="Enviar">
+            </form>
+        </div>
+        <div class="container my-5 text-center">
+            <div class="mt-5">
+                <table id="resultado2" class="table w-50">
+                    <thead>
+                        <tr>
+                            <th scope="col">1</th>
+                            <th scope="col">2</th>
+                            <th scope="col">3</th>
+                            <th scope="col">4</th>
+                            <th scope="col">Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultado">
+                       
+
+                    </tbody>
+                </table>
+            </div>
+            <div id="fin"></div>
+        </div>
+        <script src="Assets/js/Script.js"></script>
+</body>
+
+</html>

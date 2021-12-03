@@ -1,0 +1,65 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>09/12/20 - Examen: Ejercicio 2</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+        href="https://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cookieconsent.min.css" />
+    <script type="text/javascript"
+        src="https://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cookieconsent.min.js"></script>
+    <script type="text/javascript"
+        src="https://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cauce_cookie.js"></script>
+    <script type="text/javascript"
+        src="https://www3.gobiernodecanarias.org/educacion/cau_ce/estadisticasweb/scripts/piwik-base.js"></script>
+    <script type="text/javascript"
+        src="https://www3.gobiernodecanarias.org/educacion/cau_ce/estadisticasweb/scripts/piwik-eforma.js"></script>
+</head>
+
+<body>
+    <div class="container align-items-center">
+        <legend class="m-3">Gestion de partidas</legend>
+        <div class="row m-3">
+            <div class="col-3">
+                <label class="label">Nombre</label><br>
+                <input type="text" id="nombre" class="control" placeholder="nombre" name="error">
+            </div>
+            <div class="col-3">
+                <label class="label">Selecciona tipo</label><br>
+                <select id="tipo" class="select w-75">
+                    <option>Letras</option>
+                    <option>Colores</option>
+                </select>
+            </div>
+            <div class="col-3">
+                <label class="label">Cuantas opciones</label><br>
+                <input type="number" id="numOpciones" class="control" placeholder="4"  name="error">
+
+            </div>
+        </div>
+
+        <div class="row m-3">
+            <br>
+            <h4>Que opciones quieres</h4>
+            <div id="opciones">
+
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col-4 ">
+                <button id="enviarDatos" type="button" class="btn btn-primary">Crear Juego</button>
+                <br>
+                <br>
+                <h4>Lista de juegos</h4>
+                <textarea style="width: 750px;"></textarea>
+            </div>
+        </div>
+    </div>
+    <script src="Assets/js/Script.js"></script>
+</body>
+
+</html>

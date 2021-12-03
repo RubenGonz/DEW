@@ -1,0 +1,69 @@
+a) ¿Cómo podemos crear una cookie? Indica un ejemplo del código.
+
+Podemos crearla usando la siguiente función:
+
+const crearCookie = (clave, valor, expedicion) => {
+    let date = new Date();
+    date.setTime(date.getTime() + (expedicion * 24 * 60 * 60 * 1000));
+    document.cookie = clave + "=" + valor + "; expires=" + date.toGMTString();
+}
+
+Donde si pongo
+
+crearCookie("Nombre", "Ruben", 365)
+
+Se me creará una cookie de clave "Nombre" que tendrá el valor "Ruben" y se eliminará tras un año.
+
+
+
+
+
+b) Como eliminamos el ‘Reflow’ que se produce en cada modificación del DOM?
+
+Lo podemos eliminar usando propiedades del CSS.
+
+
+
+
+c) ¿Qué nos permite realizar la expresión window.onload = function() { } ? 
+
+Esta expresión nos permite ejecutar código despues de que todo el código html esté cargado.
+
+
+
+
+
+d) Realiza una conexión POST con el objeto XMLHttpRequest
+
+const crearAjax = () => {
+    let ajax = null;
+    try {
+        ajax = new XMLHttpRequest();
+    } catch (error1) {
+        try {
+            ajax = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (error2) {
+            try {
+                ajax = new ActiveXObject("Msxml12.XMLHTTP");
+            } catch (error3) {
+                ajax = null;
+            }
+        }
+    }
+    return ajax;
+}
+
+const traer = () => {
+    let ajax = crearAjax();
+    if (ajax != null) {
+        ajax.open("GET", "https://jsonplaceholder.typicode.com/users", true);
+        ajax.send(null);
+        ajax.onreadystatechange = () => {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                mostrarDatos(ajax.responseText);
+            }
+        }
+    } else {
+        console.log("Hubo un problema con la ejecución del Ajax");
+    }
+}
