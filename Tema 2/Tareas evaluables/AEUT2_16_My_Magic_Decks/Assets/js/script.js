@@ -15,7 +15,8 @@ const apisBasicas = ["https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&
     "https://api.scryfall.com/cards/search?order=set&q=e%3Augin&unique=prints"];
 
 class cartaNormal {
-    constructor(nombre, precio, baraja, colorIdentificador, tipo, mana, imagen) {
+    constructor(id, nombre, precio, baraja, colorIdentificador, tipo, mana, imagen) {
+        this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.baraja = baraja;
@@ -27,8 +28,8 @@ class cartaNormal {
 }
 
 class cartaCriatura extends cartaNormal {
-    constructor(nombre, precio, baraja, colorIdentificador, tipo, mana, imagen, fuerza, resistencia) {
-        super(nombre, precio, baraja, colorIdentificador, tipo, mana, imagen);
+    constructor(id, nombre, precio, baraja, colorIdentificador, tipo, mana, imagen, fuerza, resistencia) {
+        super(id, nombre, precio, baraja, colorIdentificador, tipo, mana, imagen);
         this.fuerza = fuerza;
         this.resistencia = resistencia;
     }
@@ -57,9 +58,9 @@ async function recibirCartas(idioma) {
             }
             let cartaFinal;
             if (!cartaApi.type_line.toLowerCase().includes("creature")) {
-                cartaFinal = new cartaNormal(nombreCarta, cartaApi.prices.eur, cartaApi.set_name, cartaApi.color_identity, cartaApi.type_line, cartaApi.mana_cost, cartaApi.image_uris.png);
+                cartaFinal = new cartaNormal(cartaApi.id, nombreCarta, cartaApi.prices.eur, cartaApi.set_name, cartaApi.color_identity, cartaApi.type_line, cartaApi.cmc, cartaApi.image_uris.png);
             } else {
-                cartaFinal = new cartaCriatura(nombreCarta, cartaApi.prices.eur, cartaApi.set_name, cartaApi.color_identity, cartaApi.type_line, cartaApi.mana_cost, cartaApi.image_uris.png, cartaApi.power, cartaApi.toughness);
+                cartaFinal = new cartaCriatura(cartaApi.id, nombreCarta, cartaApi.prices.eur, cartaApi.set_name, cartaApi.color_identity, cartaApi.type_line, cartaApi.cmc, cartaApi.image_uris.png, cartaApi.power, cartaApi.toughness);
             }
             cartasFinales.push(cartaFinal);
         }
@@ -67,15 +68,15 @@ async function recibirCartas(idioma) {
     return cartasFinales;
 }
 
-const ordenarCartas = (cartas, cualidad = "nombre", tipo = "Asc") => {
+const ordenarCartas = (cartas, cualidad = "nombre", orden = "asc") => {
     let cartasOrdenadas = cartas.sort(function (a, b) {
         if (typeof cualidad == "string") {
             return (eliminarAcentos(b[cualidad]) < eliminarAcentos(a[cualidad]));
         } else {
-            return (eliminarAcentos(b[cualidad]) - eliminarAcentos(a[cualidad]));
+            return (b[cualidad] - a[cualidad]);
         }
     })
-    if (tipo == "Desc") cartasOrdenadas = cartasOrdenadas.reverse();
+    if (orden == "desc") cartasOrdenadas = cartasOrdenadas.reverse();
     return cartasOrdenadas;
 }
 
@@ -84,7 +85,6 @@ const eliminarAcentos = (texto) => {
 }
 
 const crearCarta = (carta) => {
-    
     let general = crearElemento("div", "", ["carta"]);
 
     let imagen = crearElemento("img", "", ["imgCarta"]);
@@ -105,10 +105,10 @@ const crearElemento = (etiqueta, contenido = "", clases = []) => {
     return elemento;
 }
 
-const mostrarCartas = (idioma = "es", cualidad = "nombre", tipo = "Asc") => {
+const mostrarCartas = (idioma = "es", cualidad = "nombre", orden = "asc") => {
     recibirCartas(idioma).then(cartas => {
         if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
-        let cartasOrdenadas = ordenarCartas(cartas, cualidad, tipo);
+        let cartasOrdenadas = ordenarCartas(cartas, cualidad, orden);
         cartasOrdenadas.forEach(carta => {
             let contenedor = crearCarta(carta);
             DOM.cartas.appendChild(contenedor);
@@ -118,21 +118,56 @@ const mostrarCartas = (idioma = "es", cualidad = "nombre", tipo = "Asc") => {
     })
 }
 
+const crearCookie = (clave, valor, expedicion = "365") => {
+    let date = new Date();
+    date.setTime(date.getTime() + (expedicion * 24 * 60 * 60 * 1000));
+    document.cookie = clave + "=" + valor + "; expires=" + date.toGMTString();
+}
+
+const comprobarCookie = (clave) => {
+    let cookies = document.cookie.split("; ");
+    let encontrada = false;
+    cookies.forEach(cookie => { if (cookie.split("=")[0] == clave) encontrada = true; });
+    return encontrada;
+}
+
+const leerCookie = (claveIntroducida) => {
+    if (comprobarCookie(claveIntroducida)) {
+        let cookies = document.cookie.split("; ");
+        let valorCookie;
+        cookies.forEach(cookie => {
+            let clave = cookie.split("=")[0];
+            let valor = cookie.split("=")[1];
+            if (claveIntroducida == clave) valorCookie = valor;
+        });
+        return valorCookie;
+    }
+}
+
 DOM.idiomas.addEventListener("click", (e) => {
-    mostrarCartas(e.target.id, "nombre");
+    crearCookie("Idioma", e.target.id);
     DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
+    mostrarCartas(leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
 DOM.cualidad.addEventListener("click", (e) => {
-    mostrarCartas(e.target.id, "nombre");
+    crearCookie("Cualidad", e.target.id);
     DOM.seleccionCualidad.innerHTML = e.target.innerHTML;
+    mostrarCartas(leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
 DOM.orden.addEventListener("click", (e) => {
-    mostrarCartas(e.target.id, "nombre");
+    crearCookie("Orden", e.target.id);
     DOM.seleccionOrden.innerHTML = e.target.innerHTML;
+    mostrarCartas(leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
 window.onload = () => {
-    mostrarCartas("es");
+    if (!comprobarCookie("Idioma")) crearCookie("Idioma", "es");
+    if (!comprobarCookie("Cualidad")) crearCookie("Cualidad", "nombre");
+    if (!comprobarCookie("Orden")) crearCookie("Orden", "asc");
+    DOM.seleccionIdioma.innerHTML = document.getElementById(leerCookie("Idioma")).innerHTML;
+    DOM.seleccionCualidad.innerHTML = document.getElementById(leerCookie("Cualidad")).innerHTML;;
+    DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;;
+    mostrarCartas(leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 }

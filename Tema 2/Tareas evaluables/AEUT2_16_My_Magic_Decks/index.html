@@ -21,7 +21,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <div class="d-flex">
-                    <img src="Assets/img/Logo.png" alt="Logo" class="imgTitulo">
+                    <a href="../AEUT2_16_My_Magic_Decks/index.html"><img src="Assets/img/Logo.png" alt="Logo"
+                            class="imgTitulo"></a>
                     <a class="navbar-brand my-auto" href="../AEUT2_16_My_Magic_Decks/index.html">
                         <h1 class="d-inline m-2">Magic</h1>
                     </a>
@@ -54,8 +55,12 @@
                             <ul id="cualidad" class="dropdown-menu bg-dark" aria-labelledby="seleccionCualidad">
                                 <li><button class="dropdown-item bg-dark text-light" id="nombre">Nombre</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="precio">Precio</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="fr">Français</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="de">Deutsch</button></li>
+                                <li><button class="dropdown-item bg-dark text-light"
+                                        id="colorIdentificador">Color</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="tipo">Tipo</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="mana">Mana</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="fuerza">Fuerza</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="resistencia">Resistencia</button></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -64,8 +69,8 @@
                                 Asc
                             </a>
                             <ul id="orden" class="dropdown-menu bg-dark" aria-labelledby="seleccionOrden">
-                                <li><button class="dropdown-item bg-dark text-light" id="Asc">Asc</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="Desc">Desc</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="asc">Asc</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="desc">Desc</button></li>
                             </ul>
                         </li>
                     </ul>
@@ -79,63 +84,51 @@
     </header>
 
     <main>
-        <div class="container">
-            <div class="row">
-                <div class="col-8">
-                    <h4>Cartas</h4>
+        <div class="row g-0">
+            <div class="col-8">
+                <h4>Cartas</h4>
 
-                    <div class="row" id="cards"></div>
-                </div>
-
-                <div class="col-4">
-                    <h4>Seleccionadas</h4>
-                    <table class="table-responsive">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Action</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody id="items"></tbody>
-                        <tfoot>
-                            <tr id="footer">
-                                <th scope="row" colspan="5">Empti list - Start selecting cards!</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                <div class="row" id="cartas"></div>
             </div>
 
-            <template id="plantilla-inferior">
-                <!-- Posible template-->
-            </template>
+            <div class="col-4">
+                <h4>Seleccionadas</h4>
+                <table class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Acción</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
 
-            <template id="plantilla-selecionados">
-                <tr>
-                    <th scope="row">carta1</th>
-                    <td>5€</td>
-                    <td>2</td>
-                    <td>
-                        <!--boones en horizontal-->
-                        <button class="btn btn-info btn-sm">+</button>
-                        <button class="btn btn-danger btn-sm">-</button>
-                        <div>
-                        </div>
-                    </td>
-                    <td>€ <span>10</span></td>
-                </tr>
-            </template>
+                    <tbody id="items">
+                        <tr>
+                            <th scope="row">carta1</th>
+                            <td>5€</td>
+                            <td>2</td>
+                            <td>
+                                <!--boones en horizontal-->
+                                <button class="btn btn-info btn-sm">+</button>
+                                <button class="btn btn-danger btn-sm">-</button>
+                                <div>
+                                </div>
+                            </td>
+                            <td>€ <span>10</span></td>
+                        </tr>
+                    </tbody>
 
-            <template id="plnatilla-carta">
-                <!-- Posible template-->
-            </template>
+                    <tfoot>
+                        <tr id="footer">
+                            <th scope="row" colspan="5">No hay cartas seleccionadas</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
-        <div id="cartas">
-
-        </div>
+        
     </main>
 
     <footer>
