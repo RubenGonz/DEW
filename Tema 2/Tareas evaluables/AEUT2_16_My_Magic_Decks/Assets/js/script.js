@@ -1,5 +1,7 @@
 const DOM = {
     cartas: document.getElementById("cartas"),
+    seleccionMazo: document.getElementById("seleccionMazo"),
+    mazo: document.getElementById("mazo"),
     seleccionIdioma: document.getElementById("seleccionIdioma"),
     idiomas: document.getElementById("idiomas"),
     seleccionCualidad: document.getElementById("seleccionCualidad"),
@@ -8,11 +10,13 @@ const DOM = {
     orden: document.getElementById("orden")
 }
 
-const apisBasicas = ["https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&unique=prints",
-    "https://api.scryfall.com/cards/search?order=set&q=e%3Azne&unique=prints",
-    "https://api.scryfall.com/cards/search?order=set&q=e%3Aw17&unique=prints",
-    "https://api.scryfall.com/cards/search?order=set&q=e%3Aw16&unique=prints",
-    "https://api.scryfall.com/cards/search?order=set&q=e%3Augin&unique=prints"];
+const apisBasicas = {
+    "Welcome Deck 2016": "https://api.scryfall.com/cards/search?order=set&q=e%3Aw16&unique=prints",
+    "Ugin's Fate": "https://api.scryfall.com/cards/search?order=set&q=e%3Augin&unique=prints",
+    "Welcome Deck 2017": "https://api.scryfall.com/cards/search?order=set&q=e%3Aw17&unique=prints",
+    "Zendikar Rising Expeditions": "https://api.scryfall.com/cards/search?order=set&q=e%3Azne&unique=prints",
+    "Introductory Two-Player": "https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&unique=prints"
+}
 
 class cartaNormal {
     constructor(id, nombre, precio, baraja, colorIdentificador, tipo, mana, imagen) {
@@ -35,18 +39,22 @@ class cartaCriatura extends cartaNormal {
     }
 }
 
-const traducirApi = (idioma = "en") => {
-    let apisTraducidas = [];
-    apisBasicas.forEach(api => {
-        let seccionIdioma = api.indexOf("e%");
-        apisTraducidas.push(api.substr(0, seccionIdioma) + "lang%3A" + idioma + "+" + api.substr(seccionIdioma));
-    })
-    return apisTraducidas;
+const traducirApi = (api, idioma = "en") => {
+    let seccionIdioma = api.indexOf("e%");
+    return api.substr(0, seccionIdioma) + "lang%3A" + idioma + "+" + api.substr(seccionIdioma);
 }
 
-async function recibirCartas(idioma) {
+async function recibirCartas(apis = [], idioma) {
+    let apisFinales = [];
+    if (apis == ["Todos"]) {
+        Object.values(apisBasicas).forEach(api => {
+            apisFinales.push(traducirApi(api, idioma));
+        })
+    } else {
+        apisFinales.push(traducirApi(apis[0], idioma));
+    }
     let cartasFinales = [];
-    for (let api of traducirApi(idioma)) {
+    for (let api of apisFinales) {
         let respuesta = await fetch(api);
         let cartasApi = await respuesta.json();
         for (let cartaApi of cartasApi.data) {
@@ -105,17 +113,25 @@ const crearElemento = (etiqueta, contenido = "", clases = []) => {
     return elemento;
 }
 
-const mostrarCartas = (idioma = "es", cualidad = "nombre", orden = "asc") => {
-    recibirCartas(idioma).then(cartas => {
-        if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
+const organizarMazo = (api, idioma, cualidad, orden) => {
+    let cartasMazo = [];
+    recibirCartas(api, idioma).then(cartas => {
         let cartasOrdenadas = ordenarCartas(cartas, cualidad, orden);
         cartasOrdenadas.forEach(carta => {
-            let contenedor = crearCarta(carta);
-            DOM.cartas.appendChild(contenedor);
+            cartasMazo.push(carta);
         });
     }).catch(error => {
         console.log("Hubo un error: " + error)
     })
+    return cartasMazo;
+}
+
+const mostrarCartas = (cartas) => {
+    if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
+    cartas.forEach(carta => {
+        let contenedor = crearCarta(carta);
+        DOM.cartas.appendChild(contenedor);
+    });
 }
 
 const crearCookie = (clave, valor, expedicion = "365") => {
@@ -144,9 +160,19 @@ const leerCookie = (claveIntroducida) => {
     }
 }
 
+const agregarSeleccionada = () => {
+
+}
+
+DOM.mazo.addEventListener("click", (e) => {
+    crearCookie("Mazo", e.target.id);
+    DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
+    mostrarCartas(leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+});
+
 DOM.idiomas.addEventListener("click", (e) => {
     crearCookie("Idioma", e.target.id);
-    DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
+    DOM.seleccionMazo.innerHTML = e.target.innerHTML;
     mostrarCartas(leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
@@ -163,11 +189,13 @@ DOM.orden.addEventListener("click", (e) => {
 });
 
 window.onload = () => {
+    if (!comprobarCookie("Mazo")) crearCookie("Mazo", "Todos");
     if (!comprobarCookie("Idioma")) crearCookie("Idioma", "es");
     if (!comprobarCookie("Cualidad")) crearCookie("Cualidad", "nombre");
     if (!comprobarCookie("Orden")) crearCookie("Orden", "asc");
+    DOM.seleccionMazo.innerHTML = document.getElementById(leerCookie("Mazo")).innerHTML;
     DOM.seleccionIdioma.innerHTML = document.getElementById(leerCookie("Idioma")).innerHTML;
-    DOM.seleccionCualidad.innerHTML = document.getElementById(leerCookie("Cualidad")).innerHTML;;
-    DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;;
+    DOM.seleccionCualidad.innerHTML = document.getElementById(leerCookie("Cualidad")).innerHTML;
+    DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
     mostrarCartas(leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 }
