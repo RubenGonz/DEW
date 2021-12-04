@@ -18,7 +18,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
             <div class="container-fluid">
                 <div class="d-flex">
                     <a href="../AEUT2_16_My_Magic_Decks/index.html"><img src="Assets/img/Logo.png" alt="Logo"
@@ -42,11 +42,16 @@
                             </a>
                             <ul id="mazo" class="dropdown-menu bg-dark" aria-labelledby="seleccionMazo">
                                 <li><button class="dropdown-item bg-dark text-light" id="Todos">Todos</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="Welcome Deck 2016">Welcome Deck 2016</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="Ugin's Fate">Ugin's Fate</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="Welcome Deck 2017">Welcome Deck 2017</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="Zendikar Rising Expeditions">Zendikar Rising Expeditions</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="Introductory Two-Player">Introductory Two-Player</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="Welcome Deck 2016">Welcome Deck
+                                        2016</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="Ugin's Fate">Ugin's
+                                        Fate</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="Welcome Deck 2017">Welcome Deck
+                                        2017</button></li>
+                                <li><button class="dropdown-item bg-dark text-light"
+                                        id="Zendikar Rising Expeditions">Zendikar Rising Expeditions</button></li>
+                                <li><button class="dropdown-item bg-dark text-light"
+                                        id="Introductory Two-Player">Introductory Two-Player</button></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -74,7 +79,8 @@
                                 <li><button class="dropdown-item bg-dark text-light" id="tipo">Tipo</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="mana">Mana</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="fuerza">Fuerza</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="resistencia">Resistencia</button></li>
+                                <li><button class="dropdown-item bg-dark text-light"
+                                        id="resistencia">Resistencia</button></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -99,49 +105,36 @@
 
     <main>
         <div class="row g-0">
-            <div class="col-8">
+            <div class="offset-1 col-7">
                 <h4>Cartas</h4>
-                <div id="cartas"></div>
+                <div id="cartas" class="p-2"></div>
             </div>
 
-            <div class="col-4">
-                <h4>Seleccionadas</h4>
-                <table class="table-responsive">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Acción</th>
-                            <th scope="col">Total</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="items">
-                        <tr>
-                            <th scope="row">carta1</th>
-                            <td>5€</td>
-                            <td>2</td>
-                            <td>
-                                <!--boones en horizontal-->
-                                <button class="btn btn-info btn-sm">+</button>
-                                <button class="btn btn-danger btn-sm">-</button>
-                                <div>
-                                </div>
-                            </td>
-                            <td>€ <span>10</span></td>
-                        </tr>
-                    </tbody>
-
-                    <tfoot>
-                        <tr id="footer">
-                            <th scope="row" colspan="5">No hay cartas seleccionadas</th>
-                        </tr>
-                    </tfoot>
-                </table>
+            <div class="col-4 pe-2">
+                <div class="sticky-top pt-2">
+                    <h4>Seleccionadas</h4>
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Nombre</th>
+                                <th scope="col" class="text-center">Precio</th>
+                                <th scope="col" class="text-center">Cantidad</th>
+                                <th scope="col" class="text-center">Acción</th>
+                                <th scope="col" class="text-center">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartasSeleccionadas">
+                            
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-center fw-bold">No hay cartas seleccionadas</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
-        
     </main>
 
     <footer>
@@ -149,14 +142,28 @@
     </footer>
 
     <template id="cartaApi">
-        <div class="card carta">
+        <div class="card carta m-2">
             <img src="Direccion de la carta" class="card-img-top imgCarta" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nombre de la carta</h5>
-              <p class="card-text">Precio de la carta</p>
-              <a class="btn btn-primary">Seleccionar carta</a>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Nombre de la carta</h5>
+                <hr class="m-1">
+                <p class="card-text">Precio de la carta</p>
+                <a class="btn btn-outline-primary ms-auto mt-auto">Seleccionar</a>
             </div>
-          </div>
+        </div>
+    </template>
+
+    <template id="cartaColumna">
+        <tr name="id" >
+            <td class="fw-bold">Ugin</td>
+            <td class="text-center">100€</td>
+            <td class="text-center">1</td>
+            <td class="d-flex flex-row">
+                <button name="sumarCarta" class="btn btn-info btn-sm w-100">+</button>
+                <button name="restarCarta" class="btn btn-danger btn-sm w-100">-</button>
+            </td>
+            <td class="text-center">100€</td>
+        </tr>
     </template>
 
     <script src="Assets/js/script.js"></script>

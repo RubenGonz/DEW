@@ -1,5 +1,4 @@
 const DOM = {
-    cartas: document.getElementById("cartas"),
     seleccionMazo: document.getElementById("seleccionMazo"),
     mazo: document.getElementById("mazo"),
     seleccionIdioma: document.getElementById("seleccionIdioma"),
@@ -7,7 +6,9 @@ const DOM = {
     seleccionCualidad: document.getElementById("seleccionCualidad"),
     cualidad: document.getElementById("cualidad"),
     seleccionOrden: document.getElementById("seleccionOrden"),
-    orden: document.getElementById("orden")
+    orden: document.getElementById("orden"),
+    cartas: document.getElementById("cartas"),
+    cartasSeleccionadas: document.getElementById("cartasSeleccionadas")
 }
 
 const apisBasicas = {
@@ -99,8 +100,9 @@ const eliminarAcentos = (texto) => {
     return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
 }
 
-const mostrarMazoApi = (apis, idioma, cualidad, orden) => {
+const recibirMazoApi = (apis, idioma, cualidad, orden) => {
     recibirCartas(apis, idioma).then(mazo => {
+        mazoMostrado = mazo;
         mostrarMazo(mazo, cualidad, orden);
     }).catch(error => {
         console.log("Hubo un error: " + error)
@@ -114,7 +116,6 @@ const mostrarMazo = (mazo, cualidad, orden) => {
 }
 
 function crearCartas(cartas) {
-
     const fragment = document.createDocumentFragment();
     const template = document.getElementById("cartaApi").content;
 
@@ -123,12 +124,101 @@ function crearCartas(cartas) {
         template.querySelectorAll("img")[0].src = carta.imagen;
         template.querySelectorAll("img")[0].alt = carta.nombre;
         template.querySelectorAll("h5")[0].textContent = carta.nombre;
-        template.querySelectorAll("p")[0].textContent = carta.precio + " €";
+        if (carta.precio == null) {
+            template.querySelectorAll("p")[0].textContent = "No hay precio disponible";
+        } else {
+            template.querySelectorAll("p")[0].textContent = carta.precio + " €";
+        }
 
         const clone = template.cloneNode(true);
         fragment.appendChild(clone);
     });
     DOM.cartas.appendChild(fragment);
+}
+
+let mazoMostrado;
+
+const buscarCarta = (cualidad, valor) => {
+    let encontrada = false;
+    let i = 0;
+    let carta = null;
+    do {
+        if (mazoMostrado.cartas[i][cualidad] == valor) {
+            encontrada == true;
+            carta = mazoMostrado.cartas[i];
+        }
+        i++;
+    } while (encontrada == false && i < mazoMostrado.cartas.length);
+    return carta;
+}
+
+let cartasElegidas = [];
+
+const agregarCarta = (idCarta) => {
+    let cartaElegida = buscarCarta("id", idCarta);
+    conjuntoElegido = null;
+
+    cartasElegidas.forEach(conjuntoCartas => {
+        if (conjuntoCartas.carta == cartaElegida) {
+            conjuntoElegido = conjuntoCartas;
+        }
+    })
+
+    if (conjuntoElegido != null) {
+        if (conjuntoElegido.cantidad < 4) {
+            conjuntoElegido.cantidad = conjuntoElegido.cantidad + 1;
+            modificarSelecionadas(conjuntoElegido);
+        }
+    } else {
+        let conjuntoCartas = {
+            carta: cartaElegida,
+            cantidad: 1
+        }
+        cartasElegidas.push(conjuntoCartas);
+        modificarSelecionadas(conjuntoCartas);
+    }
+}
+
+const quitarCarta = (idCarta) => {
+    let cartaElegida = buscarCarta("id", idCarta);
+    conjuntoElegido = null;
+
+    cartasElegidas.forEach(conjuntoCartas => {
+        if (conjuntoCartas.carta == cartaElegida) {
+            conjuntoElegido = conjuntoCartas;
+        }
+    })
+
+    if (conjuntoElegido != null) {
+        if (conjuntoElegido.cantidad > 0) {
+            conjuntoElegido.cantidad = conjuntoElegido.cantidad - 1;
+            modificarSelecionadas(conjuntoElegido);
+        }
+    }
+}
+
+const modificarSelecionadas = (conjuntoCartas) => {
+
+    /* TODO: troncar los numeros del precio total y modificar el appendChild */
+
+    let trExistente = document.getElementsByName(conjuntoCartas.carta.id)[0];
+    if (trExistente != null) trExistente.remove();
+    if (conjuntoCartas.cantidad == 0) {
+        trExistente.remove();
+    } else {
+        const fragment = document.createDocumentFragment();
+        const template = document.getElementById("cartaColumna").content;
+
+        template.querySelectorAll("tr")[0].setAttribute("name", conjuntoCartas.carta.id);
+        template.querySelectorAll("td")[0].textContent = conjuntoCartas.carta.nombre;
+        template.querySelectorAll("td")[1].textContent = conjuntoCartas.carta.precio + " €";
+        template.querySelectorAll("td")[2].textContent = conjuntoCartas.cantidad;
+        template.querySelectorAll("td")[4].textContent = conjuntoCartas.carta.precio * conjuntoCartas.cantidad + " €";
+
+        const clone = template.cloneNode(true);
+        fragment.appendChild(clone);
+        DOM.cartasSeleccionadas.appendChild(fragment);
+    }
 }
 
 const crearCookie = (clave, valor, expedicion = "365") => {
@@ -157,36 +247,47 @@ const leerCookie = (claveIntroducida) => {
     }
 }
 
+DOM.cartasSeleccionadas.addEventListener("click", (e) => {
+    if (e.target.name == "sumarCarta") {
+        agregarCarta(e.target.closest("tr").getAttribute("name"));
+    }
+    if (e.target.name == "restarCarta") {
+        quitarCarta(e.target.closest("tr").getAttribute("name"));
+    }
+});
+
 DOM.cartas.addEventListener("click", (e) => {
-    console.log(e.target)
+    if (e.target.id != "cartas") {
+        agregarCarta(e.target.closest(".carta").id);
+    }
 });
 
 DOM.mazo.addEventListener("click", (e) => {
     crearCookie("Mazo", e.target.id);
     DOM.seleccionMazo.innerHTML = e.target.innerHTML;
-    mostrarMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
 DOM.idiomas.addEventListener("click", (e) => {
     crearCookie("Idioma", e.target.id);
     DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
-    mostrarMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
 DOM.cualidad.addEventListener("click", (e) => {
     crearCookie("Cualidad", e.target.id);
     DOM.seleccionCualidad.innerHTML = e.target.innerHTML;
-    mostrarMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
 DOM.orden.addEventListener("click", (e) => {
     crearCookie("Orden", e.target.id);
     DOM.seleccionOrden.innerHTML = e.target.innerHTML;
-    mostrarMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
 window.onload = () => {
-    if (!comprobarCookie("Mazo")) crearCookie("Mazo", "Todos");
+    if (!comprobarCookie("Mazo")) crearCookie("Mazo", "Welcome Deck 2016");
     if (!comprobarCookie("Idioma")) crearCookie("Idioma", "es");
     if (!comprobarCookie("Cualidad")) crearCookie("Cualidad", "nombre");
     if (!comprobarCookie("Orden")) crearCookie("Orden", "asc");
@@ -194,5 +295,5 @@ window.onload = () => {
     DOM.seleccionIdioma.innerHTML = document.getElementById(leerCookie("Idioma")).innerHTML;
     DOM.seleccionCualidad.innerHTML = document.getElementById(leerCookie("Cualidad")).innerHTML;
     DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
-    mostrarMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
 }

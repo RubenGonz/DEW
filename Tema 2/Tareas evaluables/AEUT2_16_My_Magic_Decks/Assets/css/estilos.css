@@ -1,5 +1,5 @@
 :root {
-    --anchoCarta: 250px;
+    --anchoCarta: 200px;
 }
 
 .imgTitulo {
@@ -9,7 +9,7 @@
 #cartas {
     display: flex;
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: stretch;
     flex-wrap: wrap;
 }
 
