@@ -8,7 +8,8 @@ const DOM = {
     seleccionOrden: document.getElementById("seleccionOrden"),
     orden: document.getElementById("orden"),
     cartas: document.getElementById("cartas"),
-    cartasSeleccionadas: document.getElementById("cartasSeleccionadas")
+    bodySeleccionadas: document.getElementById("bodySeleccionadas"),
+    footerSeleccionadas: document.getElementById("footerSeleccionadas")
 }
 
 const apisBasicas = {
@@ -46,6 +47,8 @@ class mazo {
         this.cartas = cartas;
     }
 }
+
+let cartasElegidas = [];
 
 const traducirApi = (api, idioma = "en") => {
     let seccionIdioma = api.indexOf("e%");
@@ -100,10 +103,10 @@ const eliminarAcentos = (texto) => {
     return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
 }
 
-const recibirMazoApi = (apis, idioma, cualidad, orden) => {
+const recibirMazoApi = (apis, idioma) => {
     recibirCartas(apis, idioma).then(mazo => {
         mazoMostrado = mazo;
-        mostrarMazo(mazo, cualidad, orden);
+        mostrarMazo(mazo, leerCookie("Cualidad"), leerCookie("Orden"));
     }).catch(error => {
         console.log("Hubo un error: " + error)
     })
@@ -152,34 +155,42 @@ const buscarCarta = (cualidad, valor) => {
     return carta;
 }
 
-let cartasElegidas = [];
-
 const agregarCarta = (idCarta) => {
-    let cartaElegida = buscarCarta("id", idCarta);
-    conjuntoElegido = null;
-
-    cartasElegidas.forEach(conjuntoCartas => {
-        if (conjuntoCartas.carta == cartaElegida) {
-            conjuntoElegido = conjuntoCartas;
-        }
-    })
-
+    let conjuntoElegido = buscarConjunto(idCarta);
     if (conjuntoElegido != null) {
         if (conjuntoElegido.cantidad < 4) {
             conjuntoElegido.cantidad = conjuntoElegido.cantidad + 1;
+            conjuntoElegido.importeTotal = parseFloat((conjuntoElegido.carta.precio * conjuntoElegido.cantidad).toFixed(2));
             modificarSelecionadas(conjuntoElegido);
+            modificarFooter();
         }
     } else {
         let conjuntoCartas = {
-            carta: cartaElegida,
-            cantidad: 1
+            carta: buscarCarta("id", idCarta),
+            cantidad: 1,
+            importeTotal: 0
         }
+        conjuntoCartas.importeTotal = parseFloat((conjuntoCartas.carta.precio * conjuntoCartas.cantidad).toFixed(2));
+
         cartasElegidas.push(conjuntoCartas);
         modificarSelecionadas(conjuntoCartas);
+        modificarFooter();
     }
 }
 
 const quitarCarta = (idCarta) => {
+    let conjuntoElegido = buscarConjunto(idCarta);
+    conjuntoElegido.cantidad = conjuntoElegido.cantidad - 1;
+    conjuntoElegido.importeTotal = parseFloat((conjuntoElegido.carta.precio * conjuntoElegido.cantidad).toFixed(2));
+    modificarSelecionadas(conjuntoElegido);
+    modificarFooter();
+    if (conjuntoElegido.cantidad == 0) {
+        let indice = cartasElegidas.indexOf(conjuntoElegido);
+        cartasElegidas.splice(indice, 1);
+    }
+}
+
+const buscarConjunto = (idCarta) => {
     let cartaElegida = buscarCarta("id", idCarta);
     conjuntoElegido = null;
 
@@ -188,18 +199,12 @@ const quitarCarta = (idCarta) => {
             conjuntoElegido = conjuntoCartas;
         }
     })
-
-    if (conjuntoElegido != null) {
-        if (conjuntoElegido.cantidad > 0) {
-            conjuntoElegido.cantidad = conjuntoElegido.cantidad - 1;
-            modificarSelecionadas(conjuntoElegido);
-        }
-    }
+    return conjuntoElegido;
 }
 
 const modificarSelecionadas = (conjuntoCartas) => {
 
-    /* TODO: troncar los numeros del precio total y modificar el appendChild */
+    /* TODO: modificar el appendChild */
 
     let trExistente = document.getElementsByName(conjuntoCartas.carta.id)[0];
     if (trExistente != null) trExistente.remove();
@@ -213,12 +218,38 @@ const modificarSelecionadas = (conjuntoCartas) => {
         template.querySelectorAll("td")[0].textContent = conjuntoCartas.carta.nombre;
         template.querySelectorAll("td")[1].textContent = conjuntoCartas.carta.precio + " €";
         template.querySelectorAll("td")[2].textContent = conjuntoCartas.cantidad;
-        template.querySelectorAll("td")[4].textContent = conjuntoCartas.carta.precio * conjuntoCartas.cantidad + " €";
+        template.querySelectorAll("td")[4].textContent = conjuntoCartas.importeTotal + " €";
 
         const clone = template.cloneNode(true);
         fragment.appendChild(clone);
-        DOM.cartasSeleccionadas.appendChild(fragment);
+        DOM.bodySeleccionadas.appendChild(fragment);
     }
+}
+
+const modificarFooter = () => {
+    if (DOM.footerSeleccionadas.innerHTML != "") DOM.footerSeleccionadas.innerHTML = "";
+    const fragment = document.createDocumentFragment();
+    let template;
+
+    if (cartasElegidas.length == 0) {
+        template = document.getElementById("footerVacio").content;
+    } else {
+        let contadores = {
+            cartas: 0,
+            importe: 0
+        }
+
+        cartasElegidas.forEach(conjunto => {
+            contadores.cartas = contadores.cartas + conjunto.cantidad;
+            contadores.importe = parseFloat((contadores.importe + conjunto.importeTotal).toFixed(2));
+        })
+        template = document.getElementById("footerLLeno").content;
+        template.querySelectorAll("td")[1].textContent = contadores.cartas;
+        template.querySelectorAll("td")[3].textContent = contadores.importe + " €";
+    }
+    const clone = template.cloneNode(true);
+    fragment.appendChild(clone);
+    DOM.footerSeleccionadas.appendChild(fragment);
 }
 
 const crearCookie = (clave, valor, expedicion = "365") => {
@@ -247,7 +278,7 @@ const leerCookie = (claveIntroducida) => {
     }
 }
 
-DOM.cartasSeleccionadas.addEventListener("click", (e) => {
+DOM.bodySeleccionadas.addEventListener("click", (e) => {
     if (e.target.name == "sumarCarta") {
         agregarCarta(e.target.closest("tr").getAttribute("name"));
     }
@@ -265,25 +296,27 @@ DOM.cartas.addEventListener("click", (e) => {
 DOM.mazo.addEventListener("click", (e) => {
     crearCookie("Mazo", e.target.id);
     DOM.seleccionMazo.innerHTML = e.target.innerHTML;
-    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi();
 });
 
 DOM.idiomas.addEventListener("click", (e) => {
     crearCookie("Idioma", e.target.id);
     DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
-    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
+    cartasElegidas = [];
+    DOM.bodySeleccionadas.innerHTML = "";
 });
 
 DOM.cualidad.addEventListener("click", (e) => {
     crearCookie("Cualidad", e.target.id);
     DOM.seleccionCualidad.innerHTML = e.target.innerHTML;
-    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
 });
 
 DOM.orden.addEventListener("click", (e) => {
     crearCookie("Orden", e.target.id);
     DOM.seleccionOrden.innerHTML = e.target.innerHTML;
-    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
 });
 
 window.onload = () => {
@@ -295,5 +328,5 @@ window.onload = () => {
     DOM.seleccionIdioma.innerHTML = document.getElementById(leerCookie("Idioma")).innerHTML;
     DOM.seleccionCualidad.innerHTML = document.getElementById(leerCookie("Cualidad")).innerHTML;
     DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
-    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"), leerCookie("Cualidad"), leerCookie("Orden"));
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
 }

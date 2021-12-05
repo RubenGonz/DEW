@@ -116,20 +116,18 @@
                     <table class="table table-responsive">
                         <thead>
                             <tr>
-                                <th scope="col" class="text-center">Nombre</th>
+                                <th scope="col">Nombre</th>
                                 <th scope="col" class="text-center">Precio</th>
                                 <th scope="col" class="text-center">Cantidad</th>
                                 <th scope="col" class="text-center">Acción</th>
                                 <th scope="col" class="text-center">Total</th>
                             </tr>
                         </thead>
-                        <tbody id="cartasSeleccionadas">
+                        <tbody id="bodySeleccionadas">
                             
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="5" class="text-center fw-bold">No hay cartas seleccionadas</td>
-                            </tr>
+                        <tfoot id="footerSeleccionadas">
+                            
                         </tfoot>
                     </table>
                 </div>
@@ -143,11 +141,11 @@
 
     <template id="cartaApi">
         <div class="card carta m-2">
-            <img src="Direccion de la carta" class="card-img-top imgCarta" alt="...">
+            <img src="" class="card-img-top imgCarta" alt="">
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Nombre de la carta</h5>
+                <h5 class="card-title"></h5>
                 <hr class="m-1">
-                <p class="card-text">Precio de la carta</p>
+                <p class="card-text text-center"></p>
                 <a class="btn btn-outline-primary ms-auto mt-auto">Seleccionar</a>
             </div>
         </div>
@@ -155,14 +153,29 @@
 
     <template id="cartaColumna">
         <tr name="id" >
-            <td class="fw-bold">Ugin</td>
-            <td class="text-center">100€</td>
-            <td class="text-center">1</td>
+            <td class="fw-bold"></td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
             <td class="d-flex flex-row">
                 <button name="sumarCarta" class="btn btn-info btn-sm w-100">+</button>
                 <button name="restarCarta" class="btn btn-danger btn-sm w-100">-</button>
             </td>
-            <td class="text-center">100€</td>
+            <td class="text-center"></td>
+        </tr>
+    </template>
+
+    <template id="footerVacio">
+        <tr>
+            <td colspan="5" class="text-center fw-bold">No hay cartas seleccionadas</td>
+        </tr>
+    </template>
+
+    <template id="footerLLeno">
+        <tr>
+            <td colspan="2" class="fw-bold">Cartas totales</td>
+            <td class="fw-bold text-center"></td>
+            <td class="fw-bold text-center">Importe total</td>
+            <td class="fw-bold text-center"></td>
         </tr>
     </template>
 
