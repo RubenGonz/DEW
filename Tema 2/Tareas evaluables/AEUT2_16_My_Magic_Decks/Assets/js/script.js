@@ -20,35 +20,44 @@ const apisBasicas = {
     "Introductory Two-Player": "https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&unique=prints"
 }
 
-class cartaNormal {
-    constructor(id, nombre, descripcion, precio, baraja, colorIdentificador, tipo, mana, imagen) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.baraja = baraja;
-        this.colorIdentificador = colorIdentificador;
-        this.tipo = tipo;
-        this.mana = mana;
-        this.imagen = imagen;
+class carta {
+    constructor(info) {
+        this.info = info;
+        this.cantidad = 1;
+        this.importeTotal = 0;
+        this.calcularImporte();
     }
-}
 
-class cartaCriatura extends cartaNormal {
-    constructor(id, nombre, descripcion, precio, baraja, colorIdentificador, tipo, mana, imagen, fuerza, resistencia) {
-        super(id, nombre, descripcion, precio, baraja, colorIdentificador, tipo, mana, imagen);
-        this.fuerza = fuerza;
-        this.resistencia = resistencia;
+    calcularImporte() {
+        this.importeTotal = parseFloat((this.info.precio * this.cantidad).toFixed(2));
     }
 }
 
 class mazo {
     constructor(cartas) {
         this.cartas = cartas;
+        this.cartasTotales = 0;
+        this.calcularCantidad();
+        this.importeMazo = 0;
+        this.calcularImporte();
+    }
+
+    calcularCantidad() {
+        let contadorCantidad = 0;
+        this.cartas.forEach(carta => {
+            contadorCantidad = contadorCantidad + carta.cantidad;
+        })
+        this.cartasTotales = contadorCantidad;
+    }
+
+    calcularImporte() {
+        let contadorImporte = 0;
+        this.cartas.forEach(carta => {
+            contadorImporte = contadorImporte + carta.importeTotal;
+        })
+        this.importeMazo = parseFloat(contadorImporte.toFixed(2));
     }
 }
-
-let cartasElegidas = [];
 
 const traducirApi = (api, idioma = "en") => {
     let seccionIdioma = api.indexOf("e%");
@@ -70,18 +79,33 @@ async function recibirCartas(apis = [], idioma) {
         let cartasApi = await respuesta.json();
         for (let cartaApi of cartasApi.data) {
             let nombreCarta;
+            let descripcionCarta;
+            let tipoCarta;
             if (idioma == "en" || idioma == undefined) {
                 nombreCarta = cartaApi.name;
+                descripcionCarta = cartaApi.oracle_text;
+                tipoCarta = cartaApi.type_line;
             } else {
                 nombreCarta = cartaApi.printed_name;
+                descripcionCarta = cartaApi.printed_text;
+                tipoCarta = cartaApi.printed_type_line;
             }
-            let cartaFinal;
-            if (!cartaApi.type_line.toLowerCase().includes("creature")) {
-                cartaFinal = new cartaNormal(cartaApi.id, nombreCarta, cartaApi.printed_text, cartaApi.prices.eur, cartaApi.set_name, cartaApi.color_identity, cartaApi.type_line, cartaApi.cmc, cartaApi.image_uris.png);
-            } else {
-                cartaFinal = new cartaCriatura(cartaApi.id, nombreCarta, cartaApi.printed_text, cartaApi.prices.eur, cartaApi.set_name, cartaApi.color_identity, cartaApi.type_line, cartaApi.cmc, cartaApi.image_uris.png, cartaApi.power, cartaApi.toughness);
+            let info = {
+                id: cartaApi.id,
+                nombre: nombreCarta,
+                descripcion: descripcionCarta,
+                precio: cartaApi.prices.eur,
+                baraja: cartaApi.set_name,
+                colorIdentificador: cartaApi.color_identity,
+                tipo: tipoCarta,
+                mana: cartaApi.cmc,
+                imagen: cartaApi.image_uris.png
             }
-            cartasFinales.push(cartaFinal);
+            if (cartaApi.type_line.toLowerCase().includes("creature")) {
+                info.fuerza = cartaApi.power;
+                info.resistencia = cartaApi.toughness;
+            }
+            cartasFinales.push(new carta(info));
         }
     }
     return new mazo(cartasFinales);
@@ -90,9 +114,9 @@ async function recibirCartas(apis = [], idioma) {
 const ordenarMazo = (mazoIntroducido, cualidad = "nombre", orden = "asc") => {
     let cartasOrdenadas = mazoIntroducido.cartas.sort(function (a, b) {
         if (typeof cualidad == "string") {
-            return (eliminarAcentos(b[cualidad]) < eliminarAcentos(a[cualidad]));
+            return (eliminarAcentos(b.info[cualidad]) < eliminarAcentos(a.info[cualidad]));
         } else {
-            return (b[cualidad] - a[cualidad]);
+            return (b.info[cualidad] - a.info[cualidad]);
         }
     })
     if (orden == "desc") cartasOrdenadas = cartasOrdenadas.reverse();
@@ -123,14 +147,14 @@ function crearCartas(cartas) {
     const template = document.getElementById("cartaApi").content;
 
     cartas.forEach(carta => {
-        template.querySelectorAll("div")[0].id = carta.id;
-        template.querySelectorAll("img")[0].src = carta.imagen;
-        template.querySelectorAll("img")[0].alt = carta.nombre;
-        template.querySelectorAll("h5")[0].textContent = carta.nombre;
-        if (carta.precio == null) {
+        template.querySelectorAll("div")[0].id = carta.info.id;
+        template.querySelectorAll("img")[0].src = carta.info.imagen;
+        template.querySelectorAll("img")[0].alt = carta.info.nombre;
+        template.querySelectorAll("h5")[0].textContent = carta.info.nombre;
+        if (carta.info.precio == null) {
             template.querySelectorAll("p")[0].textContent = "No hay precio disponible";
         } else {
-            template.querySelectorAll("p")[0].textContent = carta.precio + " €";
+            template.querySelectorAll("p")[0].textContent = carta.info.precio + " €";
         }
 
         const clone = template.cloneNode(true);
@@ -139,14 +163,12 @@ function crearCartas(cartas) {
     DOM.cartas.appendChild(fragment);
 }
 
-let mazoMostrado;
-
 const buscarCarta = (cualidad, valor) => {
     let encontrada = false;
     let i = 0;
     let carta = null;
     do {
-        if (mazoMostrado.cartas[i][cualidad] == valor) {
+        if (mazoMostrado.cartas[i].info[cualidad] == valor) {
             encontrada == true;
             carta = mazoMostrado.cartas[i];
         }
@@ -155,24 +177,34 @@ const buscarCarta = (cualidad, valor) => {
     return carta;
 }
 
+const buscarConjunto = (idCarta) => {
+    let cartaElegida = buscarCarta("id", idCarta);
+    conjuntoBuscado = null;
+
+    cartasElegidas.cartas.forEach(carta => {
+        if (carta == cartaElegida) {
+            conjuntoBuscado = carta;
+        }
+    })
+    return conjuntoBuscado;
+}
+
 const agregarCarta = (idCarta) => {
     let conjuntoElegido = buscarConjunto(idCarta);
     if (conjuntoElegido != null) {
         if (conjuntoElegido.cantidad < 4) {
             conjuntoElegido.cantidad = conjuntoElegido.cantidad + 1;
-            conjuntoElegido.importeTotal = parseFloat((conjuntoElegido.carta.precio * conjuntoElegido.cantidad).toFixed(2));
+            conjuntoElegido.calcularImporte();
+            cartasElegidas.calcularCantidad();
+            cartasElegidas.calcularImporte();
             modificarSelecionadas(conjuntoElegido);
             modificarFooter();
         }
     } else {
-        let conjuntoCartas = {
-            carta: buscarCarta("id", idCarta),
-            cantidad: 1,
-            importeTotal: 0
-        }
-        conjuntoCartas.importeTotal = parseFloat((conjuntoCartas.carta.precio * conjuntoCartas.cantidad).toFixed(2));
-
-        cartasElegidas.push(conjuntoCartas);
+        let conjuntoCartas = buscarCarta("id", idCarta);
+        cartasElegidas.cartas.push(conjuntoCartas);
+        cartasElegidas.calcularCantidad();
+        cartasElegidas.calcularImporte();
         modificarSelecionadas(conjuntoCartas);
         modificarFooter();
     }
@@ -181,32 +213,20 @@ const agregarCarta = (idCarta) => {
 const quitarCarta = (idCarta) => {
     let conjuntoElegido = buscarConjunto(idCarta);
     conjuntoElegido.cantidad = conjuntoElegido.cantidad - 1;
-    conjuntoElegido.importeTotal = parseFloat((conjuntoElegido.carta.precio * conjuntoElegido.cantidad).toFixed(2));
+    conjuntoElegido.calcularImporte();
+    cartasElegidas.calcularCantidad();
+    cartasElegidas.calcularImporte();
     modificarSelecionadas(conjuntoElegido);
     modificarFooter();
     if (conjuntoElegido.cantidad == 0) {
-        let indice = cartasElegidas.indexOf(conjuntoElegido);
-        cartasElegidas.splice(indice, 1);
+        let indice = cartasElegidas.cartas.indexOf(conjuntoElegido);
+        cartasElegidas.cartas.splice(indice, 1);
     }
-}
-
-const buscarConjunto = (idCarta) => {
-    let cartaElegida = buscarCarta("id", idCarta);
-    conjuntoElegido = null;
-
-    cartasElegidas.forEach(conjuntoCartas => {
-        if (conjuntoCartas.carta == cartaElegida) {
-            conjuntoElegido = conjuntoCartas;
-        }
-    })
-    return conjuntoElegido;
 }
 
 const modificarSelecionadas = (conjuntoCartas) => {
 
-    /* TODO: modificar el appendChild */
-
-    let trExistente = document.getElementsByName(conjuntoCartas.carta.id)[0];
+    let trExistente = document.getElementsByName(conjuntoCartas.info.id)[0];
     if (trExistente != null) trExistente.remove();
     if (conjuntoCartas.cantidad == 0) {
         trExistente.remove();
@@ -214,9 +234,9 @@ const modificarSelecionadas = (conjuntoCartas) => {
         const fragment = document.createDocumentFragment();
         const template = document.getElementById("cartaColumna").content;
 
-        template.querySelectorAll("tr")[0].setAttribute("name", conjuntoCartas.carta.id);
-        template.querySelectorAll("td")[0].textContent = conjuntoCartas.carta.nombre;
-        template.querySelectorAll("td")[1].textContent = conjuntoCartas.carta.precio + " €";
+        template.querySelectorAll("tr")[0].setAttribute("name", conjuntoCartas.info.id);
+        template.querySelectorAll("td")[0].textContent = conjuntoCartas.info.nombre;
+        template.querySelectorAll("td")[1].textContent = conjuntoCartas.info.precio + " €";
         template.querySelectorAll("td")[2].textContent = conjuntoCartas.cantidad;
         template.querySelectorAll("td")[4].textContent = conjuntoCartas.importeTotal + " €";
 
@@ -231,21 +251,12 @@ const modificarFooter = () => {
     const fragment = document.createDocumentFragment();
     let template;
 
-    if (cartasElegidas.length == 0) {
+    if (cartasElegidas.cartas.length == 0) {
         template = document.getElementById("footerVacio").content;
     } else {
-        let contadores = {
-            cartas: 0,
-            importe: 0
-        }
-
-        cartasElegidas.forEach(conjunto => {
-            contadores.cartas = contadores.cartas + conjunto.cantidad;
-            contadores.importe = parseFloat((contadores.importe + conjunto.importeTotal).toFixed(2));
-        })
         template = document.getElementById("footerLLeno").content;
-        template.querySelectorAll("td")[1].textContent = contadores.cartas;
-        template.querySelectorAll("td")[3].textContent = contadores.importe + " €";
+        template.querySelectorAll("td")[1].textContent = cartasElegidas.cartasTotales;
+        template.querySelectorAll("td")[3].textContent = cartasElegidas.importeMazo + " €";
     }
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
@@ -303,8 +314,9 @@ DOM.idiomas.addEventListener("click", (e) => {
     crearCookie("Idioma", e.target.id);
     DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
-    cartasElegidas = [];
+    cartasElegidas = new mazo([]);
     DOM.bodySeleccionadas.innerHTML = "";
+    modificarFooter();
 });
 
 DOM.cualidad.addEventListener("click", (e) => {
@@ -329,4 +341,8 @@ window.onload = () => {
     DOM.seleccionCualidad.innerHTML = document.getElementById(leerCookie("Cualidad")).innerHTML;
     DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
+    modificarFooter();
 }
+
+let mazoMostrado = new mazo([]);
+let cartasElegidas = new mazo([]);
