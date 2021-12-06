@@ -22,10 +22,27 @@ const apisBasicas = {
 
 class carta {
     constructor(info) {
-        this.info = info;
+        this.info = this.intretarInfo(info);
         this.cantidad = 1;
         this.importeTotal = 0;
         this.calcularImporte();
+    }
+
+    intretarInfo(info) {
+        let infoConvertida = info;
+        if (infoConvertida.colores.length != 0) {
+            for (let i = 0; i < infoConvertida.colores.length; i++) {
+                if (infoConvertida.colores[i] == "W") infoConvertida.colores[i] = "White";
+                if (infoConvertida.colores[i] == "U") infoConvertida.colores[i] = "Blue";
+                if (infoConvertida.colores[i] == "B") infoConvertida.colores[i] = "Black";
+                if (infoConvertida.colores[i] == "R") infoConvertida.colores[i] = "Red";
+                if (infoConvertida.colores[i] == "G") infoConvertida.colores[i] = "Green";
+            }
+        } else {
+            infoConvertida.colores = "Carta incolora"
+        }
+        infoConvertida.colores = infoConvertida.colores.toString().replace(",", ", ");
+        return infoConvertida;
     }
 
     calcularImporte() {
@@ -190,37 +207,46 @@ const buscarConjunto = (idCarta) => {
 }
 
 const agregarCarta = (idCarta) => {
-    let conjuntoElegido = buscarConjunto(idCarta);
-    if (conjuntoElegido != null) {
-        if (conjuntoElegido.cantidad < 4) {
-            conjuntoElegido.cantidad = conjuntoElegido.cantidad + 1;
-            conjuntoElegido.calcularImporte();
+    if (cartasElegidas.cartasTotales < 60) {
+        let conjuntoElegido = buscarConjunto(idCarta);
+        if (conjuntoElegido != null) {
+            if (conjuntoElegido.cantidad < 4) {
+                conjuntoElegido.cantidad = conjuntoElegido.cantidad + 1;
+                conjuntoElegido.calcularImporte();
+                cartasElegidas.calcularCantidad();
+                cartasElegidas.calcularImporte();
+                modificarSelecionadas(conjuntoElegido);
+                modificarFooter();
+            }
+        } else {
+            let conjuntoCartas = buscarCarta("id", idCarta);
+            conjuntoCartas.cantidad = 1;
+            cartasElegidas.cartas.push(conjuntoCartas);
             cartasElegidas.calcularCantidad();
             cartasElegidas.calcularImporte();
-            modificarSelecionadas(conjuntoElegido);
+            modificarSelecionadas(conjuntoCartas);
             modificarFooter();
         }
     } else {
-        let conjuntoCartas = buscarCarta("id", idCarta);
-        cartasElegidas.cartas.push(conjuntoCartas);
-        cartasElegidas.calcularCantidad();
-        cartasElegidas.calcularImporte();
-        modificarSelecionadas(conjuntoCartas);
-        modificarFooter();
+        alert("Has alcanzado el límite de cartas");
     }
 }
 
 const quitarCarta = (idCarta) => {
-    let conjuntoElegido = buscarConjunto(idCarta);
-    conjuntoElegido.cantidad = conjuntoElegido.cantidad - 1;
-    conjuntoElegido.calcularImporte();
-    cartasElegidas.calcularCantidad();
-    cartasElegidas.calcularImporte();
-    modificarSelecionadas(conjuntoElegido);
-    modificarFooter();
-    if (conjuntoElegido.cantidad == 0) {
-        let indice = cartasElegidas.cartas.indexOf(conjuntoElegido);
-        cartasElegidas.cartas.splice(indice, 1);
+    if (cartasElegidas.cartasTotales > 0) {
+        let conjuntoElegido = buscarConjunto(idCarta);
+        conjuntoElegido.cantidad = conjuntoElegido.cantidad - 1;
+        conjuntoElegido.calcularImporte();
+        cartasElegidas.calcularCantidad();
+        cartasElegidas.calcularImporte();
+        modificarSelecionadas(conjuntoElegido);
+        modificarFooter();
+        if (conjuntoElegido.cantidad == 0) {
+            let indice = cartasElegidas.cartas.indexOf(conjuntoElegido);
+            cartasElegidas.cartas.splice(indice, 1);
+        }
+    } else {
+        alert("No puedes quitar más cartas");
     }
 }
 
@@ -284,11 +310,19 @@ const mostrarInfo = (idCarta) => {
     template.querySelectorAll("p")[5].textContent = carta.info.baraja;
     template.querySelectorAll("p")[7].textContent = carta.info.colores;
     template.querySelectorAll("p")[9].textContent = carta.info.tipo;
-    if(carta.info.fuerza != "undefined") {
-        template.querySelectorAll("p")[11].textContent = carta.info.fuerza;
+    template.querySelectorAll("p")[11].textContent = carta.info.mana;
+    if (carta.info.fuerza != undefined) {
+        if (template.querySelectorAll("li")[6].classList.contains("d-none")) template.querySelectorAll("li")[6].classList.remove("d-none");
+        template.querySelectorAll("p")[13].textContent = carta.info.fuerza;
+    } else {
+        if (!template.querySelectorAll("li")[6].classList.contains("d-none")) template.querySelectorAll("li")[6].classList.add("d-none");
     }
-    if(carta.info.resistencia != "undefined") {
-        template.querySelectorAll("p")[13].textContent = carta.info.resistencia;
+
+    if (carta.info.resistencia != undefined) {
+        if (template.querySelectorAll("li")[7].classList.contains("d-none")) template.querySelectorAll("li")[7].classList.remove("d-none");
+        template.querySelectorAll("p")[15].textContent = carta.info.resistencia;
+    } else {
+        if (!template.querySelectorAll("li")[7].classList.contains("d-none")) template.querySelectorAll("li")[7].classList.add("d-none");
     }
 
     const clone = template.cloneNode(true);
