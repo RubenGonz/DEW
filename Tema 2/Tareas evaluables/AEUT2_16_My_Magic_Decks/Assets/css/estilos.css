@@ -19,7 +19,7 @@
     justify-content: center;
     max-width: var(--anchoCarta);
     border: 2px solid gray;
-    border-radius: 13px;
+    border-radius: 10px;
 }
 
 .imgCarta {

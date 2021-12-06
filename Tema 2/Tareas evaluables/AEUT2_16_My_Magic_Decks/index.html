@@ -17,6 +17,12 @@
 </head>
 
 <body>
+    <div id="Hola">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Launch static backdrop modal
+        </button>
+    </div>
+
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
             <div class="container-fluid">
@@ -74,8 +80,7 @@
                             <ul id="cualidad" class="dropdown-menu bg-dark" aria-labelledby="seleccionCualidad">
                                 <li><button class="dropdown-item bg-dark text-light" id="nombre">Nombre</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="precio">Precio</button></li>
-                                <li><button class="dropdown-item bg-dark text-light"
-                                        id="colorIdentificador">Color</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="colores">Color</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="tipo">Tipo</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="mana">Mana</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="fuerza">Fuerza</button></li>
@@ -95,8 +100,9 @@
                         </li>
                     </ul>
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        <input class="form-control me-2" type="search" placeholder="Nombre de la carta"
+                            aria-label="Search">
+                        <button class="btn btn-outline-success" type="button">Search</button>
                     </form>
                 </div>
             </div>
@@ -124,10 +130,10 @@
                             </tr>
                         </thead>
                         <tbody id="bodySeleccionadas">
-                            
+
                         </tbody>
                         <tfoot id="footerSeleccionadas">
-                            
+
                         </tfoot>
                     </table>
                 </div>
@@ -146,13 +152,77 @@
                 <h5 class="card-title"></h5>
                 <hr class="m-1">
                 <p class="card-text text-center"></p>
-                <a class="btn btn-outline-primary ms-auto mt-auto">Seleccionar</a>
+                <a name="botonSeleccion" class="btn btn-outline-primary ms-auto mt-auto">Seleccionar</a>
+            </div>
+            <a name="botonInfo" class="btn btn-secondary border-bottom-0 mb-0">Obtener info</a>
+        </div>
+    </template>
+
+    <template id="infoCarta">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Nombre Carta</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-center">
+                            <img src="./Assets/img/Logo.png" class="card-img-top imgCarta" alt="">
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group-flush ps-0">
+                                <li class="list-group-item">
+                                    <p class="card-text">Descripción:</p>
+                                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Alias
+                                        error minus perspiciatis? Repellendus fugiat consequuntur veritatis illo
+                                        expedita, cum voluptate pariatur suscipit velit, adipisci maiores quis facere
+                                        sapiente sequi id!
+                                        Nisi quibusdam facere autem, culpa eos dicta dolor similique unde totam hic
+                                        illum fugiat qui voluptates explicabo amet quasi dolores magni ad nobis sunt.
+                                        Natus reprehenderit laboriosam nisi accusamus? Veritatis!</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <p class="card-text">Precio:</p>
+                                    <p class="card-text">5€</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <p class="card-text">Baraja:</p>
+                                    <p class="card-text">Esa misma</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <p class="card-text">Colores:</p>
+                                    <p class="card-text">Esa misma</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <p class="card-text">Tipo:</p>
+                                    <p class="card-text">Esa misma</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <p class="card-text">Mana:</p>
+                                    <p class="card-text">Esa misma</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <p class="card-text">Fuerza:</p>
+                                    <p class="card-text">Esa misma</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <p class="card-text">Resistencia:</p>
+                                    <p class="card-text">Esa misma</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="eliminarModal()">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </template>
 
     <template id="cartaColumna">
-        <tr name="id" >
+        <tr name="id">
             <td class="fw-bold"></td>
             <td class="text-center"></td>
             <td class="text-center"></td>

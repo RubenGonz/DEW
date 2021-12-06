@@ -96,7 +96,7 @@ async function recibirCartas(apis = [], idioma) {
                 descripcion: descripcionCarta,
                 precio: cartaApi.prices.eur,
                 baraja: cartaApi.set_name,
-                colorIdentificador: cartaApi.color_identity,
+                colores: cartaApi.color_identity,
                 tipo: tipoCarta,
                 mana: cartaApi.cmc,
                 imagen: cartaApi.image_uris.png
@@ -227,8 +227,8 @@ const quitarCarta = (idCarta) => {
 const modificarSelecionadas = (conjuntoCartas) => {
 
     let trExistente = document.getElementsByName(conjuntoCartas.info.id)[0];
-    if (trExistente != null) trExistente.remove();
-    if (conjuntoCartas.cantidad == 0) {
+
+    if (conjuntoCartas.cantidad == 0 && typeof trExistente != "undefined") {
         trExistente.remove();
     } else {
         const fragment = document.createDocumentFragment();
@@ -236,13 +236,21 @@ const modificarSelecionadas = (conjuntoCartas) => {
 
         template.querySelectorAll("tr")[0].setAttribute("name", conjuntoCartas.info.id);
         template.querySelectorAll("td")[0].textContent = conjuntoCartas.info.nombre;
-        template.querySelectorAll("td")[1].textContent = conjuntoCartas.info.precio + " €";
+        if (conjuntoCartas.info.precio == null) {
+            template.querySelectorAll("td")[1].textContent = "No hay precio disponible";
+        } else {
+            template.querySelectorAll("td")[1].textContent = conjuntoCartas.info.precio + " €";
+        }
         template.querySelectorAll("td")[2].textContent = conjuntoCartas.cantidad;
         template.querySelectorAll("td")[4].textContent = conjuntoCartas.importeTotal + " €";
 
         const clone = template.cloneNode(true);
         fragment.appendChild(clone);
-        DOM.bodySeleccionadas.appendChild(fragment);
+        if (typeof trExistente == "undefined") {
+            DOM.bodySeleccionadas.appendChild(fragment);
+        } else {
+            DOM.bodySeleccionadas.replaceChild(fragment, trExistente);
+        }
     }
 }
 
@@ -261,6 +269,35 @@ const modificarFooter = () => {
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
     DOM.footerSeleccionadas.appendChild(fragment);
+}
+
+const mostrarInfo = (idCarta) => {
+    let carta = buscarCarta("id", idCarta);
+    const fragment = document.createDocumentFragment();
+    const template = document.getElementById("infoCarta").content;
+
+    template.querySelectorAll("h5")[0].textContent = carta.info.nombre;
+    template.querySelectorAll("img")[0].src = carta.info.imagen;
+    template.querySelectorAll("img")[0].alt = carta.info.nombre;
+    template.querySelectorAll("p")[1].textContent = carta.info.descripcion;
+    template.querySelectorAll("p")[3].textContent = carta.info.precio + " €";
+    template.querySelectorAll("p")[5].textContent = carta.info.baraja;
+    template.querySelectorAll("p")[7].textContent = carta.info.colores;
+    template.querySelectorAll("p")[9].textContent = carta.info.tipo;
+    if(carta.info.fuerza != "undefined") {
+        template.querySelectorAll("p")[11].textContent = carta.info.fuerza;
+    }
+    if(carta.info.resistencia != "undefined") {
+        template.querySelectorAll("p")[13].textContent = carta.info.resistencia;
+    }
+
+    const clone = template.cloneNode(true);
+    fragment.appendChild(clone);
+    document.getElementById("Hola").appendChild(fragment);
+}
+
+const eliminarModal = () => {
+    document.getElementById("staticBackdrop").remove();
 }
 
 const crearCookie = (clave, valor, expedicion = "365") => {
@@ -299,8 +336,11 @@ DOM.bodySeleccionadas.addEventListener("click", (e) => {
 });
 
 DOM.cartas.addEventListener("click", (e) => {
-    if (e.target.id != "cartas") {
+    if (e.target.nodeName == "IMG" || e.target.name == "botonSeleccion") {
         agregarCarta(e.target.closest(".carta").id);
+    }
+    if (e.target.name == "botonInfo") {
+        mostrarInfo(e.target.closest(".carta").id);
     }
 });
 
