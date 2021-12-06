@@ -327,7 +327,7 @@ const mostrarInfo = (idCarta) => {
 
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
-    document.getElementById("Hola").appendChild(fragment);
+    document.getElementById("modal").appendChild(fragment);
 }
 
 const eliminarModal = () => {
@@ -373,6 +373,12 @@ DOM.cartas.addEventListener("click", (e) => {
     if (e.target.nodeName == "IMG" || e.target.name == "botonSeleccion") {
         agregarCarta(e.target.closest(".carta").id);
     }
+    if (e.target.name == "botonInfo") {
+        mostrarInfo(e.target.closest(".carta").id);
+    }
+});
+
+DOM.cartas.addEventListener("mouseover", (e) => {
     if (e.target.name == "botonInfo") {
         mostrarInfo(e.target.closest(".carta").id);
     }
