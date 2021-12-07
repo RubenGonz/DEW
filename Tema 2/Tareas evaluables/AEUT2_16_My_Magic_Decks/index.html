@@ -17,9 +17,6 @@
 </head>
 
 <body>
-    <div id="modal">
-    </div>
-
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
             <div class="container-fluid">
@@ -44,7 +41,7 @@
                                 Mazo
                             </a>
                             <ul id="mazo" class="dropdown-menu bg-dark" aria-labelledby="seleccionMazo">
-                                <li><button class="dropdown-item bg-dark text-light" id="Todos">Todos</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="Todas">Todas</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="Welcome Deck 2016">Welcome Deck
                                         2016</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="Ugin's Fate">Ugin's
@@ -77,6 +74,7 @@
                             <ul id="cualidad" class="dropdown-menu bg-dark" aria-labelledby="seleccionCualidad">
                                 <li><button class="dropdown-item bg-dark text-light" id="nombre">Nombre</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="precio">Precio</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="baraja">Baraja</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="colores">Color</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="tipo">Tipo</button></li>
                                 <li><button class="dropdown-item bg-dark text-light" id="mana">Mana</button></li>
@@ -97,9 +95,9 @@
                         </li>
                     </ul>
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Nombre de la carta"
+                        <input id="inputBuscador" class="form-control me-2" type="text" placeholder="Nombre de la carta"
                             aria-label="Search">
-                        <button class="btn btn-outline-success" type="button">Search</button>
+                        <button id="botonBuscador" class="btn btn-outline-success" type="button" on>Search</button>
                     </form>
                 </div>
             </div>
@@ -149,9 +147,10 @@
                 <h5 class="card-title"></h5>
                 <hr class="m-1">
                 <p class="card-text text-center"></p>
-                <a name="botonSeleccion" class="btn btn-outline-primary ms-auto mt-auto">Seleccionar</a>
+                <a class="btn btn-outline-primary ms-auto mt-auto">Seleccionar</a>
             </div>
-            <button type="button" name="botonInfo" class="btn btn-secondary border-bottom-0 mb-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+
+            <button type="button" name="botonInfo" class="btn btn-secondary border-bottom-0 mb-0">
                 Obtener info
             </button>
         </div>

@@ -9,10 +9,13 @@ const DOM = {
     orden: document.getElementById("orden"),
     cartas: document.getElementById("cartas"),
     bodySeleccionadas: document.getElementById("bodySeleccionadas"),
-    footerSeleccionadas: document.getElementById("footerSeleccionadas")
+    footerSeleccionadas: document.getElementById("footerSeleccionadas"),
+    inputBuscador: document.getElementById("inputBuscador"),
+    botonBuscador: document.getElementById("botonBuscador")
 }
 
 const apisBasicas = {
+    "Todas": "Todas",
     "Welcome Deck 2016": "https://api.scryfall.com/cards/search?order=set&q=e%3Aw16&unique=prints",
     "Ugin's Fate": "https://api.scryfall.com/cards/search?order=set&q=e%3Augin&unique=prints",
     "Welcome Deck 2017": "https://api.scryfall.com/cards/search?order=set&q=e%3Aw17&unique=prints",
@@ -42,6 +45,11 @@ class carta {
             infoConvertida.colores = "Carta incolora"
         }
         infoConvertida.colores = infoConvertida.colores.toString().replace(",", ", ");
+
+        infoConvertida.precio = parseFloat(infoConvertida.precio);
+        if (infoConvertida.fuerza != null) infoConvertida.fuerza = parseFloat(infoConvertida.fuerza);
+        if (infoConvertida.resistencia != null) infoConvertida.resistencia = parseFloat(infoConvertida.resistencia);
+
         return infoConvertida;
     }
 
@@ -83,9 +91,9 @@ const traducirApi = (api, idioma = "en") => {
 
 async function recibirCartas(apis = [], idioma) {
     let apisFinales = [];
-    if (apis == ["Todos"]) {
+    if (apis == "Todas") {
         Object.values(apisBasicas).forEach(api => {
-            apisFinales.push(traducirApi(api, idioma));
+            if (api != "Todas") apisFinales.push(traducirApi(api, idioma));
         })
     } else {
         apisFinales.push(traducirApi(apis[0], idioma));
@@ -129,13 +137,18 @@ async function recibirCartas(apis = [], idioma) {
 }
 
 const ordenarMazo = (mazoIntroducido, cualidad = "nombre", orden = "asc") => {
-    let cartasOrdenadas = mazoIntroducido.cartas.sort(function (a, b) {
-        if (typeof cualidad == "string") {
-            return (eliminarAcentos(b.info[cualidad]) < eliminarAcentos(a.info[cualidad]));
-        } else {
-            return (b.info[cualidad] - a.info[cualidad]);
-        }
-    })
+    let cartasOrdenadas;
+    if (cualidad != "fuerza" && cualidad != "resistencia") {
+        cartasOrdenadas = mazoIntroducido.cartas.sort(function (a, b) {
+            if (typeof a.info[cualidad] == "string") {
+                return (eliminarAcentos(b.info[cualidad]) < eliminarAcentos(a.info[cualidad]));
+            } else {
+                return (a.info[cualidad] - b.info[cualidad]);
+            }
+        })
+    } else {
+
+    }
     if (orden == "desc") cartasOrdenadas = cartasOrdenadas.reverse();
     return new mazo(cartasOrdenadas);
 }
@@ -327,11 +340,25 @@ const mostrarInfo = (idCarta) => {
 
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
-    document.getElementById("modal").appendChild(fragment);
+
+    if (document.getElementById('staticBackdrop') == null) {
+        document.body.appendChild(fragment);
+    } else {
+        document.getElementById('staticBackdrop').remove();
+        document.body.appendChild(fragment);
+    }
+
+    myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), "static")
+    myModal.show();
 }
 
+let myModal;
+
 const eliminarModal = () => {
-    document.getElementById("staticBackdrop").remove();
+    myModal.hide();
+    if (document.getElementById('staticBackdrop') != null) {
+        document.getElementById('staticBackdrop').remove();
+    }
 }
 
 const crearCookie = (clave, valor, expedicion = "365") => {
@@ -360,6 +387,11 @@ const leerCookie = (claveIntroducida) => {
     }
 }
 
+DOM.botonBuscador.addEventListener("click", () => {
+    let cartaBuscada = buscarCarta("nombre",DOM.inputBuscador.value);
+    if (cartaBuscada != null) mostrarInfo(cartaBuscada.info.id);
+});
+
 DOM.bodySeleccionadas.addEventListener("click", (e) => {
     if (e.target.name == "sumarCarta") {
         agregarCarta(e.target.closest("tr").getAttribute("name"));
@@ -370,7 +402,7 @@ DOM.bodySeleccionadas.addEventListener("click", (e) => {
 });
 
 DOM.cartas.addEventListener("click", (e) => {
-    if (e.target.nodeName == "IMG" || e.target.name == "botonSeleccion") {
+    if (e.target.nodeName == "IMG" || e.target.nodeName == "A") {
         agregarCarta(e.target.closest(".carta").id);
     }
     if (e.target.name == "botonInfo") {
@@ -378,7 +410,7 @@ DOM.cartas.addEventListener("click", (e) => {
     }
 });
 
-DOM.cartas.addEventListener("mouseover", (e) => {
+DOM.cartas.addEventListener("click", (e) => {
     if (e.target.name == "botonInfo") {
         mostrarInfo(e.target.closest(".carta").id);
     }
@@ -387,7 +419,7 @@ DOM.cartas.addEventListener("mouseover", (e) => {
 DOM.mazo.addEventListener("click", (e) => {
     crearCookie("Mazo", e.target.id);
     DOM.seleccionMazo.innerHTML = e.target.innerHTML;
-    recibirMazoApi();
+    recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
 });
 
 DOM.idiomas.addEventListener("click", (e) => {
@@ -412,7 +444,7 @@ DOM.orden.addEventListener("click", (e) => {
 });
 
 window.onload = () => {
-    if (!comprobarCookie("Mazo")) crearCookie("Mazo", "Welcome Deck 2016");
+    if (!comprobarCookie("Mazo")) crearCookie("Mazo", "Todas");
     if (!comprobarCookie("Idioma")) crearCookie("Idioma", "es");
     if (!comprobarCookie("Cualidad")) crearCookie("Cualidad", "nombre");
     if (!comprobarCookie("Orden")) crearCookie("Orden", "asc");
