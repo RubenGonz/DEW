@@ -172,27 +172,6 @@ const mostrarMazo = (mazo, cualidad, orden) => {
     crearCartas(mazoOrdenado.cartas);
 }
 
-function crearCartas(cartas) {
-    const fragment = document.createDocumentFragment();
-    const template = document.getElementById("cartaApi").content;
-
-    cartas.forEach(carta => {
-        template.querySelectorAll("div")[0].id = carta.info.id;
-        template.querySelectorAll("img")[0].src = carta.info.imagen;
-        template.querySelectorAll("img")[0].alt = carta.info.nombre;
-        template.querySelectorAll("h5")[0].textContent = carta.info.nombre;
-        if (carta.info.precio == null) {
-            template.querySelectorAll("p")[0].textContent = "No hay precio disponible";
-        } else {
-            template.querySelectorAll("p")[0].textContent = carta.info.precio + " €";
-        }
-
-        const clone = template.cloneNode(true);
-        fragment.appendChild(clone);
-    });
-    DOM.cartas.appendChild(fragment);
-}
-
 const buscarCarta = (cualidad, valor) => {
     let encontrada = false;
     let i = 0;
@@ -263,32 +242,71 @@ const quitarCarta = (idCarta) => {
     }
 }
 
-const modificarSelecionadas = (conjuntoCartas) => {
+const eliminarModal = () => {
+    modalInfo.hide();
+    if (document.getElementById('staticBackdrop') != null) {
+        document.getElementById('staticBackdrop').remove();
+    }
+}
 
-    let trExistente = document.getElementsByName(conjuntoCartas.info.id)[0];
+const guardarMazo = () => {
+    let mazoFinal = cartasElegidas;
+    cartasElegidas = new mazo([]);
+    modificarSelecionadas();
+    modificarFooter();
+    console.log(mazoFinal);
+}
 
-    if (conjuntoCartas.cantidad == 0 && typeof trExistente != "undefined") {
-        trExistente.remove();
-    } else {
-        const fragment = document.createDocumentFragment();
-        const template = document.getElementById("cartaColumna").content;
+function crearCartas(cartas) {
+    const fragment = document.createDocumentFragment();
+    const template = document.getElementById("cartaApi").content;
 
-        template.querySelectorAll("tr")[0].setAttribute("name", conjuntoCartas.info.id);
-        template.querySelectorAll("td")[0].textContent = conjuntoCartas.info.nombre;
-        if (conjuntoCartas.info.precio == null) {
-            template.querySelectorAll("td")[1].textContent = "No hay precio disponible";
+    cartas.forEach(carta => {
+        template.querySelectorAll("div")[0].id = carta.info.id;
+        template.querySelectorAll("img")[0].src = carta.info.imagen;
+        template.querySelectorAll("img")[0].alt = carta.info.nombre;
+        template.querySelectorAll("h5")[0].textContent = carta.info.nombre;
+        if (carta.info.precio == null) {
+            template.querySelectorAll("p")[0].textContent = "No hay precio disponible";
         } else {
-            template.querySelectorAll("td")[1].textContent = conjuntoCartas.info.precio + " €";
+            template.querySelectorAll("p")[0].textContent = carta.info.precio + " €";
         }
-        template.querySelectorAll("td")[2].textContent = conjuntoCartas.cantidad;
-        template.querySelectorAll("td")[4].textContent = conjuntoCartas.importeTotal + " €";
 
         const clone = template.cloneNode(true);
         fragment.appendChild(clone);
-        if (typeof trExistente == "undefined") {
-            DOM.bodySeleccionadas.appendChild(fragment);
+    });
+    DOM.cartas.appendChild(fragment);
+}
+
+const modificarSelecionadas = (conjuntoCartas = null) => {
+    if (conjuntoCartas == null) {
+        DOM.bodySeleccionadas.innerHTML = "";
+    } else {
+        let trExistente = document.getElementsByName(conjuntoCartas.info.id)[0];
+
+        if (conjuntoCartas.cantidad == 0 && typeof trExistente != "undefined") {
+            trExistente.remove();
         } else {
-            DOM.bodySeleccionadas.replaceChild(fragment, trExistente);
+            const fragment = document.createDocumentFragment();
+            const template = document.getElementById("cartaColumna").content;
+
+            template.querySelectorAll("tr")[0].setAttribute("name", conjuntoCartas.info.id);
+            template.querySelectorAll("td")[0].textContent = conjuntoCartas.info.nombre;
+            if (conjuntoCartas.info.precio == null) {
+                template.querySelectorAll("td")[1].textContent = "No hay precio disponible";
+            } else {
+                template.querySelectorAll("td")[1].textContent = conjuntoCartas.info.precio + " €";
+            }
+            template.querySelectorAll("td")[2].textContent = conjuntoCartas.cantidad;
+            template.querySelectorAll("td")[4].textContent = conjuntoCartas.importeTotal + " €";
+
+            const clone = template.cloneNode(true);
+            fragment.appendChild(clone);
+            if (typeof trExistente == "undefined") {
+                DOM.bodySeleccionadas.appendChild(fragment);
+            } else {
+                DOM.bodySeleccionadas.replaceChild(fragment, trExistente);
+            }
         }
     }
 }
@@ -309,6 +327,7 @@ const modificarFooter = () => {
             template.querySelectorAll("span")[0].textContent = "El mazo debe tener 60 cartas para poder guardarse";
         } else {
             if (template.querySelectorAll("button")[0].classList.contains("disabled")) template.querySelectorAll("button")[0].classList.remove("disabled");
+            template.querySelectorAll("button")[0].setAttribute("onclick", "guardarMazo()");
             template.querySelectorAll("span")[0].textContent = "";
         }
     }
@@ -357,17 +376,8 @@ const mostrarInfo = (idCarta) => {
         document.body.appendChild(fragment);
     }
 
-    myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), "static")
-    myModal.show();
-}
-
-let myModal;
-
-const eliminarModal = () => {
-    myModal.hide();
-    if (document.getElementById('staticBackdrop') != null) {
-        document.getElementById('staticBackdrop').remove();
-    }
+    modalInfo = new bootstrap.Modal(document.getElementById('staticBackdrop'), "static")
+    modalInfo.show();
 }
 
 const crearCookie = (clave, valor, expedicion = "365") => {
@@ -457,8 +467,8 @@ window.onload = () => {
     DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
     modificarFooter();
-    document.getElementsByClassName("scroll")[0].style.height = "85vh";
 }
 
 let mazoMostrado = new mazo([]);
 let cartasElegidas = new mazo([]);
+let modalInfo;
