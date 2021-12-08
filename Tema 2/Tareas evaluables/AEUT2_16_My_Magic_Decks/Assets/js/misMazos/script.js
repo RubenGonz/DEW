@@ -167,7 +167,6 @@ const mostrarInfo = (idCarta) => {
         if (!template.querySelectorAll("li")[7].classList.contains("d-none")) template.querySelectorAll("li")[7].classList.add("d-none");
     }
 
-    template.querySelectorAll("a")[0].setAttribute("onclick", "agregarCarta('" + carta.info.id + "')");
     template.querySelectorAll("button")[0].setAttribute("onclick", "eliminarModal()");
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
@@ -197,6 +196,38 @@ const generarOpciones = (mazo = mazoMostrado) => {
     DOM.listaOpciones.appendChild(fragment);
 }
 
+const obtenerMazosCreados = () => {
+    return JSON.parse(almacenamientoLocal.getItem("Mazos hechos"))
+}
+
+const añadirMazoCreado = (nuevoMazo) => {
+    let mazosActuales = obtenerMazosCreados();
+    mazosActuales.push(nuevoMazo);
+    almacenamientoLocal.setItem("Mazos hechos",JSON.stringify(mazosActuales));
+}
+
+const generarMazosCreados = () => {
+    if (DOM.mazo.innerHTML != "") DOM.mazo.innerHTML = "";
+
+    const fragment = document.createDocumentFragment();
+    const template = document.getElementById("plantillaMazos").content;
+    obtenerMazosCreados().forEach(mazoCreado => {
+        template.querySelectorAll("button")[0].id = mazoCreado.nombre;
+        template.querySelectorAll("button")[0].innerHTML = mazoCreado.nombre;
+        const clone = template.cloneNode(true);
+        fragment.appendChild(clone);
+    });
+    DOM.mazo.appendChild(fragment);
+}
+
+const buscarMazo = (nombreMazo) => {
+    let mazoEncontrado = null;
+    obtenerMazosCreados().forEach(mazoCreado => {
+        if (mazoCreado.nombre == nombreMazo) mazoEncontrado = mazoCreado; 
+    })
+    return mazoEncontrado;
+}
+
 const crearCookie = (clave, valor, expedicion = "365") => {
     let date = new Date();
     date.setTime(date.getTime() + (expedicion * 24 * 60 * 60 * 1000));
@@ -222,6 +253,24 @@ const leerCookie = (claveIntroducida) => {
         return valorCookie;
     }
 }
+
+DOM.mazo.addEventListener("click", (e) => {
+    DOM.seleccionMazo.innerHTML = e.target.innerHTML;
+    mostrarMazo(buscarMazo(DOM.seleccionMazo.innerHTML),leerCookie("Cualidad"),leerCookie("Orden"));
+    generarOpciones();
+});
+
+DOM.cualidad.addEventListener("click", (e) => {
+    crearCookie("Cualidad", e.target.id);
+    DOM.seleccionCualidad.innerHTML = e.target.innerHTML;
+    mostrarMazo(buscarMazo(DOM.seleccionMazo.innerHTML),leerCookie("Cualidad"),leerCookie("Orden"));
+});
+
+DOM.orden.addEventListener("click", (e) => {
+    crearCookie("Orden", e.target.id);
+    DOM.seleccionOrden.innerHTML = e.target.innerHTML;
+    mostrarMazo(buscarMazo(DOM.seleccionMazo.innerHTML),leerCookie("Cualidad"),leerCookie("Orden"));
+});
 
 DOM.inputBuscador.addEventListener("keydown", (e) => {
     if (e.key == "Enter") {
@@ -251,22 +300,18 @@ DOM.cartas.addEventListener("click", (e) => {
     }
 });
 
-DOM.cualidad.addEventListener("click", (e) => {
-    crearCookie("Cualidad", e.target.id);
-    DOM.seleccionCualidad.innerHTML = e.target.innerHTML;
-});
-
-DOM.orden.addEventListener("click", (e) => {
-    crearCookie("Orden", e.target.id);
-    DOM.seleccionOrden.innerHTML = e.target.innerHTML;
-});
-
 window.onload = () => {
     if (!comprobarCookie("Cualidad")) crearCookie("Cualidad", "nombre");
     if (!comprobarCookie("Orden")) crearCookie("Orden", "asc");
+    DOM.seleccionMazo.innerHTML = obtenerMazosCreados()[0].nombre;
     DOM.seleccionCualidad.innerHTML = document.getElementById(leerCookie("Cualidad")).innerHTML;
     DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
+    generarMazosCreados();
+    mostrarMazo(obtenerMazosCreados()[0],leerCookie("Cualidad"),leerCookie("Orden"));
+    generarOpciones();
 }
+
 
 let mazoMostrado = new mazo([]);
 let modalInfo;
+let almacenamientoLocal = window.localStorage;

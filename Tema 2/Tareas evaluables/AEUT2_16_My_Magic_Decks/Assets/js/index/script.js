@@ -250,11 +250,25 @@ const eliminarModal = () => {
 }
 
 const guardarMazo = () => {
-    let mazoFinal = cartasElegidas;
-    cartasElegidas = new mazo([]);
-    modificarSelecionadas();
-    modificarFooter();
-    añadirMazoCreado(mazoFinal);
+    let nombreMazo = prompt("Introduzca el nombre que le quiere dar a su mazo");
+    if (nombreMazo != undefined && nombreMazo != "" && !existeMazoCreado(nombreMazo)) {
+        let mazoFinal = cartasElegidas;
+        mazoFinal.nombre = nombreMazo;
+        cartasElegidas = new mazo([]);
+        modificarSelecionadas();
+        modificarFooter();
+        añadirMazoCreado(mazoFinal);   
+    } else {
+        alert("No ha introducido un nombre válido, vuelve a intentarlo")
+    }
+}
+
+const existeMazoCreado = (nombreMazo) => {
+    let encontrado = false;
+    obtenerMazosCreados().forEach(mazoCreado => {
+        if (mazoCreado.nombre == nombreMazo) encontrado = true; 
+    })
+    return encontrado;
 }
 
 function crearCartas(cartas) {
@@ -464,12 +478,14 @@ DOM.mazo.addEventListener("click", (e) => {
     crearCookie("Mazo", e.target.id);
     DOM.seleccionMazo.innerHTML = e.target.innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
+    generarOpciones();
 });
 
 DOM.idiomas.addEventListener("click", (e) => {
     crearCookie("Idioma", e.target.id);
     DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
+    generarOpciones();
     cartasElegidas = new mazo([]);
     DOM.bodySeleccionadas.innerHTML = "";
     modificarFooter();
@@ -479,12 +495,14 @@ DOM.cualidad.addEventListener("click", (e) => {
     crearCookie("Cualidad", e.target.id);
     DOM.seleccionCualidad.innerHTML = e.target.innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
+    generarOpciones();
 });
 
 DOM.orden.addEventListener("click", (e) => {
     crearCookie("Orden", e.target.id);
     DOM.seleccionOrden.innerHTML = e.target.innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
+    generarOpciones();
 });
 
 window.onload = () => {
@@ -498,7 +516,7 @@ window.onload = () => {
     DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
     modificarFooter();
-    almacenamientoLocal.setItem("Mazos hechos",JSON.stringify([]))
+    if (JSON.parse(almacenamientoLocal.getItem("Mazos hechos")) == null) almacenamientoLocal.setItem("Mazos hechos",JSON.stringify([]))
 }
 
 let mazoMostrado = new mazo([]);

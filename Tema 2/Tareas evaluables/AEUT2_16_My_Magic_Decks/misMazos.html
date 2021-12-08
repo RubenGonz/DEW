@@ -42,10 +42,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fw-bold" id="seleccionMazo" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Mazo
+                                Nombre del mazo mostrado
                             </a>
                             <ul id="mazo" class="dropdown-menu bg-dark" aria-labelledby="seleccionMazo">
-                                <li><button class="dropdown-item bg-dark text-light" id="mazo1">Mazo1</button></li>
+                                
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -81,31 +81,6 @@
                         </datalist>
 
                         <button id="botonBuscador" class="btn btn-outline-success me-2" type="button">Search</button>
-
-                        <div class="btn-group">
-                            <button id="Login" class="btn btn-primary dropdown-toggle me-2" type="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">Login</button>
-
-                            <div class="dropdown-menu dropdown-menu-end login">
-                                <form class="px-4 py-3">
-                                    <h3 class="mb-3">Login</h3>
-                                    <div class="mb-3">
-                                        <label for="nombreUsuario" class="form-label">Nombre de usuario</label>
-                                        <input type="email" class="form-control" id="nombreUsuario"
-                                            placeholder="Juan1234">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="Contraseña" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="Contraseña" placeholder="****">
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary">Loguearse</button>
-                                    </div>
-                                </form>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item">Registrase</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -114,9 +89,11 @@
 
     <main>
         <div class="row">
-            <div class="offset-1 col-10 bg-black">
+            <div class="offset-1 col-10">
                 <h4>Cartas</h4>
-                <div id="cartas" class="p-2"></div>
+                <div id="cartas" class="p-2">
+                    <h1>Cartas del mazo</h1>
+                </div>
             </div>
         </div>
     </main>
@@ -132,7 +109,6 @@
                 <h5 class="card-title"></h5>
                 <hr class="m-1">
                 <p class="card-text text-center"></p>
-                <a class="btn btn-outline-primary ms-auto mt-auto">Seleccionar</a>
             </div>
 
             <button type="button" name="botonInfo" class="btn btn-secondary border-bottom-0 mb-0">
@@ -191,7 +167,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a class="btn btn-outline-primary ms-auto mt-auto">Seleccionar</a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -201,6 +176,10 @@
 
     <template id="plantillaOpciones">
         <option value="Valor opcion"></option>
+    </template>
+
+    <template id="plantillaMazos">
+        <li><button class="dropdown-item bg-dark text-light" id="mazo1">Mazo1</button></li>
     </template>
 
     <script src="Assets/js/misMazos/script.js"></script>
