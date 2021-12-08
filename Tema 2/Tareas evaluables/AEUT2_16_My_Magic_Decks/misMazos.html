@@ -45,29 +45,7 @@
                                 Mazo
                             </a>
                             <ul id="mazo" class="dropdown-menu bg-dark" aria-labelledby="seleccionMazo">
-                                <li><button class="dropdown-item bg-dark text-light" id="Todas">Todas</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="Welcome Deck 2016">Welcome Deck
-                                        2016</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="Ugin's Fate">Ugin's
-                                        Fate</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="Welcome Deck 2017">Welcome Deck
-                                        2017</button></li>
-                                <li><button class="dropdown-item bg-dark text-light"
-                                        id="Zendikar Rising Expeditions">Zendikar Rising Expeditions</button></li>
-                                <li><button class="dropdown-item bg-dark text-light"
-                                        id="Introductory Two-Player">Introductory Two-Player</button></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" id="seleccionIdioma" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Español
-                            </a>
-                            <ul id="idiomas" class="dropdown-menu bg-dark" aria-labelledby="seleccionIdioma">
-                                <li><button class="dropdown-item bg-dark text-light" id="en">English</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="es">Español</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="fr">Français</button></li>
-                                <li><button class="dropdown-item bg-dark text-light" id="de">Deutsch</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="nombre">Mazo1</button></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -135,35 +113,10 @@
     </header>
 
     <main>
-        <div class="row g-0">
-            <div class="offset-1 col-7">
+        <div class="row">
+            <div class="offset-1 col-10 bg-black">
                 <h4>Cartas</h4>
                 <div id="cartas" class="p-2"></div>
-            </div>
-
-            <div class="col-4 pe-2">
-                <div class="sticky-top pt-2">
-                    <h4>Cartas seleccionadas</h4>
-                    <div class="scroll">
-                        <table class="table table-responsive">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col" class="text-center">Precio</th>
-                                    <th scope="col" class="text-center">Cantidad</th>
-                                    <th scope="col" class="text-center">Acción</th>
-                                    <th scope="col" class="text-center">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bodySeleccionadas">
-
-                            </tbody>
-                            <tfoot id="footerSeleccionadas">
-
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
@@ -246,45 +199,11 @@
         </div>
     </template>
 
-    <template id="cartaColumna">
-        <tr name="id">
-            <td class="fw-bold"></td>
-            <td class="text-center"></td>
-            <td class="text-center"></td>
-            <td class="d-flex flex-row">
-                <button name="sumarCarta" class="btn btn-info btn-sm w-100">+</button>
-                <button name="restarCarta" class="btn btn-danger btn-sm w-100">-</button>
-            </td>
-            <td class="text-center"></td>
-        </tr>
-    </template>
-
-    <template id="footerVacio">
-        <tr>
-            <td colspan="5" class="text-center fw-bold">No hay cartas seleccionadas</td>
-        </tr>
-    </template>
-
-    <template id="footerLLeno">
-        <tr>
-            <td colspan="2" class="fw-bold">Cartas totales</td>
-            <td class="fw-bold text-center"></td>
-            <td class="fw-bold text-center">Importe total</td>
-            <td class="fw-bold text-center"></td>
-        </tr>
-        <tr>
-            <td colspan="5"><button class="btn btn-primary w-100">Guardar Mazo</button></td>
-        </tr>
-        <tr>
-            <td colspan="5"><span>Hola</span></td>
-        </tr>
-    </template>
-
     <template id="plantillaOpciones">
         <option value="Valor opcion"></option>
     </template>
 
-    <script src="Assets/js/index/script.js"></script>
+    <script src="Assets/js/misMazos/script.js"></script>
 </body>
 
 </html>
