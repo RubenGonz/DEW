@@ -1,15 +1,11 @@
 const DOM = {
     seleccionMazo: document.getElementById("seleccionMazo"),
     mazo: document.getElementById("mazo"),
-    seleccionIdioma: document.getElementById("seleccionIdioma"),
-    idiomas: document.getElementById("idiomas"),
     seleccionCualidad: document.getElementById("seleccionCualidad"),
     cualidad: document.getElementById("cualidad"),
     seleccionOrden: document.getElementById("seleccionOrden"),
     orden: document.getElementById("orden"),
     cartas: document.getElementById("cartas"),
-    bodySeleccionadas: document.getElementById("bodySeleccionadas"),
-    footerSeleccionadas: document.getElementById("footerSeleccionadas"),
     inputBuscador: document.getElementById("inputBuscador"),
     listaOpciones: document.getElementById("listaOpciones"),
     botonBuscador: document.getElementById("botonBuscador")

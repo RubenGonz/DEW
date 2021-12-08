@@ -254,7 +254,7 @@ const guardarMazo = () => {
     cartasElegidas = new mazo([]);
     modificarSelecionadas();
     modificarFooter();
-    console.log(mazoFinal);
+    añadirMazoCreado(mazoFinal);
 }
 
 function crearCartas(cartas) {
@@ -498,8 +498,20 @@ window.onload = () => {
     DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
     modificarFooter();
+    almacenamientoLocal.setItem("Mazos hechos",JSON.stringify([]))
 }
 
 let mazoMostrado = new mazo([]);
 let cartasElegidas = new mazo([]);
 let modalInfo;
+let almacenamientoLocal = window.localStorage;
+
+const obtenerMazosCreados = () => {
+    return JSON.parse(almacenamientoLocal.getItem("Mazos hechos"))
+}
+
+const añadirMazoCreado = (nuevoMazo) => {
+    let mazosActuales = obtenerMazosCreados();
+    mazosActuales.push(nuevoMazo);
+    almacenamientoLocal.setItem("Mazos hechos",JSON.stringify(mazosActuales));
+}
