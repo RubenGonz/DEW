@@ -113,26 +113,29 @@
 
             <div class="col-4 pe-2">
                 <div class="sticky-top pt-2">
-                    <h4>Seleccionadas</h4>
-                    <table class="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col" class="text-center">Precio</th>
-                                <th scope="col" class="text-center">Cantidad</th>
-                                <th scope="col" class="text-center">Acción</th>
-                                <th scope="col" class="text-center">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bodySeleccionadas">
+                    <h4>Cartas seleccionadas</h4>
+                    <div class="scroll">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col" class="text-center">Precio</th>
+                                    <th scope="col" class="text-center">Cantidad</th>
+                                    <th scope="col" class="text-center">Acción</th>
+                                    <th scope="col" class="text-center">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodySeleccionadas">
 
-                        </tbody>
-                        <tfoot id="footerSeleccionadas">
+                            </tbody>
+                            <tfoot id="footerSeleccionadas">
 
-                        </tfoot>
-                    </table>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
+        </div>
         </div>
     </main>
 
@@ -206,8 +209,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                            onclick="eliminarModal()">Close</button>
+                        <a class="btn btn-outline-primary ms-auto mt-auto">Seleccionar</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -239,6 +242,12 @@
             <td class="fw-bold text-center"></td>
             <td class="fw-bold text-center">Importe total</td>
             <td class="fw-bold text-center"></td>
+        </tr>
+        <tr>
+            <td colspan="5"><button class="btn btn-primary w-100">Guardar Mazo</button></td>
+        </tr>
+        <tr>
+            <td colspan="5"><span>Hola</span></td>
         </tr>
     </template>
 

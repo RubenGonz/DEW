@@ -252,12 +252,12 @@ const quitarCarta = (idCarta) => {
         conjuntoElegido.calcularImporte();
         cartasElegidas.calcularCantidad();
         cartasElegidas.calcularImporte();
-        modificarSelecionadas(conjuntoElegido);
-        modificarFooter();
         if (conjuntoElegido.cantidad == 0) {
             let indice = cartasElegidas.cartas.indexOf(conjuntoElegido);
             cartasElegidas.cartas.splice(indice, 1);
         }
+        modificarSelecionadas(conjuntoElegido);
+        modificarFooter();
     } else {
         alert("No puedes quitar más cartas");
     }
@@ -298,13 +298,21 @@ const modificarFooter = () => {
     const fragment = document.createDocumentFragment();
     let template;
 
-    if (cartasElegidas.cartas.length == 0) {
+    if (cartasElegidas.cartasTotales == 0) {
         template = document.getElementById("footerVacio").content;
     } else {
         template = document.getElementById("footerLLeno").content;
         template.querySelectorAll("td")[1].textContent = cartasElegidas.cartasTotales;
         template.querySelectorAll("td")[3].textContent = cartasElegidas.importeMazo + " €";
+        if (cartasElegidas.cartasTotales < 60 || cartasElegidas.cartasTotales > 60) {
+            if (!template.querySelectorAll("button")[0].classList.contains("disabled")) template.querySelectorAll("button")[0].classList.add("disabled");
+            template.querySelectorAll("span")[0].textContent = "El mazo debe tener 60 cartas para poder guardarse";
+        } else {
+            if (template.querySelectorAll("button")[0].classList.contains("disabled")) template.querySelectorAll("button")[0].classList.remove("disabled");
+            template.querySelectorAll("span")[0].textContent = "";
+        }
     }
+
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
     DOM.footerSeleccionadas.appendChild(fragment);
@@ -330,7 +338,6 @@ const mostrarInfo = (idCarta) => {
     } else {
         if (!template.querySelectorAll("li")[6].classList.contains("d-none")) template.querySelectorAll("li")[6].classList.add("d-none");
     }
-
     if (carta.info.resistencia != undefined) {
         if (template.querySelectorAll("li")[7].classList.contains("d-none")) template.querySelectorAll("li")[7].classList.remove("d-none");
         template.querySelectorAll("p")[15].textContent = carta.info.resistencia;
@@ -338,6 +345,8 @@ const mostrarInfo = (idCarta) => {
         if (!template.querySelectorAll("li")[7].classList.contains("d-none")) template.querySelectorAll("li")[7].classList.add("d-none");
     }
 
+    template.querySelectorAll("a")[0].setAttribute("onclick", "agregarCarta('" + carta.info.id + "')");
+    template.querySelectorAll("button")[0].setAttribute("onclick", "eliminarModal()");
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
 
@@ -388,7 +397,7 @@ const leerCookie = (claveIntroducida) => {
 }
 
 DOM.botonBuscador.addEventListener("click", () => {
-    let cartaBuscada = buscarCarta("nombre",DOM.inputBuscador.value);
+    let cartaBuscada = buscarCarta("nombre", DOM.inputBuscador.value);
     if (cartaBuscada != null) mostrarInfo(cartaBuscada.info.id);
 });
 
@@ -405,12 +414,6 @@ DOM.cartas.addEventListener("click", (e) => {
     if (e.target.nodeName == "IMG" || e.target.nodeName == "A") {
         agregarCarta(e.target.closest(".carta").id);
     }
-    if (e.target.name == "botonInfo") {
-        mostrarInfo(e.target.closest(".carta").id);
-    }
-});
-
-DOM.cartas.addEventListener("click", (e) => {
     if (e.target.name == "botonInfo") {
         mostrarInfo(e.target.closest(".carta").id);
     }
@@ -454,6 +457,7 @@ window.onload = () => {
     DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
     recibirMazoApi([apisBasicas[leerCookie("Mazo")]], leerCookie("Idioma"));
     modificarFooter();
+    document.getElementsByClassName("scroll")[0].style.height = "85vh";
 }
 
 let mazoMostrado = new mazo([]);
