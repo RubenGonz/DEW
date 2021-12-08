@@ -11,6 +11,7 @@ const DOM = {
     bodySeleccionadas: document.getElementById("bodySeleccionadas"),
     footerSeleccionadas: document.getElementById("footerSeleccionadas"),
     inputBuscador: document.getElementById("inputBuscador"),
+    listaOpciones: document.getElementById("listaOpciones"),
     botonBuscador: document.getElementById("botonBuscador")
 }
 
@@ -160,6 +161,7 @@ const eliminarAcentos = (texto) => {
 const recibirMazoApi = (apis, idioma) => {
     recibirCartas(apis, idioma).then(mazo => {
         mazoMostrado = mazo;
+        generarOpciones(mazoMostrado);
         mostrarMazo(mazo, leerCookie("Cualidad"), leerCookie("Orden"));
     }).catch(error => {
         console.log("Hubo un error: " + error)
@@ -380,6 +382,20 @@ const mostrarInfo = (idCarta) => {
     modalInfo.show();
 }
 
+const generarOpciones = (mazo = mazoMostrado) => {
+    if (DOM.listaOpciones.innerHTML != "") DOM.listaOpciones.innerHTML = "";
+
+    const fragment = document.createDocumentFragment();
+    const template = document.getElementById("plantillaOpciones").content;
+
+    mazo.cartas.forEach(carta => {
+        template.querySelectorAll("option")[0].value = carta.info.nombre;
+        const clone = template.cloneNode(true);
+        fragment.appendChild(clone);
+    });
+    DOM.listaOpciones.appendChild(fragment);
+}
+
 const crearCookie = (clave, valor, expedicion = "365") => {
     let date = new Date();
     date.setTime(date.getTime() + (expedicion * 24 * 60 * 60 * 1000));
@@ -406,9 +422,26 @@ const leerCookie = (claveIntroducida) => {
     }
 }
 
+DOM.inputBuscador.addEventListener("keydown", (e) => {
+    if (e.key == "Enter") {
+        let cartaBuscada = buscarCarta("nombre", DOM.inputBuscador.value);
+        if (cartaBuscada != null) {
+            mostrarInfo(cartaBuscada.info.id);
+            DOM.inputBuscador.value = "";
+        } else {
+            DOM.inputBuscador.value = "Carta no encontrada";
+        }
+    }
+});
+
 DOM.botonBuscador.addEventListener("click", () => {
     let cartaBuscada = buscarCarta("nombre", DOM.inputBuscador.value);
-    if (cartaBuscada != null) mostrarInfo(cartaBuscada.info.id);
+        if (cartaBuscada != null) {
+            mostrarInfo(cartaBuscada.info.id);
+            DOM.inputBuscador.value = "";
+        } else {
+            DOM.inputBuscador.value = "Carta no encontrada";
+        }
 });
 
 DOM.bodySeleccionadas.addEventListener("click", (e) => {

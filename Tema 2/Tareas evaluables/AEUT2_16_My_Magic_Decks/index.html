@@ -35,6 +35,9 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold bg-secondary text-black rounded-3" href="#">Mis mazos</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fw-bold" id="seleccionMazo" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -94,11 +97,40 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input id="inputBuscador" class="form-control me-2" type="text" placeholder="Nombre de la carta"
-                            aria-label="Search">
-                        <button id="botonBuscador" class="btn btn-outline-success" type="button" on>Search</button>
-                    </form>
+                    <div class="d-flex">
+                        <input id="inputBuscador" class="form-control me-2" list="listaOpciones"
+                            placeholder="Nombre de la carta">
+                        <datalist id="listaOpciones">
+
+                        </datalist>
+
+                        <button id="botonBuscador" class="btn btn-outline-success me-2" type="button">Search</button>
+
+                        <div class="btn-group">
+                            <button id="Login" class="btn btn-primary dropdown-toggle me-2" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Login</button>
+
+                            <div class="dropdown-menu dropdown-menu-end login">
+                                <form class="px-4 py-3">
+                                    <h3 class="mb-3">Login</h3>
+                                    <div class="mb-3">
+                                        <label for="nombreUsuario" class="form-label">Nombre de usuario</label>
+                                        <input type="email" class="form-control" id="nombreUsuario"
+                                            placeholder="Juan1234">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Contraseña" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="Contraseña" placeholder="****">
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary">Loguearse</button>
+                                    </div>
+                                </form>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Registrase</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -249,6 +281,10 @@
         <tr>
             <td colspan="5"><span>Hola</span></td>
         </tr>
+    </template>
+
+    <template id="plantillaOpciones">
+        <option value="Valor opcion"></option>
     </template>
 
     <script src="Assets/js/script.js"></script>

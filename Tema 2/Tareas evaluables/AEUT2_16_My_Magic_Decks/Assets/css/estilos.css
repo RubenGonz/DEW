@@ -37,3 +37,8 @@
     overflow-y: scroll;
     height: 85vh;
 }
+
+.login {
+    width: 500px;
+    z-index: 1021;
+}
