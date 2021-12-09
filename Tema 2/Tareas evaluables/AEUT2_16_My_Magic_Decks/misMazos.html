@@ -42,7 +42,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fw-bold" id="seleccionMazo" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Nombre del mazo mostrado
+                                No tienes ningún mazo creado
                             </a>
                             <ul id="mazo" class="dropdown-menu bg-dark" aria-labelledby="seleccionMazo">
                                 
@@ -90,9 +90,12 @@
     <main>
         <div class="row">
             <div class="offset-1 col-10">
-                <h4>Cartas</h4>
+                <div class="d-flex justify-content-between">
+                    <h4>Cartas</h4>
+                    <button id="borrarMazo" class="btn btn-danger me-2" type="button">Borrar mazo</button>
+                </div>
                 <div id="cartas" class="p-2">
-                    <h1>Cartas del mazo</h1>
+                    <h1>No tienes ningún mazo creado</h1>
                 </div>
             </div>
         </div>

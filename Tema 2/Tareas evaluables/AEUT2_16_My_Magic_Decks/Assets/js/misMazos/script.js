@@ -8,7 +8,8 @@ const DOM = {
     cartas: document.getElementById("cartas"),
     inputBuscador: document.getElementById("inputBuscador"),
     listaOpciones: document.getElementById("listaOpciones"),
-    botonBuscador: document.getElementById("botonBuscador")
+    botonBuscador: document.getElementById("botonBuscador"),
+    borrarMazo: document.getElementById("borrarMazo")
 }
 
 class carta {
@@ -203,7 +204,7 @@ const obtenerMazosCreados = () => {
 const añadirMazoCreado = (nuevoMazo) => {
     let mazosActuales = obtenerMazosCreados();
     mazosActuales.push(nuevoMazo);
-    almacenamientoLocal.setItem("Mazos hechos",JSON.stringify(mazosActuales));
+    almacenamientoLocal.setItem("Mazos hechos", JSON.stringify(mazosActuales));
 }
 
 const generarMazosCreados = () => {
@@ -223,9 +224,20 @@ const generarMazosCreados = () => {
 const buscarMazo = (nombreMazo) => {
     let mazoEncontrado = null;
     obtenerMazosCreados().forEach(mazoCreado => {
-        if (mazoCreado.nombre == nombreMazo) mazoEncontrado = mazoCreado; 
+        if (mazoCreado.nombre == nombreMazo) mazoEncontrado = mazoCreado;
     })
     return mazoEncontrado;
+}
+
+const borrarMazo = (nombreMazo) => {
+    let mazosActuales = obtenerMazosCreados();
+    let mazoBuscado = buscarMazo(nombreMazo);
+    let indice;
+    for (let i = 0; i < mazosActuales.length; i++) {
+        if (mazosActuales[i].nombre == mazoBuscado.nombre) indice = i;
+    }
+    mazosActuales.splice(indice, 1);
+    almacenamientoLocal.setItem("Mazos hechos", JSON.stringify(mazosActuales));
 }
 
 const crearCookie = (clave, valor, expedicion = "365") => {
@@ -256,20 +268,22 @@ const leerCookie = (claveIntroducida) => {
 
 DOM.mazo.addEventListener("click", (e) => {
     DOM.seleccionMazo.innerHTML = e.target.innerHTML;
-    mostrarMazo(buscarMazo(DOM.seleccionMazo.innerHTML),leerCookie("Cualidad"),leerCookie("Orden"));
-    generarOpciones();
+    if (obtenerMazosCreados().length != 0) {
+        mostrarMazo(buscarMazo(DOM.seleccionMazo.innerHTML), leerCookie("Cualidad"), leerCookie("Orden"));
+        generarOpciones();
+    }
 });
 
 DOM.cualidad.addEventListener("click", (e) => {
     crearCookie("Cualidad", e.target.id);
     DOM.seleccionCualidad.innerHTML = e.target.innerHTML;
-    mostrarMazo(buscarMazo(DOM.seleccionMazo.innerHTML),leerCookie("Cualidad"),leerCookie("Orden"));
+    if (obtenerMazosCreados().length != 0) mostrarMazo(buscarMazo(DOM.seleccionMazo.innerHTML), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
 DOM.orden.addEventListener("click", (e) => {
     crearCookie("Orden", e.target.id);
     DOM.seleccionOrden.innerHTML = e.target.innerHTML;
-    mostrarMazo(buscarMazo(DOM.seleccionMazo.innerHTML),leerCookie("Cualidad"),leerCookie("Orden"));
+    if (obtenerMazosCreados().length != 0) mostrarMazo(buscarMazo(DOM.seleccionMazo.innerHTML), leerCookie("Cualidad"), leerCookie("Orden"));
 });
 
 DOM.inputBuscador.addEventListener("keydown", (e) => {
@@ -286,12 +300,12 @@ DOM.inputBuscador.addEventListener("keydown", (e) => {
 
 DOM.botonBuscador.addEventListener("click", () => {
     let cartaBuscada = buscarCarta("nombre", DOM.inputBuscador.value);
-        if (cartaBuscada != null) {
-            mostrarInfo(cartaBuscada.info.id);
-            DOM.inputBuscador.value = "";
-        } else {
-            DOM.inputBuscador.value = "Carta no encontrada";
-        }
+    if (cartaBuscada != null) {
+        mostrarInfo(cartaBuscada.info.id);
+        DOM.inputBuscador.value = "";
+    } else {
+        DOM.inputBuscador.value = "Carta no encontrada";
+    }
 });
 
 DOM.cartas.addEventListener("click", (e) => {
@@ -300,17 +314,40 @@ DOM.cartas.addEventListener("click", (e) => {
     }
 });
 
+DOM.borrarMazo.addEventListener("click", () => {
+    if (obtenerMazosCreados().length != 0) {
+        borrarMazo(DOM.seleccionMazo.innerHTML);
+        document.getElementById(DOM.seleccionMazo.innerHTML).remove();
+        if (obtenerMazosCreados().length != 0) {
+            if (DOM.borrarMazo.classList.contains("disabled")) DOM.borrarMazo.classList.remove("disabled");
+            DOM.seleccionMazo.innerHTML = obtenerMazosCreados()[0].nombre;
+            mostrarMazo(obtenerMazosCreados()[0], leerCookie("Cualidad"), leerCookie("Orden"));
+            generarOpciones();
+        } else {
+            if (!DOM.borrarMazo.classList.contains("disabled")) DOM.borrarMazo.classList.add("disabled");
+            DOM.seleccionMazo.innerHTML = "No tienes ningún mazo creado";
+            DOM.cartas.innerHTML = "<h1>No tienes ningún mazo creado</h1>";
+            DOM.listaOpciones.innerHTML = "";
+        }
+    } else {
+        if (!DOM.borrarMazo.classList.contains("disabled")) DOM.borrarMazo.classList.add("disabled");
+    }
+});
+
 window.onload = () => {
     if (!comprobarCookie("Cualidad")) crearCookie("Cualidad", "nombre");
     if (!comprobarCookie("Orden")) crearCookie("Orden", "asc");
-    DOM.seleccionMazo.innerHTML = obtenerMazosCreados()[0].nombre;
     DOM.seleccionCualidad.innerHTML = document.getElementById(leerCookie("Cualidad")).innerHTML;
     DOM.seleccionOrden.innerHTML = document.getElementById(leerCookie("Orden")).innerHTML;
-    generarMazosCreados();
-    mostrarMazo(obtenerMazosCreados()[0],leerCookie("Cualidad"),leerCookie("Orden"));
-    generarOpciones();
+    if (obtenerMazosCreados().length != 0) {
+        DOM.seleccionMazo.innerHTML = obtenerMazosCreados()[0].nombre;
+        generarMazosCreados();
+        mostrarMazo(obtenerMazosCreados()[0], leerCookie("Cualidad"), leerCookie("Orden"));
+        generarOpciones();
+    } else {
+        DOM.borrarMazo.classList.add("disabled");
+    }
 }
-
 
 let mazoMostrado = new mazo([]);
 let modalInfo;
