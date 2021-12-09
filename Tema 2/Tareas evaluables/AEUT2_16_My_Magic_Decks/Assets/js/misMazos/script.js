@@ -125,6 +125,7 @@ function crearCartas(cartas) {
     const template = document.getElementById("cartaApi").content;
 
     cartas.forEach(carta => {
+        template.querySelectorAll("a")[0].href = carta.info.url;
         template.querySelectorAll("div")[0].id = carta.info.id;
         template.querySelectorAll("img")[0].src = carta.info.imagen;
         template.querySelectorAll("img")[0].alt = carta.info.nombre;

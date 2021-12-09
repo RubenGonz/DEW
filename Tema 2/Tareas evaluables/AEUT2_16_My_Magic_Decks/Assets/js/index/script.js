@@ -36,11 +36,11 @@ class carta {
         let infoConvertida = info;
         if (infoConvertida.colores.length != 0) {
             for (let i = 0; i < infoConvertida.colores.length; i++) {
-                if (infoConvertida.colores[i] == "W") infoConvertida.colores[i] = "White";
-                if (infoConvertida.colores[i] == "U") infoConvertida.colores[i] = "Blue";
-                if (infoConvertida.colores[i] == "B") infoConvertida.colores[i] = "Black";
-                if (infoConvertida.colores[i] == "R") infoConvertida.colores[i] = "Red";
-                if (infoConvertida.colores[i] == "G") infoConvertida.colores[i] = "Green";
+                if (infoConvertida.colores[i] == "W") infoConvertida.colores[i] = "Blanco";
+                if (infoConvertida.colores[i] == "U") infoConvertida.colores[i] = "Azul";
+                if (infoConvertida.colores[i] == "B") infoConvertida.colores[i] = "Negro";
+                if (infoConvertida.colores[i] == "R") infoConvertida.colores[i] = "Rojo";
+                if (infoConvertida.colores[i] == "G") infoConvertida.colores[i] = "Verde";
             }
         } else {
             infoConvertida.colores = "Carta incolora"
@@ -125,7 +125,8 @@ async function recibirCartas(apis = [], idioma) {
                 colores: cartaApi.color_identity,
                 tipo: tipoCarta,
                 mana: cartaApi.cmc,
-                imagen: cartaApi.image_uris.png
+                imagen: cartaApi.image_uris.png,
+                url: cartaApi.scryfall_uri
             }
             if (cartaApi.type_line.toLowerCase().includes("creature")) {
                 info.fuerza = cartaApi.power;
