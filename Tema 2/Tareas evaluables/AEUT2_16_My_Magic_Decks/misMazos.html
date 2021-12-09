@@ -82,6 +82,28 @@
 
                         <button id="botonBuscador" class="btn btn-outline-success me-2" type="button">Search</button>
                     </div>
+                    <div class="btn-group">
+                        <button id="Login" class="btn btn-primary dropdown-toggle me-2" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Login</button>
+
+                        <div class="dropdown-menu dropdown-menu-end login">
+                            <form class="px-4 py-3">
+                                <h3 class="mb-3">Login</h3>
+                                <div class="mb-3">
+                                    <label for="nombreUsuario" class="form-label">Nombre de usuario</label>
+                                    <input type="email" class="form-control" id="nombreUsuario"
+                                        placeholder="Juan1234">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Contraseña" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" id="Contraseña" placeholder="****">
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-primary">Loguearse</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -100,10 +122,6 @@
             </div>
         </div>
     </main>
-
-    <footer>
-
-    </footer>
 
     <template id="cartaApi">
         <div class="card carta m-2">

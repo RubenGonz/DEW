@@ -25,3 +25,8 @@
 .imgCarta {
     max-width: var(--anchoCarta);
 }
+
+.login {
+    width: 500px;
+    z-index: 1021;
+}
