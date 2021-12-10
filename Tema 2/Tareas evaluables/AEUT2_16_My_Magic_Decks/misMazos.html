@@ -45,7 +45,7 @@
                                 No tienes ningún mazo creado
                             </a>
                             <ul id="mazo" class="dropdown-menu bg-dark" aria-labelledby="seleccionMazo">
-                                
+
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -72,6 +72,22 @@
                                 <li><button class="dropdown-item bg-dark text-light" id="desc">Desc</button></li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" id="seleccionRareza" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Sin filtro
+                            </a>
+                            <ul id="rareza" class="dropdown-menu bg-dark" aria-labelledby="seleccionRareza">
+                                <li><button class="dropdown-item bg-dark text-light" id="rarezaInexistente">Sin
+                                        filtro</button>
+                                </li>
+                                <li><button class="dropdown-item bg-dark text-light" id="common">Comunes</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="uncommon">Poco comunes</button>
+                                </li>
+                                <li><button class="dropdown-item bg-dark text-light" id="rare">Raras</button></li>
+                                <li><button class="dropdown-item bg-dark text-light" id="mythic">Miticas</button></li>
+                            </ul>
+                        </li>
                     </ul>
                     <div class="d-flex">
                         <input id="inputBuscador" class="form-control me-2" list="listaOpciones"
@@ -91,8 +107,7 @@
                                 <h3 class="mb-3">Login</h3>
                                 <div class="mb-3">
                                     <label for="nombreUsuario" class="form-label">Nombre de usuario</label>
-                                    <input type="email" class="form-control" id="nombreUsuario"
-                                        placeholder="Juan1234">
+                                    <input type="email" class="form-control" id="nombreUsuario" placeholder="Juan1234">
                                 </div>
                                 <div class="mb-3">
                                     <label for="Contraseña" class="form-label">Contraseña</label>

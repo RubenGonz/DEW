@@ -186,7 +186,8 @@ async function recibirCartas(apis = [], idioma) {
                 tipo: tipoCarta,
                 mana: cartaApi.cmc,
                 imagen: cartaApi.image_uris.png,
-                url: cartaApi.scryfall_uri
+                url: cartaApi.scryfall_uri,
+                rareza: cartaApi.rarity
             }
             if (cartaApi.type_line.toLowerCase().includes("creature")) {
                 info.fuerza = cartaApi.power;

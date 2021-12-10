@@ -16,7 +16,9 @@ const DOM = {
     inputBuscador: document.getElementById("inputBuscador"),
     listaOpciones: document.getElementById("listaOpciones"),
     botonBuscador: document.getElementById("botonBuscador"),
-    borrarMazo: document.getElementById("borrarMazo")
+    borrarMazo: document.getElementById("borrarMazo"),
+    rareza: document.getElementById("rareza"),
+    seleccionRareza: document.getElementById("seleccionRareza")
 }
 
 /**
@@ -195,7 +197,7 @@ const eliminarModal = () => {
  * Constante que obtiene los mazos creados del almacenamiento local
  * @returns array de mazos creados
  */
- const obtenerMazosCreados = () => {
+const obtenerMazosCreados = () => {
     return JSON.parse(almacenamientoLocal.getItem("Mazos hechos"))
 }
 
@@ -215,7 +217,7 @@ const añadirMazoCreado = (nuevoMazo) => {
  * @param {String} nombreMazo nombre del mazo a buscar
  * @returns mazo buscado
  */
- const buscarMazo = (nombreMazo) => {
+const buscarMazo = (nombreMazo) => {
     let mazoEncontrado = null;
     obtenerMazosCreados().forEach(mazoCreado => {
         if (mazoCreado.nombre == nombreMazo) mazoEncontrado = mazoCreado;
@@ -390,8 +392,38 @@ const leerCookie = (claveIntroducida) => {
 }
 
 /**
+ * Constante que muestra en la pantalla 
+ * las cartas de una rareza en específico
+ * @param {String} rareza rareza a mostrar
+ */
+const filtrarRareza = (rareza = "rarezaInexistente") => {
+    let mazoFinal = obtenerMazosCreados()[0];
+    if (rarezas.includes(rareza)) {
+        let cartasFiltradas = [];
+        mazoMostrado.cartas.forEach(carta => {
+            if (carta.info.rareza == rareza) cartasFiltradas.push(carta);
+        })
+        mazoFinal = new mazo(cartasFiltradas);
+    }
+    if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
+    let mazoOrdenado = ordenarMazo(mazoFinal, leerCookie("Cualidad"), leerCookie("Orden"));
+    crearCartas(mazoOrdenado.cartas);
+    generarOpciones();
+}
+
+/**
  * Listeners
 */
+
+/**
+ * Listener de la seleccion de la rareza que filtra
+ * las cartas del mazo seleccionado por una rareza en 
+ * específico
+ */
+DOM.rareza.addEventListener("click", (e) => {
+    DOM.seleccionRareza.innerHTML = e.target.innerHTML;
+    filtrarRareza(e.target.id);
+});
 
 /**
  * Listener de la seleccion del mazo donde al pulsar
@@ -522,3 +554,4 @@ window.onload = () => {
 let mazoMostrado = new mazo([]);
 let modalInfo;
 let almacenamientoLocal = window.localStorage;
+let rarezas = ["rare", "mythic", "uncommon", "common"];
