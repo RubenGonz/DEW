@@ -1,3 +1,10 @@
+/**
+ * Constantes
+*/
+
+/**
+ * Constante DOM que guarda algunas variables del html
+ */
 const DOM = {
     seleccionMazo: document.getElementById("seleccionMazo"),
     mazo: document.getElementById("mazo"),
@@ -15,6 +22,10 @@ const DOM = {
     botonBuscador: document.getElementById("botonBuscador")
 }
 
+/**
+ * Constante que guarda las diferentes apis desde las 
+ * que podemos recoger información
+ */
 const apisBasicas = {
     "Todas": "Todas",
     "Welcome Deck 2016": "https://api.scryfall.com/cards/search?order=set&q=e%3Aw16&unique=prints",
@@ -24,6 +35,14 @@ const apisBasicas = {
     "Introductory Two-Player": "https://api.scryfall.com/cards/search?order=set&q=e%3Aitp&unique=prints"
 }
 
+/**
+ * Clases
+*/
+
+/**
+ * Clase carta que guarda toda la información sobre una 
+ * carta en específico
+ */
 class carta {
     constructor(info) {
         this.info = this.intretarInfo(info);
@@ -32,6 +51,12 @@ class carta {
         this.calcularImporte();
     }
 
+    /**
+     * Función local que apadta la información recibida a un 
+     * formato legible para el usuario
+     * @param {Array} info información recibida 
+     * @returns información adaptada
+     */
     intretarInfo(info) {
         let infoConvertida = info;
         if (infoConvertida.colores.length != 0) {
@@ -54,11 +79,19 @@ class carta {
         return infoConvertida;
     }
 
+    /**
+     * Función que calcula el importe total de esta carta
+     * habiendose o no repetido en un mazo y se la setea a
+     * importeTotal 
+     */
     calcularImporte() {
         this.importeTotal = parseFloat((this.info.precio * this.cantidad).toFixed(2));
     }
 }
 
+/**
+ * Clase que guarda un mazo de cartas con sus características
+ */
 class mazo {
     constructor(cartas) {
         this.cartas = cartas;
@@ -68,6 +101,10 @@ class mazo {
         this.calcularImporte();
     }
 
+    /**
+     * Función que calcula las cartas totales del mazo
+     * y se lo setea a cartasTotales 
+     */
     calcularCantidad() {
         let contadorCantidad = 0;
         this.cartas.forEach(carta => {
@@ -76,6 +113,10 @@ class mazo {
         this.cartasTotales = contadorCantidad;
     }
 
+    /**
+     * Función que calcula el importe total de todas las cartas
+     * del mazo y se lo setea a importeMazo 
+     */
     calcularImporte() {
         let contadorImporte = 0;
         this.cartas.forEach(carta => {
@@ -85,11 +126,30 @@ class mazo {
     }
 }
 
+/**
+ * Funciones
+*/
+
+/**
+ * Constante que traduce una api a un idioma
+ * @param {String} api enlace de la api
+ * @param {String} idioma abreviación del idioma
+ * @returns 
+ */
 const traducirApi = (api, idioma = "en") => {
     let seccionIdioma = api.indexOf("e%");
     return api.substr(0, seccionIdioma) + "lang%3A" + idioma + "+" + api.substr(seccionIdioma);
 }
 
+/**
+ * Función asincrona que trae los datos 
+ * de las apis en un idioma y con ellos crea cartas
+ * que porteriormente se usaran para crear un mazo
+ * 
+ * @param {Array} apis array de apis a tratar
+ * @param {String} idioma abreviación del idioma
+ * @returns mazo con las cartas de las apis
+ */
 async function recibirCartas(apis = [], idioma) {
     let apisFinales = [];
     if (apis == "Todas") {
@@ -138,6 +198,13 @@ async function recibirCartas(apis = [], idioma) {
     return new mazo(cartasFinales);
 }
 
+/**
+ * Constante que ordena un mazo segun se especifique
+ * @param {Object} mazoIntroducido mazo a ordenar
+ * @param {String} cualidad parametro por elq ue ordenar
+ * @param {String} orden orden en el que se quiere ordenar
+ * @returns Mazo ordenado
+ */
 const ordenarMazo = (mazoIntroducido, cualidad = "nombre", orden = "asc") => {
     let cartasOrdenadas;
     if (cualidad != "fuerza" && cualidad != "resistencia") {
@@ -153,10 +220,21 @@ const ordenarMazo = (mazoIntroducido, cualidad = "nombre", orden = "asc") => {
     return new mazo(cartasOrdenadas);
 }
 
+/**
+ * Constante que pasandole un texto te quita los acentos
+ * @param {String} texto texto a convetir
+ * @returns texto sin acentos
+ */
 const eliminarAcentos = (texto) => {
     return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
 }
 
+/**
+ * Constante que recoge la información de las apis y
+ * muestra los mazos al usuario
+ * @param {Array} apis apis a tratar
+ * @param {String} idioma abreviación del idioma
+ */
 const recibirMazoApi = (apis, idioma) => {
     recibirCartas(apis, idioma).then(mazo => {
         mazoMostrado = mazo;
@@ -167,12 +245,26 @@ const recibirMazoApi = (apis, idioma) => {
     })
 }
 
+/**
+ * Constante que recibiendo un mazo y la forma 
+ * de ordenacion muestra un mazo en la pantalla
+ * @param {Object} mazo mazo a mostrar
+ * @param {String} cualidad parametro por el que ordenar
+ * @param {String} orden tipo de ordenacion
+ */
 const mostrarMazo = (mazo, cualidad, orden) => {
     if (DOM.cartas.innerHTML != "") DOM.cartas.innerHTML = "";
     let mazoOrdenado = ordenarMazo(mazo, cualidad, orden);
     crearCartas(mazoOrdenado.cartas);
 }
 
+/**
+ * Constante que busca una carta entre 
+ * las cartas mostradas en la pantalla
+ * @param {String} cualidad parametro por el que buscar
+ * @param {String} valor valor del parametro a buscar
+ * @returns objeto carta
+ */
 const buscarCarta = (cualidad, valor) => {
     let encontrada = false;
     let i = 0;
@@ -187,18 +279,28 @@ const buscarCarta = (cualidad, valor) => {
     return carta;
 }
 
+/**
+ * Constante que busca una carta entre las cartas
+ * seleccionadas por el usuario
+ * @param {String} idCarta identificador de la carta
+ * @returns carta buscada
+ */
 const buscarConjunto = (idCarta) => {
     let cartaElegida = buscarCarta("id", idCarta);
     conjuntoBuscado = null;
 
     cartasElegidas.cartas.forEach(carta => {
-        if (carta == cartaElegida) {
-            conjuntoBuscado = carta;
-        }
+        if (carta == cartaElegida) conjuntoBuscado = carta;
     })
     return conjuntoBuscado;
 }
 
+/**
+ * Constante que agrega una carta al 
+ * mazo de las cartas seleccionadas y lo
+ * muestra
+ * @param {String} idCarta identificador de la carta
+ */
 const agregarCarta = (idCarta) => {
     if (cartasElegidas.cartasTotales < 60) {
         let conjuntoElegido = buscarConjunto(idCarta);
@@ -225,6 +327,12 @@ const agregarCarta = (idCarta) => {
     }
 }
 
+/**
+ * Constante que elimina una carta del 
+ * mazo de las cartas seleccionadas y lo
+ * muestra
+ * @param {String} idCarta identificador de la carta
+ */
 const quitarCarta = (idCarta) => {
     if (cartasElegidas.cartasTotales > 0) {
         let conjuntoElegido = buscarConjunto(idCarta);
@@ -243,6 +351,10 @@ const quitarCarta = (idCarta) => {
     }
 }
 
+/**
+ * Constante que elimina el modal
+ * de mostrar información
+ */
 const eliminarModal = () => {
     modalInfo.hide();
     if (document.getElementById('staticBackdrop') != null) {
@@ -250,6 +362,10 @@ const eliminarModal = () => {
     }
 }
 
+/**
+ * Constante que guarda un mazo en el almacenamiento local
+ * en el caso de que no exista ya uno con el mismo nombre
+ */
 const guardarMazo = () => {
     let nombreMazo = prompt("Introduzca el nombre que le quiere dar a su mazo");
     if (nombreMazo != undefined && nombreMazo != "" && !existeMazoCreado(nombreMazo)) {
@@ -264,6 +380,30 @@ const guardarMazo = () => {
     }
 }
 
+/**
+ * Constante que obtiene los mazos creados del almacenamiento local
+ * @returns array de mazos creados
+ */
+const obtenerMazosCreados = () => {
+    return JSON.parse(almacenamientoLocal.getItem("Mazos hechos"))
+}
+
+/**
+ * Constante que añade un nuevo mazo al almacenamiento
+ * @param {Object} nuevoMazo mazo a añadir
+ */
+const añadirMazoCreado = (nuevoMazo) => {
+    let mazosActuales = obtenerMazosCreados();
+    mazosActuales.push(nuevoMazo);
+    almacenamientoLocal.setItem("Mazos hechos",JSON.stringify(mazosActuales));
+}
+
+/**
+ * Constante qque comprueba si existe 
+ * un mazo creado con el mismo nombre
+ * @param {String} nombreMazo nombre del mazo a comprobar
+ * @returns true si se encuentra o false si no se encuentra
+ */
 const existeMazoCreado = (nombreMazo) => {
     let encontrado = false;
     obtenerMazosCreados().forEach(mazoCreado => {
@@ -272,6 +412,10 @@ const existeMazoCreado = (nombreMazo) => {
     return encontrado;
 }
 
+/**
+ * Constante que muestra las cartas en la pantalla
+ * @param {Array} cartas cartas del mazo a mostrar
+ */
 function crearCartas(cartas) {
     const fragment = document.createDocumentFragment();
     const template = document.getElementById("cartaApi").content;
@@ -293,6 +437,12 @@ function crearCartas(cartas) {
     DOM.cartas.appendChild(fragment);
 }
 
+/**
+ * Constante que modifica el estado del body de la
+ * tabla de las cartas seleccionadas al añadir o 
+ * eliminar una carta
+ * @param {Object} conjuntoCartas carta a añadir o eliminar de la tabla
+ */
 const modificarSelecionadas = (conjuntoCartas = null) => {
     if (conjuntoCartas == null) {
         DOM.bodySeleccionadas.innerHTML = "";
@@ -306,7 +456,7 @@ const modificarSelecionadas = (conjuntoCartas = null) => {
             const template = document.getElementById("cartaColumna").content;
 
             template.querySelectorAll("tr")[0].setAttribute("name", conjuntoCartas.info.id);
-            template.querySelectorAll("td")[0].textContent = conjuntoCartas.info.nombre;
+            template.querySelectorAll("span")[0].textContent = conjuntoCartas.info.nombre;
             if (conjuntoCartas.info.precio == null) {
                 template.querySelectorAll("td")[1].textContent = "No hay precio disponible";
             } else {
@@ -326,6 +476,11 @@ const modificarSelecionadas = (conjuntoCartas = null) => {
     }
 }
 
+/**
+ * Constante que modifica el estado del footer de la
+ * tabla de las cartas seleccionadas al añadir o 
+ * eliminar una carta
+ */
 const modificarFooter = () => {
     if (DOM.footerSeleccionadas.innerHTML != "") DOM.footerSeleccionadas.innerHTML = "";
     const fragment = document.createDocumentFragment();
@@ -352,6 +507,11 @@ const modificarFooter = () => {
     DOM.footerSeleccionadas.appendChild(fragment);
 }
 
+/**
+ * Constante que muestra un modal con toda 
+ * la información de una carta
+ * @param {String} idCarta identificador de la carta
+ */
 const mostrarInfo = (idCarta) => {
     let carta = buscarCarta("id", idCarta);
     const fragment = document.createDocumentFragment();
@@ -395,6 +555,10 @@ const mostrarInfo = (idCarta) => {
     modalInfo.show();
 }
 
+/**
+ * Constante que genera las opciones del buscador 
+ * @param {Object} mazo mazo de donde queremos las opciones
+ */
 const generarOpciones = (mazo = mazoMostrado) => {
     if (DOM.listaOpciones.innerHTML != "") DOM.listaOpciones.innerHTML = "";
 
@@ -409,12 +573,23 @@ const generarOpciones = (mazo = mazoMostrado) => {
     DOM.listaOpciones.appendChild(fragment);
 }
 
+/**
+ * Constante que crea una cookie
+ * @param {String} clave identificador de la cookie
+ * @param {String} valor valor de la cookie
+ * @param {Number} expedicion dias de duración de la cookie
+ */
 const crearCookie = (clave, valor, expedicion = "365") => {
     let date = new Date();
     date.setTime(date.getTime() + (expedicion * 24 * 60 * 60 * 1000));
     document.cookie = clave + "=" + valor + "; expires=" + date.toGMTString();
 }
 
+/**
+ * Constante que comprueba si una cookie existe
+ * @param {String} clave identificador de la cookie 
+ * @returns true si existe o false si no existe
+ */
 const comprobarCookie = (clave) => {
     let cookies = document.cookie.split("; ");
     let encontrada = false;
@@ -422,6 +597,11 @@ const comprobarCookie = (clave) => {
     return encontrada;
 }
 
+/**
+ * Constane que lee el valor de una cookie
+ * @param {String} claveIntroducida identificador de la cookie 
+ * @returns valor de la cookie
+ */
 const leerCookie = (claveIntroducida) => {
     if (comprobarCookie(claveIntroducida)) {
         let cookies = document.cookie.split("; ");
@@ -435,6 +615,15 @@ const leerCookie = (claveIntroducida) => {
     }
 }
 
+/**
+ * Listeners
+*/
+
+/**
+ * Listener del input del buscador que muestra 
+ * la informacion de la carta escrita al pulsar 
+ * enter
+ */
 DOM.inputBuscador.addEventListener("keydown", (e) => {
     if (e.key == "Enter") {
         let cartaBuscada = buscarCarta("nombre", DOM.inputBuscador.value);
@@ -447,6 +636,11 @@ DOM.inputBuscador.addEventListener("keydown", (e) => {
     }
 });
 
+/**
+ * Listener del boton del buscador que muestra 
+ * la informacion de la carta escrita en el input 
+ * al pulsar en el
+ */
 DOM.botonBuscador.addEventListener("click", () => {
     let cartaBuscada = buscarCarta("nombre", DOM.inputBuscador.value);
         if (cartaBuscada != null) {
@@ -457,6 +651,11 @@ DOM.botonBuscador.addEventListener("click", () => {
         }
 });
 
+/**
+ * Listener de los botones de las cartas seleccionadas 
+ * para agregar y quitar cartas y el mostrar informacion
+ * al pulsar en el nombre de un usuario
+ */
 DOM.bodySeleccionadas.addEventListener("click", (e) => {
     if (e.target.name == "sumarCarta") {
         agregarCarta(e.target.closest("tr").getAttribute("name"));
@@ -464,8 +663,17 @@ DOM.bodySeleccionadas.addEventListener("click", (e) => {
     if (e.target.name == "restarCarta") {
         quitarCarta(e.target.closest("tr").getAttribute("name"));
     }
+    if (e.target.getAttribute("name") == "nombreCarta") {
+        mostrarInfo(e.target.closest("tr").getAttribute("name"));
+    }
 });
 
+/**
+ * Listeneres de la carta en la pantalla donde en la 
+ * imagen o el boton de seleccionar se añade a 
+ * la lista de cartas selccionadas y en el boton
+ * de mostrar informacion se crea un modal
+ */
 DOM.cartas.addEventListener("click", (e) => {
     if (e.target.nodeName == "IMG" || e.target.nodeName == "A") {
         agregarCarta(e.target.closest(".carta").id);
@@ -475,6 +683,10 @@ DOM.cartas.addEventListener("click", (e) => {
     }
 });
 
+/**
+ * Listener de la opcion de navegacion de seleccion
+ * del mazo para mostrarlo
+ */
 DOM.mazo.addEventListener("click", (e) => {
     crearCookie("Mazo", e.target.id);
     DOM.seleccionMazo.innerHTML = e.target.innerHTML;
@@ -482,6 +694,10 @@ DOM.mazo.addEventListener("click", (e) => {
     generarOpciones();
 });
 
+/**
+ * Listener de la opcion de navegacion de seleccion
+ * del idioma para mostrar el mazo en el idioma seleccionado
+ */
 DOM.idiomas.addEventListener("click", (e) => {
     crearCookie("Idioma", e.target.id);
     DOM.seleccionIdioma.innerHTML = e.target.innerHTML;
@@ -492,6 +708,11 @@ DOM.idiomas.addEventListener("click", (e) => {
     modificarFooter();
 });
 
+/**
+ * Listener de la opcion de navegacion de seleccion
+ * de la cualidad para mostrar el mazo segun la
+ * cualidad seleccionada
+ */
 DOM.cualidad.addEventListener("click", (e) => {
     crearCookie("Cualidad", e.target.id);
     DOM.seleccionCualidad.innerHTML = e.target.innerHTML;
@@ -499,6 +720,11 @@ DOM.cualidad.addEventListener("click", (e) => {
     generarOpciones();
 });
 
+/**
+ * Listener de la opcion de navegacion de seleccion
+ * del orden para mostrar el mazo segun el
+ * orden seleccionado
+ */
 DOM.orden.addEventListener("click", (e) => {
     crearCookie("Orden", e.target.id);
     DOM.seleccionOrden.innerHTML = e.target.innerHTML;
@@ -506,6 +732,9 @@ DOM.orden.addEventListener("click", (e) => {
     generarOpciones();
 });
 
+/**
+ * Acciones a acometerse cuando la página cargue
+ */
 window.onload = () => {
     if (!comprobarCookie("Mazo")) crearCookie("Mazo", "Todas");
     if (!comprobarCookie("Idioma")) crearCookie("Idioma", "es");
@@ -520,17 +749,11 @@ window.onload = () => {
     if (JSON.parse(almacenamientoLocal.getItem("Mazos hechos")) == null) almacenamientoLocal.setItem("Mazos hechos",JSON.stringify([]))
 }
 
+/**
+ * Variables globales
+*/
+
 let mazoMostrado = new mazo([]);
 let cartasElegidas = new mazo([]);
 let modalInfo;
 let almacenamientoLocal = window.localStorage;
-
-const obtenerMazosCreados = () => {
-    return JSON.parse(almacenamientoLocal.getItem("Mazos hechos"))
-}
-
-const añadirMazoCreado = (nuevoMazo) => {
-    let mazosActuales = obtenerMazosCreados();
-    mazosActuales.push(nuevoMazo);
-    almacenamientoLocal.setItem("Mazos hechos",JSON.stringify(mazosActuales));
-}
