@@ -492,7 +492,7 @@ const modificarFooter = () => {
         template = document.getElementById("footerLLeno").content;
         template.querySelectorAll("td")[1].textContent = cartasElegidas.cartasTotales;
         template.querySelectorAll("td")[3].textContent = cartasElegidas.importeMazo + " €";
-        if (cartasElegidas.cartasTotales < 60 || cartasElegidas.cartasTotales > 60) {
+        if (cartasElegidas.cartasTotales > 60 || cartasElegidas.cartasTotales < 1) {
             if (!template.querySelectorAll("button")[0].classList.contains("disabled")) template.querySelectorAll("button")[0].classList.add("disabled");
             template.querySelectorAll("span")[0].textContent = "El mazo debe tener 60 cartas para poder guardarse";
         } else {

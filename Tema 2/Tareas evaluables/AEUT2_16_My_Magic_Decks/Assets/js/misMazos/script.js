@@ -20,14 +20,6 @@ const DOM = {
 }
 
 /**
- * Variables globales
-*/
-
-let mazoMostrado = new mazo([]);
-let modalInfo;
-let almacenamientoLocal = window.localStorage;
-
-/**
  * Clases
 */
 
@@ -522,3 +514,11 @@ window.onload = () => {
         DOM.borrarMazo.classList.add("disabled");
     }
 }
+
+/**
+ * Variables globales
+*/
+
+let mazoMostrado = new mazo([]);
+let modalInfo;
+let almacenamientoLocal = window.localStorage;
