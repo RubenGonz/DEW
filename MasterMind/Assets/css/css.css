@@ -1,0 +1,30 @@
+.imgLogo {
+    width: 32px;
+}
+
+.tamanioMoneda {
+    width: 64px;
+    height: 64px;
+    z-index: 1000;
+}
+
+.monedaIntento {
+    background-color: gray;
+}
+
+.monedaSolucion {
+    width: 32px;
+    height: 32px;
+    z-index: 999;
+}
+
+.error {
+    font-size: small;
+    color: red;
+}
+
+.intentos {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 500px;
+}
