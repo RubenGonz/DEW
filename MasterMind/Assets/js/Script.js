@@ -6,9 +6,7 @@ const DOM = {
     plantillaMoneda: document.getElementById("plantillaMoneda"),
     plantillaIntento: document.getElementById("plantillaIntento"),
     plantillaSlots: document.getElementById("plantillaSlots"),
-    plantillaAcierto: document.getElementById("plantillaAcierto"),
-    plantillaCoincidencia: document.getElementById("plantillaCoincidencia"),
-    plantillaFallo: document.getElementById("plantillaFallo"),
+    plantillaMonedaSolucion: document.getElementById("plantillaMonedaSolucion"),
     plantillaPartidaGanada: document.getElementById("plantillaPartidaGanada"),
     plantillaPartidaPerdida: document.getElementById("plantillaPartidaPerdida"),
     seccionResultado: document.getElementById("seccionResultado")
@@ -64,27 +62,24 @@ const mostrarError = (filaIntento) => {
 const mostrarResultado = (filaIntento, cantidadAciertos, cantidadCoincidencias, cantidadFallos) => {
     document.getElementById("comprobacion" + filaIntento).innerHTML = "";
     document.getElementById("comprobacion" + filaIntento).classList.replace("flex-column", "flex-row");
-    const fragmentAcierto = document.createDocumentFragment();
-    const fragmentCoincidencia = document.createDocumentFragment();
-    const fragmentFallo = document.createDocumentFragment();
-    const templateAcierto = DOM.plantillaAcierto.content;
-    const templateCoincidencia = DOM.plantillaCoincidencia.content;
-    const templateFallo = DOM.plantillaFallo.content;
+    const fragment = document.createDocumentFragment();
+    const template = DOM.plantillaMonedaSolucion.content;
     for (let i = 1; i <= cantidadAciertos; i++) {
-        const cloneAcierto = templateAcierto.cloneNode(true);
-        fragmentAcierto.appendChild(cloneAcierto);
+        template.querySelectorAll("div")[0].style.backgroundColor = "#0a0a0a";
+        const clone = template.cloneNode(true);
+        fragment.appendChild(clone);
     }
     for (let i = 1; i <= cantidadCoincidencias; i++) {
-        const cloneCoincidencia = templateCoincidencia.cloneNode(true);
-        fragmentCoincidencia.appendChild(cloneCoincidencia);
+        template.querySelectorAll("div")[0].style.backgroundColor = "white";
+        const clone = template.cloneNode(true);
+        fragment.appendChild(clone);
     }
     for (let i = 1; i <= cantidadFallos; i++) {
-        const cloneFallo = templateFallo.cloneNode(true);
-        fragmentFallo.appendChild(cloneFallo);
+        template.querySelectorAll("div")[0].style.backgroundColor = "gray";
+        const clone = template.cloneNode(true);
+        fragment.appendChild(clone);
     }
-    document.getElementById("comprobacion" + filaIntento).appendChild(fragmentAcierto);
-    document.getElementById("comprobacion" + filaIntento).appendChild(fragmentCoincidencia);
-    document.getElementById("comprobacion" + filaIntento).appendChild(fragmentFallo);
+    document.getElementById("comprobacion" + filaIntento).appendChild(fragment);
 }
 
 const mostrarSolucion = (resultado) => {
