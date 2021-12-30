@@ -22,13 +22,50 @@
             </div>
             <a class="navbar-brand me-auto ps-2 text-dark" href="#">MasterMind</a>
             <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Configuración
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Aqui la configuración</a></li>
-                </ul>
+                <button class="btn botonConfiguracion text-end dropdown-toggle">Configuración</button>
+                <div class="configuracionPartida bg-info p-2 rounded-3">
+                    <div>
+                        Colores:
+                        <div>
+                            <input type="color" name="" id="">
+                            <input type="color" name="" id="">
+                            <input type="color" name="" id="">
+                            <input type="color" name="" id="">
+                            <input type="color" name="" id="">
+                            <input type="color" name="" id="">
+                            <input type="color" name="" id="">
+                            <input type="color" name="" id="">
+                        </div>
+                    </div>
+                    <hr class="my-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="w-50">
+                            Numero de intentos
+                        </div>
+                        <div class="w-50">
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                    <hr class="my-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="w-50">
+                            Numero de slots
+                        </div>
+                        <div class="w-50">
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                    <hr class="my-1">
+                    <div>
+                        <input type="checkbox" class="btn-check" id="btn-check">
+                        <label class="btn btn-primary w-100" for="btn-check">Repeticiones</label>
+                    </div>
+                    <hr class="my-1">
+                    
+                    <div>
+                        <input type="button" value="Establecer nueva configuración" class="btn btn-primary w-100">
+                    </div>
+                </div>
             </div>
         </nav>
     </header>

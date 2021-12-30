@@ -1,10 +1,16 @@
+:root {
+    --diametroMonedaPequenia: 32px;
+    --diametroMonedaGrande: 64px;
+    --anchoConf: 300px;
+}
+
 .imgLogo {
-    width: 32px;
+    width: var(--diametroMonedaPequenia);
 }
 
 .tamanioMoneda {
-    width: 64px;
-    height: 64px;
+    width: var(--diametroMonedaGrande);
+    height: var(--diametroMonedaGrande);
     z-index: 1000;
 }
 
@@ -13,8 +19,8 @@
 }
 
 .monedaSolucion {
-    width: 32px;
-    height: 32px;
+    width: var(--diametroMonedaPequenia);
+    height: var(--diametroMonedaPequenia);
     z-index: 999;
 }
 
@@ -51,4 +57,15 @@
 
 ::-webkit-scrollbar {
     width: 0px;
+}
+
+.botonConfiguracion {
+    width: var(--anchoConf);   
+}
+
+.configuracionPartida {
+    position: absolute;
+    top: 50px;
+    background-color: #409dc4;
+    width: var(--anchoConf); 
 }
