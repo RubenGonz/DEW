@@ -1,21 +1,20 @@
 const DOM = {
-    configuracionPartida: document.getElementById("configuracionPartida"),
     opciones: document.getElementById("opciones"),
     intentos: document.getElementById("intentos"),
-    plantillaMoneda: document.getElementById("plantillaMoneda"),
-    plantillaMoneda: document.getElementById("plantillaMoneda"),
+    seccionResultado: document.getElementById("seccionResultado"),
+    plantillaMonedaEstandar: document.getElementById("plantillaMonedaEstandar"),
+    plantillaMonedaSolucion: document.getElementById("plantillaMonedaSolucion"),
     plantillaIntento: document.getElementById("plantillaIntento"),
     plantillaSlots: document.getElementById("plantillaSlots"),
-    plantillaMonedaSolucion: document.getElementById("plantillaMonedaSolucion"),
+    plantillaMonedaPequenia: document.getElementById("plantillaMonedaPequenia"),
     plantillaPartidaGanada: document.getElementById("plantillaPartidaGanada"),
-    plantillaPartidaPerdida: document.getElementById("plantillaPartidaPerdida"),
-    seccionResultado: document.getElementById("seccionResultado")
+    plantillaPartidaPerdida: document.getElementById("plantillaPartidaPerdida")
 }
 
 const generarColores = () => {
-    if (DOM.opciones.innerHTML == "") DOM.opciones.innerHTML = "";
+    if (DOM.opciones.innerHTML != "") DOM.opciones.innerHTML = "";
     const fragment = document.createDocumentFragment();
-    const template = DOM.plantillaMoneda.content;
+    const template = DOM.plantillaMonedaEstandar.content;
 
     juegoEnCurso.coloresJuego.forEach(color => {
         template.querySelectorAll("div")[0].id = color;
@@ -36,6 +35,7 @@ const generarIntentos = () => {
         const cloneSlot = templateSlot.cloneNode(true);
         fragmentSlot.appendChild(cloneSlot);
     }
+    templateIntento.querySelectorAll("div")[2].innerHTML = "";
     for (let i = 1; i <= juegoEnCurso.cantidadIntentos; i++) {
         templateIntento.querySelectorAll('[id^="intento"]')[0].id = "intento" + i;
         templateIntento.querySelectorAll('[id^="slots"]')[0].id = "slots" + i;
@@ -63,7 +63,7 @@ const mostrarResultado = (filaIntento, cantidadAciertos, cantidadCoincidencias, 
     document.getElementById("comprobacion" + filaIntento).innerHTML = "";
     document.getElementById("comprobacion" + filaIntento).classList.replace("flex-column", "flex-row");
     const fragment = document.createDocumentFragment();
-    const template = DOM.plantillaMonedaSolucion.content;
+    const template = DOM.plantillaMonedaPequenia.content;
     for (let i = 1; i <= cantidadAciertos; i++) {
         template.querySelectorAll("div")[0].style.backgroundColor = "#0a0a0a";
         const clone = template.cloneNode(true);
@@ -87,7 +87,7 @@ const mostrarSolucion = (resultado) => {
         if (intento.querySelectorAll('input')[0] != null) intento.remove();
     })
     const fragmentMoneda = document.createDocumentFragment();
-    const templateMoneda = DOM.plantillaMoneda.content;
+    const templateMoneda = DOM.plantillaMonedaSolucion.content;
     for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
         templateMoneda.querySelectorAll("div")[0].style.backgroundColor = juegoEnCurso.combinacionCorrecta.colores[i];
         const cloneMoneda = templateMoneda.cloneNode(true);
@@ -144,3 +144,7 @@ DOM.intentos.addEventListener("click", (e) => {
         juegoEnCurso.comprobarIntento(numFila);
     }
 })
+
+$('input[type=button]').click(function () {
+    iniciarJuego();
+});

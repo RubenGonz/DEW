@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="shortcut icon" href="Assets/img/Coin.png" type="image/x-icon">
     <title>MarterMind</title>
     <link rel="stylesheet" href="Assets/css/css.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -36,7 +36,7 @@
     <main>
         <div class="row m-0">
             <div class="col offset-md-2 col-md-8 offset-xl-3 col-xl-6">
-                <div class="d-flex justify-content-between my-2">
+                <div class="d-flex justify-content-between my-2 align-items-center">
                     <div class="tamanioMoneda rounded-circle"
                         style="background-image: url(Assets/img/Coin.png);background-size: cover;background-color: yellow;">
                     </div>
@@ -46,110 +46,96 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h3>Configuración actual</h3>
+                <div class="fondo-info rounded-3 p-2 mt-3">
 
-                        <div id="configuracionPartida">
-                            <div>Cantidad de colores: 6</div>
-                            <div>Numero de intentos: 10</div>
-                            <div>Cantidad de slots: 4</div>
-                        </div>
-                    </div>
-                    <div class="text-end">
-                        <h3>Partida en curso</h3>
-
-                        <div id="configuracionPartida">
-                            <div>Intentos restantes: 10</div>
-                            <div>Mejor ronda: 10 aciertos</div>
-                        </div>
+                    <div class="p-1 d-flex justify-content-between">
                         <div>
-                            <input type="button" value="Nuevo juego">
+                            <h5>Estos son los colors para escoger:</h5>
                         </div>
                     </div>
 
-
-                </div>
-
-                <div class="p-1 d-flex justify-content-between">
-                    <div>
-                        Estos son los colors para escoger:
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-around flex-wrap bg-info rounded-pill p-2 mx-5" id="opciones">
-
-                </div>
-
-                <div class="p-1">
-                    Leyenda:
-                </div>
-
-                <div class="p-1">
-                    <div class="row bg-info py-2">
-
-                        <div class="col-4">
-                            <div class="d-flex flex-column align-items-center">
-                                <div class="monedaSolucion rounded-circle mx-1"
-                                    style="background-image: url(Assets/img/Coin.png);background-size: cover; background-color: #0a0a0a;">
-                                </div>
-                                <div class="text-center">
-                                    Ha acertado el color y la posición.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <div class="d-flex flex-column align-items-center">
-                                <div class="monedaSolucion rounded-circle mx-1"
-                                    style="background-image: url(Assets/img/Coin.png);background-size: cover; background-color: white;">
-                                </div>
-                                <div class="text-center">
-                                    Ha acertado el color pero no la posición.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <div class="d-flex flex-column align-items-center">
-                                <div class="monedaSolucion rounded-circle mx-1"
-                                    style="background-image: url(Assets/img/Coin.png);background-size: cover; background-color: gray;">
-                                </div>
-                                <div class="text-center">
-                                    No acertaste nada.
-                                </div>
-                            </div>
-                        </div>
+                    <div class="d-flex justify-content-around flex-wrap mx-3" id="opciones">
 
                     </div>
+
+                    <div class="p-1 mt-3">
+                        <h5>Leyenda:</h5>
+                    </div>
+
+                    <div class="p-1">
+                        <div class="row py-2 m-0">
+
+                            <div class="col-4">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="monedaSolucion rounded-circle mx-1"
+                                        style="background-image: url(Assets/img/Coin.png);background-size: cover; background-color: #0a0a0a;">
+                                    </div>
+                                    <div class="text-center">
+                                        Ha acertado el color y la posición.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="monedaSolucion rounded-circle mx-1"
+                                        style="background-image: url(Assets/img/Coin.png);background-size: cover; background-color: white;">
+                                    </div>
+                                    <div class="text-center">
+                                        Ha acertado el color pero no la posición.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="monedaSolucion rounded-circle mx-1"
+                                        style="background-image: url(Assets/img/Coin.png);background-size: cover; background-color: gray;">
+                                    </div>
+                                    <div class="text-center">
+                                        No acertaste nada.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-1 mt-3 d-flex justify-content-center">
+                        <input type="button" value="Nuevo juego" class="btn btn-primary w-100">
+                    </div>
                 </div>
-
-                <div class="p-1">
-                    Intentos:
-                </div>
-
-                <hr>
-
-                <div id="intentos" class="intentos">
-
-                </div>
-
-                <hr>
 
                 <div id="seccionResultado">
 
+                </div>
+
+                <div class="fondo-intentos rounded-3 p-2 mt-3">
+                    <div class="p-1">
+                        <h4 class="mb-0">Intentos</h4>
+                    </div>
+
+                    <hr class="my-2">
+
+                    <div id="intentos" class="intentos">
+
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="bg-info">
+    <footer class="bg-info mt-3">
         Hola
     </footer>
 
-    <template id="plantillaMoneda">
+    <template id="plantillaMonedaEstandar">
         <div id="" draggable="true" class="tamanioMoneda rounded-circle"
             style="background-image: url(Assets/img/Coin.png);background-size: cover;">
+        </div>
+    </template>
+
+    <template id="plantillaMonedaSolucion">
+        <div class="tamanioMoneda rounded-circle"
+            style="background-image: url(Assets/img/CoinSolucion.png);background-size: cover;">
         </div>
     </template>
 
@@ -158,7 +144,7 @@
         </div>
     </template>
 
-    <template id="plantillaMonedaSolucion">
+    <template id="plantillaMonedaPequenia">
         <div class="monedaSolucion rounded-circle mx-1"
             style="background-image: url(Assets/img/Coin.png);background-size: cover;">
         </div>
@@ -166,64 +152,68 @@
 
     <template id="plantillaIntento">
         <div id="intento" class="row py-2">
-            <div class="col-8">
-                <div id="slots" class="d-flex justify-content-between w-100">
+            <div class="col-8 px-1">
+                <div id="slots" class="d-flex flex-wrap justify-content-around w-100">
 
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-4 px-1">
                 <div id="comprobacion" class="d-flex justify-content-center align-items-center flex-column h-100">
-                    <input type="button" value="Comprobar intento">
+                    <input type="button" value="Comprobar intento" class="btn btn-success">
                 </div>
             </div>
         </div>
     </template>
 
     <template id="plantillaPartidaGanada">
-        <div class="row py-2">
-            <div class="col">
-                <h1 class="text-center">¡¡Ha ganado la partida!!</h1>
-            </div>
-        </div>
-        <div class="row py-2">
-            <div class="col">
-                <div id="slotsSolucion" class="d-flex justify-content-around w-100">
-
+        <div class="partidaGanda rounded-3 p-2 mt-3">
+            <div class="row py-2">
+                <div class="col">
+                    <h1 class="text-center">¡¡Has ganado la partida!!</h1>
                 </div>
             </div>
-        </div>
-        <div class="row py-2">
-            <div class="col d-flex align-items-center">
-                <h4>Intentos restantes: <span id="intentosRestantes">1</span></h4>
+            <div class="row py-2">
+                <div class="col">
+                    <div id="slotsSolucion" class="d-flex justify-content-around w-100">
+
+                    </div>
+                </div>
             </div>
-            <div class="col text-end">
-                <h4>¿Quieres volver a jugar?</h4>
-                <input type="button" value="Nuevo juego">
+            <div class="row py-2">
+                <div class="col d-flex align-items-center">
+                    <h4>Intentos restantes: <span id="intentosRestantes">1</span></h4>
+                </div>
+                <div class="col text-end">
+                    <h4>¿Quieres volver a jugar?</h4>
+                    <input type="button" value="Nuevo juego" class="btn btn-success mt-2">
+                </div>
             </div>
         </div>
     </template>
 
     <template id="plantillaPartidaPerdida">
-        <div class="row py-2">
-            <div class="col">
-                <h1 class="text-center">Has perdido la partida...</h1>
-            </div>
-        </div>
-        <div class="row py-2">
-            <div class="col">
-                <h4 class="mb-4">La combinacion correcta era:</h4>
-                <div id="slotsSolucion" class="d-flex justify-content-around w-100">
-
+        <div class="partidaPerdida rounded-3 p-2 mt-3">
+            <div class="row py-2">
+                <div class="col">
+                    <h1 class="text-center">Has perdido la partida...</h1>
                 </div>
             </div>
-        </div>
-        <div class="row py-2">
-            <div class="col d-flex align-items-center">
-                <h4>Otra vez sera...</h4>
+            <div class="row py-2">
+                <div class="col">
+                    <h4 class="mb-4">La combinacion correcta era:</h4>
+                    <div id="slotsSolucion" class="d-flex justify-content-around w-100">
+
+                    </div>
+                </div>
             </div>
-            <div class="col text-end">
-                <h4>¿Quieres volver a intentarlo?</h4>
-                <input type="button" value="Nuevo juego">
+            <div class="row py-2">
+                <div class="col d-flex align-items-center">
+                    <h4>Otra vez sera...</h4>
+                </div>
+                <div class="col text-end">
+                    <h4>¿Quieres volver a intentarlo?</h4>
+                    <input type="button" value="Nuevo juego" class="btn btn-danger mt-2">
+                </div>
             </div>
         </div>
     </template>
@@ -231,8 +221,8 @@
     <script src="Assets/js/logica.js"></script>
     <script src="Assets/js/Script.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 </body>
 

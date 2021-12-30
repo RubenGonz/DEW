@@ -26,5 +26,29 @@
 .intentos {
     overflow-y: scroll;
     overflow-x: hidden;
-    max-height: 500px;
+    max-height: 350px;
+}
+
+.fondo-info {
+    background-color: lightskyblue;
+    border: 2px solid #409dc4;
+}
+
+.fondo-intentos {
+    background-color: #ffe8cd;
+    border: 2px solid #9f5700;
+}
+
+.partidaGanda {
+    background-color: lightgreen;
+    border: 2px solid green;
+}
+
+.partidaPerdida {
+    background-color: #ffbfaa;
+    border: 2px solid red;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
 }
