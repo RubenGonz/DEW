@@ -1,11 +1,13 @@
-const coloresDefecto = ["rgb(255, 0, 0)", "rgb(0, 128, 0)", "rgb(255, 255, 0)", "rgb(238, 130, 238)", "rgb(0, 0, 255)", "rgb(46, 64, 83)"];
+const coloresDefecto = ["#ff0000", "#008000", "#ffff00", "#ee82ee", "#0000ff", "#2e4053"];
 let juegoEnCurso;
 
 window.onload = () => {
     iniciarJuego(coloresDefecto, 10, 4, false);
 }
-const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, cantidadIntentos = juegoEnCurso.cantidadIntentos, cantidadSlots = juegoEnCurso.cantidadSlots, repeticion = juegoEnCurso.repeticion, combinacionCorrecta) => {
-    juegoEnCurso = new juego(coloresJuego, cantidadIntentos, cantidadSlots, repeticion, combinacionCorrecta);
+
+const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, cantidadIntentos = juegoEnCurso.cantidadIntentos, cantidadSlots = juegoEnCurso.cantidadSlots, repeticiones = juegoEnCurso.repeticiones, combinacionCorrecta) => {
+    juegoEnCurso = new juego(coloresJuego, cantidadIntentos, cantidadSlots, repeticiones, combinacionCorrecta);
+    generarConf();
     generarColores();
     DOM.seccionResultado.innerHTML = "";
     generarIntentos();
@@ -32,23 +34,23 @@ const generarNumeroAleatorio = (valorMin, valorMax) => {
 }
 
 class juego {
-    constructor(coloresJuego, cantidadIntentos, cantidadSlots, repeticion, combinacionCorrecta) {
+    constructor(coloresJuego, cantidadIntentos, cantidadSlots, repeticiones, combinacionCorrecta) {
         this.coloresJuego = coloresJuego;
         this.cantidadIntentos = cantidadIntentos;
         this.cantidadSlots = cantidadSlots;
-        this.repeticion = repeticion;
+        this.repeticiones = repeticiones;
         if (combinacionCorrecta == null) {
-            this.combinacionCorrecta = this.generarCombinacionRandom(this.repeticion);
+            this.combinacionCorrecta = this.generarCombinacionRandom(this.repeticiones);
         } else {
             this.combinacionCorrecta = new combinacion(combinacionCorrecta);
         }
     }
 
-    generarCombinacionRandom(repeticion) {
+    generarCombinacionRandom(repeticiones) {
         let coloresRandom = [];
         do {
             let colorRandom = this.coloresJuego[generarNumeroAleatorio(0, this.coloresJuego.length)];
-            if (repeticion) {
+            if (repeticiones) {
                 coloresRandom.push(colorRandom);
             } else if (!coloresRandom.includes(colorRandom)) {
                 coloresRandom.push(colorRandom);
@@ -63,7 +65,7 @@ class juego {
             let intento = new combinacion(obtenerColores(filaIntento));
             let contadorAciertos = 0;
             let contadorCoincidencias = 0;
-            
+
             for (let i = 0; i < intento.colores.length; i++) {
                 if (Object.values(this.combinacionCorrecta.colores)[i] == Object.values(intento.colores)[i]) contadorAciertos++;
                 else if (Object.values(this.combinacionCorrecta.colores).includes(Object.values(intento.colores)[i])) contadorCoincidencias++;
@@ -75,7 +77,7 @@ class juego {
             if (contadorAciertos == this.cantidadSlots) mostrarSolucion(true);
             else if (this.cantidadIntentos == 0) mostrarSolucion(false);
         } else {
-            mostrarError(filaIntento);
+            mostrarError("comprobacion" + filaIntento, "Rellena todos los slots");
         }
     }
 }

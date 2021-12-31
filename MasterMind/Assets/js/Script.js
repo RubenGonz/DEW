@@ -1,7 +1,13 @@
 const DOM = {
     opciones: document.getElementById("opciones"),
+    nuevoJuegoLeyenda: document.getElementById("nuevoJuegoLeyenda"),
     intentos: document.getElementById("intentos"),
     seccionResultado: document.getElementById("seccionResultado"),
+    coloresConf: document.getElementById("coloresConf"),
+    inputIntentos: document.getElementById("inputIntentos"),
+    inputSlots: document.getElementById("inputSlots"),
+    checkboxRepeticiones: document.getElementById("checkboxRepeticiones"),
+    botonNuevaConf: document.getElementById("botonNuevaConf"),
     plantillaMonedaEstandar: document.getElementById("plantillaMonedaEstandar"),
     plantillaMonedaSolucion: document.getElementById("plantillaMonedaSolucion"),
     plantillaIntento: document.getElementById("plantillaIntento"),
@@ -9,6 +15,54 @@ const DOM = {
     plantillaMonedaPequenia: document.getElementById("plantillaMonedaPequenia"),
     plantillaPartidaGanada: document.getElementById("plantillaPartidaGanada"),
     plantillaPartidaPerdida: document.getElementById("plantillaPartidaPerdida")
+}
+
+let colorButton = document.getElementById("primary_color");
+
+colorButton.onchange = function() {
+    colorDiv.innerHTML = colorButton.value;
+}
+
+const generarConf = () => {
+    DOM.coloresConf.innerHTML = "";
+    juegoEnCurso.coloresJuego.forEach(color => {
+        let inputColor = document.createElement("input");
+        inputColor.type = "color";
+        inputColor.value = color;
+        DOM.coloresConf.appendChild(inputColor);
+    })
+    DOM.inputIntentos.value = juegoEnCurso.cantidadIntentos;
+    DOM.inputSlots.value = juegoEnCurso.cantidadSlots;
+    if (juegoEnCurso.repeticiones) {
+        DOM.checkboxRepeticiones.checked = true;
+        DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones activadas";
+    } else {
+        DOM.checkboxRepeticiones.checked = false;
+        DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones desactivadas";
+    }
+}
+
+const establecerNuevaConf = () => {
+    let configuracionValida = true;
+    let colores = [];
+    DOM.coloresConf.childNodes.forEach(color => colores.push(color.value));
+    let numIntentos = parseInt(DOM.inputIntentos.value);
+    let numSlots = parseInt(DOM.inputSlots.value);
+    let repeticiones = DOM.checkboxRepeticiones.checked;
+    if (numIntentos < 1 || typeof numIntentos != "number") {
+        configuracionValida = false;
+        mostrarError("errorIntentos", "Este valor no es válido");
+    }
+    if (numSlots < 1 || typeof numSlots != "number") {
+        configuracionValida = false;
+        mostrarError("errorSlots", "Este valor no es válido");
+    }
+    if (!repeticiones && numSlots > colores.length) {
+        configuracionValida = false;
+        mostrarError("errorRepeticiones", "Necesitas mas colores o menos slots para activar las repeticiones");
+    }
+    if (configuracionValida) iniciarJuego(colores, numIntentos, numSlots, repeticiones);
+    else mostrarError("errorConfiguracion", "La configuración introducida no es válida");
 }
 
 const generarColores = () => {
@@ -47,16 +101,14 @@ const generarIntentos = () => {
     DOM.intentos.appendChild(fragmentIntento);
 }
 
-const mostrarError = (filaIntento) => {
-    if (document.getElementById("comprobacion" + filaIntento).children.length == 1) {
-        let parrafoError = document.createElement("div");
-        parrafoError.innerHTML = "Rellena todos los slots";
-        parrafoError.id = "mensajeError" + filaIntento;
-        parrafoError.classList.add("error");
-        document.getElementById("comprobacion" + filaIntento).appendChild(parrafoError);
-        $('#mensajeError' + filaIntento).delay(1000).fadeOut(500);
-        setTimeout(() => $('#mensajeError' + filaIntento).remove(), 1500);
-    }
+const mostrarError = (contenedorPadre, mensajeError) => {
+    let parrafoError = document.createElement("div");
+    parrafoError.innerHTML = mensajeError;
+    parrafoError.id = "mensajeError";
+    parrafoError.classList.add("error");
+    document.getElementById(contenedorPadre).appendChild(parrafoError);
+    $('#mensajeError').delay(1000).fadeOut(500);
+    setTimeout(() => $('#mensajeError').remove(), 1500);
 }
 
 const mostrarResultado = (filaIntento, cantidadAciertos, cantidadCoincidencias, cantidadFallos) => {
@@ -145,6 +197,13 @@ DOM.intentos.addEventListener("click", (e) => {
     }
 })
 
-$('input[type=button]').click(function () {
+$('#nuevoJuegoLeyenda').click(() => {
     iniciarJuego();
 });
+
+$('#checkboxRepeticiones').click(() => {
+    if (DOM.checkboxRepeticiones.checked) DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones activadas";
+    else DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones desactivadas";
+});
+
+$('#botonNuevaConf').click(() => establecerNuevaConf());

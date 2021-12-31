@@ -64,8 +64,27 @@
 }
 
 .configuracionPartida {
+    z-index: 1001;
     position: absolute;
     top: 50px;
-    background-color: #409dc4;
+    background-color: lightskyblue;
+    border: 2px solid #409dc4;
     width: var(--anchoConf); 
+}
+
+input[type="color"] {
+    border-radius: 50%;
+    width: var(--diametroMonedaPequenia);
+    height: var(--diametroMonedaPequenia);
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0; 
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
 }
