@@ -24,7 +24,8 @@ const comprobarSlots = (filaIntento) => {
 const obtenerColores = (filaIntento) => {
     let colores = [];
     Object.values(document.getElementById("slots" + filaIntento).children).forEach(slot => {
-        colores.push(slot.children[0].style.backgroundColor);
+        let color = convertirAHex(slot.children[0].style.backgroundColor);
+        colores.push(color);
     });
     return colores;
 }

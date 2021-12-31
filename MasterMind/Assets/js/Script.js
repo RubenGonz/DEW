@@ -17,12 +17,6 @@ const DOM = {
     plantillaPartidaPerdida: document.getElementById("plantillaPartidaPerdida")
 }
 
-let colorButton = document.getElementById("primary_color");
-
-colorButton.onchange = function() {
-    colorDiv.innerHTML = colorButton.value;
-}
-
 const generarConf = () => {
     DOM.coloresConf.innerHTML = "";
     juegoEnCurso.coloresJuego.forEach(color => {
@@ -165,13 +159,13 @@ const mostrarSolucion = (resultado) => {
 
 DOM.opciones.addEventListener("dragstart", (e) => {
     if (e.target.draggable == true) {
-        e.dataTransfer.setData("text/plain", e.target.style.backgroundColor);
+        e.dataTransfer.setData("text/plain", e.target.id);
     }
 })
 
 DOM.intentos.addEventListener("dragstart", (e) => {
     if (e.target.draggable == true) {
-        e.dataTransfer.setData("text/plain", e.target.style.backgroundColor);
+        e.dataTransfer.setData("text/plain", e.target.id);
     }
 })
 
@@ -207,3 +201,14 @@ $('#checkboxRepeticiones').click(() => {
 });
 
 $('#botonNuevaConf').click(() => establecerNuevaConf());
+
+function convertirAHex(colorRgb) {
+    let secciones = colorRgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    secciones.shift();
+    for (let i = 0; i < 3; i++) {
+        secciones[i] = parseInt(secciones[i]).toString(16);
+        console.log(secciones[i].length)
+        if (secciones[i].length == 1) secciones[i] = '0' + secciones[i];
+    }
+    return '#' + secciones.join('');
+}
