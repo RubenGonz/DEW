@@ -40,6 +40,13 @@ const establecerNuevaConf = () => {
     let configuracionValida = true;
     let colores = [];
     DOM.coloresConf.childNodes.forEach(color => colores.push(color.value));
+    let coloresOrdenados = colores.sort();
+    for (let i = 0; i < coloresOrdenados.length; i++) {
+        if (coloresOrdenados[i + 1] === coloresOrdenados[i]) {
+            configuracionValida = false;
+            mostrarError("errorColores", "Hay colores repetidos");
+        }
+    }
     let numIntentos = parseInt(DOM.inputIntentos.value);
     let numSlots = parseInt(DOM.inputSlots.value);
     let repeticiones = DOM.checkboxRepeticiones.checked;
