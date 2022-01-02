@@ -5,8 +5,8 @@ window.onload = () => {
     iniciarJuego(coloresDefecto, 10, 4, false);
 }
 
-const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, cantidadIntentos = juegoEnCurso.cantidadIntentos, cantidadSlots = juegoEnCurso.cantidadSlots, repeticiones = juegoEnCurso.repeticiones, combinacionCorrecta) => {
-    juegoEnCurso = new juego(coloresJuego, cantidadIntentos, cantidadSlots, repeticiones, combinacionCorrecta);
+const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, intentosIniciales = juegoEnCurso.intentosIniciales, cantidadSlots = juegoEnCurso.cantidadSlots, repeticiones = juegoEnCurso.repeticiones, combinacionCorrecta) => {
+    juegoEnCurso = new juego(coloresJuego, intentosIniciales, cantidadSlots, repeticiones, combinacionCorrecta);
     generarConf();
     generarColores();
     DOM.seccionResultado.innerHTML = "";
@@ -24,8 +24,10 @@ const comprobarSlots = (filaIntento) => {
 const obtenerColores = (filaIntento) => {
     let colores = [];
     Object.values(document.getElementById("slots" + filaIntento).children).forEach(slot => {
-        let color = convertirAHex(slot.children[0].style.backgroundColor);
-        colores.push(color);
+        if (slot.children[0] != undefined) {
+            let color = convertirAHex(slot.children[0].style.backgroundColor);
+            colores.push(color);
+        } else colores.push(null);
     });
     return colores;
 }
@@ -35,9 +37,10 @@ const generarNumeroAleatorio = (valorMin, valorMax) => {
 }
 
 class juego {
-    constructor(coloresJuego, cantidadIntentos, cantidadSlots, repeticiones, combinacionCorrecta) {
+    constructor(coloresJuego, intentosIniciales, cantidadSlots, repeticiones, combinacionCorrecta) {
         this.coloresJuego = coloresJuego;
-        this.cantidadIntentos = cantidadIntentos;
+        this.intentosIniciales = intentosIniciales;
+        this.intentosRestantes = intentosIniciales;
         this.cantidadSlots = cantidadSlots;
         this.repeticiones = repeticiones;
         if (combinacionCorrecta == null) {
@@ -74,9 +77,9 @@ class juego {
 
             let contadorFallos = this.cantidadSlots - contadorAciertos - contadorCoincidencias;
             mostrarResultado(filaIntento, contadorAciertos, contadorCoincidencias, contadorFallos);
-            this.cantidadIntentos = this.cantidadIntentos - 1;
+            this.intentosRestantes = this.intentosRestantes - 1;
             if (contadorAciertos == this.cantidadSlots) mostrarSolucion(true);
-            else if (this.cantidadIntentos == 0) mostrarSolucion(false);
+            else if (this.intentosRestantes == 0) mostrarSolucion(false);
         } else {
             mostrarError("comprobacion" + filaIntento, "Rellena todos los slots");
         }

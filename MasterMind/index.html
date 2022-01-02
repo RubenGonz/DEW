@@ -22,16 +22,17 @@
             </div>
             <a class="navbar-brand me-auto ps-2 text-dark" href="#">MasterMind</a>
             <div class="nav-item dropdown">
-                <button class="btn botonConfiguracion text-end dropdown-toggle">Configuración</button>
-                <div class="configuracionPartida bg-info p-2 rounded-3">
+                <button id="botonConfiguracion"
+                    class="btn botonConfiguracion text-end dropdown-toggle">Configuración</button>
+                <div id="configuracionPartida" class="configuracionPartida d-none bg-info p-2 rounded-3">
                     <div>
                         <div class="mb-1">Colores:</div>
                         <div id="coloresConf" class="d-flex flex-wrap justify-content-around">
 
                         </div>
                         <div class="d-flex justify-content-around my-1">
-                            <button class="btn btn-success m-1">+</button>
-                            <button class="btn btn-danger m-1">-</button>
+                            <button id="botonSumar" class="btn btn-success m-1 w-25">+</button>
+                            <button id="botonRestar" class="btn btn-danger m-1 w-25">-</button>
                         </div>
                         <div id="errorColores" class="text-center">
 

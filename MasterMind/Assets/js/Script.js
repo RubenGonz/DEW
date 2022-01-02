@@ -25,7 +25,7 @@ const generarConf = () => {
         inputColor.value = color;
         DOM.coloresConf.appendChild(inputColor);
     })
-    DOM.inputIntentos.value = juegoEnCurso.cantidadIntentos;
+    DOM.inputIntentos.value = juegoEnCurso.intentosIniciales;
     DOM.inputSlots.value = juegoEnCurso.cantidadSlots;
     if (juegoEnCurso.repeticiones) {
         DOM.checkboxRepeticiones.checked = true;
@@ -36,20 +36,52 @@ const generarConf = () => {
     }
 }
 
+const aniadirColor = () => {
+    let coloresMaximos = 10;
+    if (DOM.coloresConf.childNodes.length < coloresMaximos) {
+        let inputColor = document.createElement("input");
+        inputColor.type = "color";
+        let colorInput;
+        let colores = [];
+        DOM.coloresConf.childNodes.forEach(color => colores.push(color.value));
+        do {
+            let colorRandom = "rgb(" + generarNumeroAleatorio(0, 255) + "," + generarNumeroAleatorio(0, 255) + "," + generarNumeroAleatorio(0, 255) + ")";
+            colorInput = convertirAHex(colorRandom);
+        } while (colores.includes(colorInput));
+        inputColor.value = colorInput;
+        DOM.coloresConf.appendChild(inputColor);
+    } else mostrarError("errorColores", "No puede haber mas de " + coloresMaximos + " colores");
+}
+
+const quitarColor = () => {
+    if (DOM.coloresConf.childNodes.length > 1) DOM.coloresConf.lastChild.remove();
+    else mostrarError("errorColores", "Tiene que haber como minimo un color");
+}
+
+function convertirAHex(colorRgb) {
+    let secciones = colorRgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    secciones.shift();
+    for (let i = 0; i < 3; i++) {
+        secciones[i] = parseInt(secciones[i]).toString(16);
+        if (secciones[i].length == 1) secciones[i] = '0' + secciones[i];
+    }
+    return '#' + secciones.join('');
+}
+
 const establecerNuevaConf = () => {
     let configuracionValida = true;
     let colores = [];
     DOM.coloresConf.childNodes.forEach(color => colores.push(color.value));
-    let coloresOrdenados = colores.sort();
-    for (let i = 0; i < coloresOrdenados.length; i++) {
-        if (coloresOrdenados[i + 1] === coloresOrdenados[i]) {
-            configuracionValida = false;
-            mostrarError("errorColores", "Hay colores repetidos");
-        }
-    }
     let numIntentos = parseInt(DOM.inputIntentos.value);
     let numSlots = parseInt(DOM.inputSlots.value);
     let repeticiones = DOM.checkboxRepeticiones.checked;
+    let coloresOrdenados = colores.slice().sort();
+    let coloresRepetidos = [];
+    for (let i = 0; i < coloresOrdenados.length; i++) if (coloresOrdenados[i + 1] === coloresOrdenados[i] && !coloresRepetidos.includes(coloresOrdenados[i])) coloresRepetidos.push(coloresOrdenados[i]);
+    if (coloresRepetidos.length > 0) {
+        configuracionValida = false;
+        mostrarError("errorColores", "Hay " + coloresRepetidos.length + " colores repetidos");
+    }
     if (numIntentos < 1 || typeof numIntentos != "number") {
         configuracionValida = false;
         mostrarError("errorIntentos", "Este valor no es válido");
@@ -91,7 +123,7 @@ const generarIntentos = () => {
         fragmentSlot.appendChild(cloneSlot);
     }
     templateIntento.querySelectorAll("div")[2].innerHTML = "";
-    for (let i = 1; i <= juegoEnCurso.cantidadIntentos; i++) {
+    for (let i = 1; i <= juegoEnCurso.intentosIniciales; i++) {
         templateIntento.querySelectorAll('[id^="intento"]')[0].id = "intento" + i;
         templateIntento.querySelectorAll('[id^="slots"]')[0].id = "slots" + i;
         templateIntento.querySelectorAll('[id^="comprobacion"]')[0].id = "comprobacion" + i;
@@ -136,9 +168,7 @@ const mostrarResultado = (filaIntento, cantidadAciertos, cantidadCoincidencias, 
 }
 
 const mostrarSolucion = (resultado) => {
-    Object.values(DOM.intentos.children).forEach(intento => {
-        if (intento.querySelectorAll('input')[0] != null) intento.remove();
-    })
+    Object.values(DOM.intentos.children).forEach(intento => { if (intento.querySelectorAll('input')[0] != null) intento.remove() });
     const fragmentMoneda = document.createDocumentFragment();
     const templateMoneda = DOM.plantillaMonedaSolucion.content;
     for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
@@ -149,9 +179,10 @@ const mostrarSolucion = (resultado) => {
     if (resultado) {
         const fragmentGanada = document.createDocumentFragment();
         const templateGanada = DOM.plantillaPartidaGanada.content;
-        templateGanada.querySelectorAll("span")[0].innerHTML = juegoEnCurso.cantidadIntentos;
+        templateGanada.querySelectorAll("span")[0].innerHTML = juegoEnCurso.intentosRestantes;
         templateGanada.querySelector("#slotsSolucion").appendChild(fragmentMoneda);
         const cloneGanada = templateGanada.cloneNode(true);
+        templateGanada.querySelector("#slotsSolucion").innerHTML = "";
         fragmentGanada.appendChild(cloneGanada);
         DOM.seccionResultado.appendChild(fragmentGanada);
     } else {
@@ -159,6 +190,7 @@ const mostrarSolucion = (resultado) => {
         const templatePerdida = DOM.plantillaPartidaPerdida.content;
         templatePerdida.querySelector("#slotsSolucion").appendChild(fragmentMoneda);
         const clonePerdida = templatePerdida.cloneNode(true);
+        templatePerdida.querySelector("#slotsSolucion").innerHTML = "";
         fragmentPerdida.appendChild(clonePerdida);
         DOM.seccionResultado.appendChild(fragmentPerdida);
     }
@@ -177,13 +209,17 @@ DOM.intentos.addEventListener("dragstart", (e) => {
 })
 
 DOM.intentos.addEventListener("drop", (e) => {
-    e.preventDefault();
+    let numFila = e.target.closest("#intentos > div").id.slice(7);
+    let coloresFila = obtenerColores(numFila);
     let idColor = e.dataTransfer.getData("text");
-    let colorInsertado = document.getElementById(idColor).cloneNode(true);
-    if (e.target.classList.contains("monedaIntento")) {
-        e.target.appendChild(colorInsertado);
-    } else if (e.target.parentNode.classList.contains("monedaIntento")) {
-        e.target.parentNode.replaceChild(colorInsertado, e.target);
+    if (!(!juegoEnCurso.repeticiones && coloresFila.includes(idColor))) {
+        e.preventDefault();
+        let colorInsertado = document.getElementById(idColor).cloneNode(true);
+        if (e.target.classList.contains("monedaIntento")) {
+            e.target.appendChild(colorInsertado);
+        } else if (e.target.parentNode.classList.contains("monedaIntento")) {
+            e.target.parentNode.replaceChild(colorInsertado, e.target);
+        }
     }
 })
 
@@ -198,24 +234,20 @@ DOM.intentos.addEventListener("click", (e) => {
     }
 })
 
-$('#nuevoJuegoLeyenda').click(() => {
-    iniciarJuego();
-});
+const alternarVistaConf = () => {
+    if (document.getElementById("configuracionPartida").classList.contains("d-none")) {
+        document.getElementById("configuracionPartida").classList.remove("d-none");
+    } else {
+        document.getElementById("configuracionPartida").classList.add("d-none");
+    }
+}
 
+$('#botonConfiguracion').click(() => alternarVistaConf());
+$('#nuevoJuegoLeyenda').click(() => iniciarJuego());
 $('#checkboxRepeticiones').click(() => {
     if (DOM.checkboxRepeticiones.checked) DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones activadas";
     else DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones desactivadas";
 });
-
 $('#botonNuevaConf').click(() => establecerNuevaConf());
-
-function convertirAHex(colorRgb) {
-    let secciones = colorRgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    secciones.shift();
-    for (let i = 0; i < 3; i++) {
-        secciones[i] = parseInt(secciones[i]).toString(16);
-        console.log(secciones[i].length)
-        if (secciones[i].length == 1) secciones[i] = '0' + secciones[i];
-    }
-    return '#' + secciones.join('');
-}
+$('#botonSumar').click(() => aniadirColor());
+$('#botonRestar').click(() => quitarColor());
