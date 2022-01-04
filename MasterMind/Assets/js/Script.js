@@ -1,6 +1,10 @@
 const DOM = {
     opciones: document.getElementById("opciones"),
     nuevoJuegoLeyenda: document.getElementById("nuevoJuegoLeyenda"),
+    botonCombinacionCorrecta: document.getElementById("botonCombinacionCorrecta"),
+    contenedorCombinacionCorrecta: $("#contenedorCombinacionCorrecta"),
+    slotsCombCorrecta: document.getElementById("slotsCombCorrecta"),
+    botonEstablecerCombinacionCorrecta: document.getElementById("botonEstablecerCombinacionCorrecta"),
     intentos: document.getElementById("intentos"),
     seccionResultado: document.getElementById("seccionResultado"),
     coloresConf: document.getElementById("coloresConf"),
@@ -58,16 +62,6 @@ const quitarColor = () => {
     else mostrarError("errorColores", "Tiene que haber como minimo un color");
 }
 
-function convertirAHex(colorRgb) {
-    let secciones = colorRgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    secciones.shift();
-    for (let i = 0; i < 3; i++) {
-        secciones[i] = parseInt(secciones[i]).toString(16);
-        if (secciones[i].length == 1) secciones[i] = '0' + secciones[i];
-    }
-    return '#' + secciones.join('');
-}
-
 const establecerNuevaConf = () => {
     let configuracionValida = true;
     let colores = [];
@@ -112,6 +106,17 @@ const generarColores = () => {
     DOM.opciones.appendChild(fragment);
 }
 
+const generarSlotsCombinacion = () => {
+    if (DOM.slotsCombCorrecta.innerHTML != "") DOM.slotsCombCorrecta.innerHTML = "";
+    const fragmentSlot = document.createDocumentFragment();
+    const templateSlot = DOM.plantillaSlots.content;
+    for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
+        const cloneSlot = templateSlot.cloneNode(true);
+        fragmentSlot.appendChild(cloneSlot);
+    }
+    DOM.slotsCombCorrecta.appendChild(fragmentSlot);
+}
+
 const generarIntentos = () => {
     if (DOM.intentos.innerHTML != "") DOM.intentos.innerHTML = "";
     const fragmentIntento = document.createDocumentFragment();
@@ -144,7 +149,7 @@ const mostrarError = (contenedorPadre, mensajeError) => {
     setTimeout(() => $('#mensajeError').remove(), 1500);
 }
 
-const mostrarResultado = (filaIntento, cantidadAciertos, cantidadCoincidencias, cantidadFallos) => {
+const mostrarResultadoIntento = (filaIntento, cantidadAciertos, cantidadCoincidencias, cantidadFallos) => {
     document.getElementById("comprobacion" + filaIntento).innerHTML = "";
     document.getElementById("comprobacion" + filaIntento).classList.replace("flex-column", "flex-row");
     const fragment = document.createDocumentFragment();
@@ -195,59 +200,3 @@ const mostrarSolucion = (resultado) => {
         DOM.seccionResultado.appendChild(fragmentPerdida);
     }
 }
-
-DOM.opciones.addEventListener("dragstart", (e) => {
-    if (e.target.draggable == true) {
-        e.dataTransfer.setData("text/plain", e.target.id);
-    }
-})
-
-DOM.intentos.addEventListener("dragstart", (e) => {
-    if (e.target.draggable == true) {
-        e.dataTransfer.setData("text/plain", e.target.id);
-    }
-})
-
-DOM.intentos.addEventListener("drop", (e) => {
-    let numFila = e.target.closest("#intentos > div").id.slice(7);
-    let coloresFila = obtenerColores(numFila);
-    let idColor = e.dataTransfer.getData("text");
-    if (!(!juegoEnCurso.repeticiones && coloresFila.includes(idColor))) {
-        e.preventDefault();
-        let colorInsertado = document.getElementById(idColor).cloneNode(true);
-        if (e.target.classList.contains("monedaIntento")) {
-            e.target.appendChild(colorInsertado);
-        } else if (e.target.parentNode.classList.contains("monedaIntento")) {
-            e.target.parentNode.replaceChild(colorInsertado, e.target);
-        }
-    }
-})
-
-DOM.intentos.addEventListener("dragover", (e) => {
-    e.preventDefault();
-})
-
-DOM.intentos.addEventListener("click", (e) => {
-    if (e.target.nodeName == "INPUT") {
-        let numFila = e.target.closest("#intentos > div").id.slice(7);
-        juegoEnCurso.comprobarIntento(numFila);
-    }
-})
-
-const alternarVistaConf = () => {
-    if (document.getElementById("configuracionPartida").classList.contains("d-none")) {
-        document.getElementById("configuracionPartida").classList.remove("d-none");
-    } else {
-        document.getElementById("configuracionPartida").classList.add("d-none");
-    }
-}
-
-$('#botonConfiguracion').click(() => alternarVistaConf());
-$('#nuevoJuegoLeyenda').click(() => iniciarJuego());
-$('#checkboxRepeticiones').click(() => {
-    if (DOM.checkboxRepeticiones.checked) DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones activadas";
-    else DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones desactivadas";
-});
-$('#botonNuevaConf').click(() => establecerNuevaConf());
-$('#botonSumar').click(() => aniadirColor());
-$('#botonRestar').click(() => quitarColor());

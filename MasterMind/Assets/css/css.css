@@ -14,14 +14,14 @@
     z-index: 1000;
 }
 
-.monedaIntento {
-    background-color: gray;
-}
-
 .monedaSolucion {
     width: var(--diametroMonedaPequenia);
     height: var(--diametroMonedaPequenia);
     z-index: 999;
+}
+
+.monedaIntento {
+    background-color: gray;
 }
 
 .error {
@@ -29,7 +29,7 @@
     color: red;
 }
 
-.intentos {
+#intentos {
     overflow-y: scroll;
     overflow-x: hidden;
     max-height: 350px;
@@ -45,6 +45,10 @@
     border: 2px solid #9f5700;
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+}
+
 .partidaGanda {
     background-color: lightgreen;
     border: 2px solid green;
@@ -55,15 +59,13 @@
     border: 2px solid red;
 }
 
-::-webkit-scrollbar {
-    width: 0px;
+#botonConfiguracion {
+    width: var(--anchoConf);
+    display: flex;
+    justify-content: end;
 }
 
-.botonConfiguracion {
-    width: var(--anchoConf);   
-}
-
-.configuracionPartida {
+#configuracionPartida {
     z-index: 1001;
     position: absolute;
     top: 50px;
@@ -85,4 +87,3 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 50%;
     border: none;
 }
-

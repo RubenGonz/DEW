@@ -9,8 +9,10 @@ const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, intentosIniciale
     juegoEnCurso = new juego(coloresJuego, intentosIniciales, cantidadSlots, repeticiones, combinacionCorrecta);
     generarConf();
     generarColores();
-    DOM.seccionResultado.innerHTML = "";
+    generarSlotsCombinacion();
     generarIntentos();
+    DOM.seccionResultado.innerHTML = "";
+    DOM.botonCombinacionCorrecta.disabled = false;
 }
 
 const comprobarSlots = (filaIntento) => {
@@ -32,10 +34,6 @@ const obtenerColores = (filaIntento) => {
     return colores;
 }
 
-const generarNumeroAleatorio = (valorMin, valorMax) => {
-    return Math.floor((Math.random() * (valorMax - valorMin)) + valorMin);
-}
-
 class juego {
     constructor(coloresJuego, intentosIniciales, cantidadSlots, repeticiones, combinacionCorrecta) {
         this.coloresJuego = coloresJuego;
@@ -43,22 +41,16 @@ class juego {
         this.intentosRestantes = intentosIniciales;
         this.cantidadSlots = cantidadSlots;
         this.repeticiones = repeticiones;
-        if (combinacionCorrecta == null) {
-            this.combinacionCorrecta = this.generarCombinacionRandom(this.repeticiones);
-        } else {
-            this.combinacionCorrecta = new combinacion(combinacionCorrecta);
-        }
+        if (combinacionCorrecta == null) this.combinacionCorrecta = this.generarCombinacionRandom(this.repeticiones);
+        else this.combinacionCorrecta = new combinacion(combinacionCorrecta);
     }
 
     generarCombinacionRandom(repeticiones) {
         let coloresRandom = [];
         do {
             let colorRandom = this.coloresJuego[generarNumeroAleatorio(0, this.coloresJuego.length)];
-            if (repeticiones) {
-                coloresRandom.push(colorRandom);
-            } else if (!coloresRandom.includes(colorRandom)) {
-                coloresRandom.push(colorRandom);
-            }
+            if (repeticiones) coloresRandom.push(colorRandom);
+            else if (!coloresRandom.includes(colorRandom)) coloresRandom.push(colorRandom);
         } while (coloresRandom.length != this.cantidadSlots);
         let combinacionRandom = new combinacion(coloresRandom);
         return combinacionRandom;
@@ -69,20 +61,16 @@ class juego {
             let intento = new combinacion(obtenerColores(filaIntento));
             let contadorAciertos = 0;
             let contadorCoincidencias = 0;
-
             for (let i = 0; i < intento.colores.length; i++) {
                 if (Object.values(this.combinacionCorrecta.colores)[i] == Object.values(intento.colores)[i]) contadorAciertos++;
                 else if (Object.values(this.combinacionCorrecta.colores).includes(Object.values(intento.colores)[i])) contadorCoincidencias++;
             }
-
             let contadorFallos = this.cantidadSlots - contadorAciertos - contadorCoincidencias;
-            mostrarResultado(filaIntento, contadorAciertos, contadorCoincidencias, contadorFallos);
+            mostrarResultadoIntento(filaIntento, contadorAciertos, contadorCoincidencias, contadorFallos);
             this.intentosRestantes = this.intentosRestantes - 1;
             if (contadorAciertos == this.cantidadSlots) mostrarSolucion(true);
             else if (this.intentosRestantes == 0) mostrarSolucion(false);
-        } else {
-            mostrarError("comprobacion" + filaIntento, "Rellena todos los slots");
-        }
+        } else mostrarError("comprobacion" + filaIntento, "Rellena todos los slots");
     }
 }
 
