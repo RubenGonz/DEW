@@ -24,51 +24,51 @@ const DOM = {
 const generarConf = () => {
     DOM.coloresConf.innerHTML = "";
     juegoEnCurso.coloresJuego.forEach(color => {
-        let inputColor = document.createElement("input");
-        inputColor.type = "color";
-        inputColor.value = color;
-        DOM.coloresConf.appendChild(inputColor);
+        $('<input>', {
+            type: 'color',
+            value: color
+        }).appendTo(DOM.coloresConf)
     })
-    DOM.inputIntentos.value = juegoEnCurso.intentosIniciales;
-    DOM.inputSlots.value = juegoEnCurso.cantidadSlots;
+    $("#inputIntentos").val(juegoEnCurso.intentosIniciales);
+    $("#inputSlots").val(juegoEnCurso.cantidadSlots);
     if (juegoEnCurso.repeticiones) {
-        DOM.checkboxRepeticiones.checked = true;
-        DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones activadas";
+        $("#checkboxRepeticiones").prop("checked", true);
+        $("#checkboxRepeticiones").next().text("Repeticiones activadas");
     } else {
-        DOM.checkboxRepeticiones.checked = false;
-        DOM.checkboxRepeticiones.nextElementSibling.innerHTML = "Repeticiones desactivadas";
+        $("#checkboxRepeticiones").prop("checked", false);
+        $("#checkboxRepeticiones").next().text("Repeticiones desactivadas");
     }
 }
 
 const aniadirColor = () => {
     let coloresMaximos = 10;
-    if (DOM.coloresConf.childNodes.length < coloresMaximos) {
-        let inputColor = document.createElement("input");
-        inputColor.type = "color";
-        let colorInput;
+    if ($("#coloresConf").children().length < coloresMaximos) {
+        let nuevoColor;
         let colores = [];
-        DOM.coloresConf.childNodes.forEach(color => colores.push(color.value));
+        $("#coloresConf").children().each(function () { colores.push($(this).val()) });
         do {
             let colorRandom = "rgb(" + generarNumeroAleatorio(0, 255) + "," + generarNumeroAleatorio(0, 255) + "," + generarNumeroAleatorio(0, 255) + ")";
-            colorInput = convertirAHex(colorRandom);
-        } while (colores.includes(colorInput));
-        inputColor.value = colorInput;
-        DOM.coloresConf.appendChild(inputColor);
+            nuevoColor = convertirAHex(colorRandom);
+        } while (colores.includes(nuevoColor));
+        $('<input>', {
+            type: 'color',
+            value: nuevoColor
+        }).appendTo(DOM.coloresConf)
     } else mostrarError("errorColores", "No puede haber mas de " + coloresMaximos + " colores");
 }
 
 const quitarColor = () => {
-    if (DOM.coloresConf.childNodes.length > 1) DOM.coloresConf.lastChild.remove();
+    if ($("#coloresConf").children().length > 1) $("#coloresConf").children().last().remove();
     else mostrarError("errorColores", "Tiene que haber como minimo un color");
 }
 
 const establecerNuevaConf = () => {
     let configuracionValida = true;
     let colores = [];
-    DOM.coloresConf.childNodes.forEach(color => colores.push(color.value));
-    let numIntentos = parseInt(DOM.inputIntentos.value);
-    let numSlots = parseInt(DOM.inputSlots.value);
-    let repeticiones = DOM.checkboxRepeticiones.checked;
+    $("#coloresConf").children().each(function () { colores.push($(this).val()) });
+    let numIntentos = parseInt($("#inputIntentos").val());
+    let numSlots = parseInt($("#inputSlots").val());
+    let repeticiones = $("#checkboxRepeticiones").prop("checked");;
     let coloresOrdenados = colores.slice().sort();
     let coloresRepetidos = [];
     for (let i = 0; i < coloresOrdenados.length; i++) if (coloresOrdenados[i + 1] === coloresOrdenados[i] && !coloresRepetidos.includes(coloresOrdenados[i])) coloresRepetidos.push(coloresOrdenados[i]);

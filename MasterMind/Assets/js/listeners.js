@@ -40,8 +40,8 @@ DOM.slotsCombCorrecta.addEventListener("drop", (e) => {
     }
 })
 
-$('#botonConfiguracion').click(() => $("#configuracionPartida").toggle());
-$('#botonCombinacionCorrecta').click(() => $("#contenedorCombinacionCorrecta").toggle());
+$('#botonConfiguracion').click(() => $("#configuracionPartida").slideToggle("slow"));
+$('#botonCombinacionCorrecta').click(() => $("#contenedorCombinacionCorrecta").slideToggle("slow"));
 
 $('#botonEstablecerCombinacionCorrecta').click(() => {
     let combinacionCorrecta = [];
