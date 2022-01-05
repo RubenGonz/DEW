@@ -3,6 +3,8 @@ let juegoEnCurso;
 
 window.onload = () => {
     iniciarJuego(coloresDefecto, 10, 4, false);
+    $("#contenedorCombinacionCorrecta").hide();
+    $("#configuracionPartida").hide();
 }
 
 const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, intentosIniciales = juegoEnCurso.intentosIniciales, cantidadSlots = juegoEnCurso.cantidadSlots, repeticiones = juegoEnCurso.repeticiones, combinacionCorrecta) => {
@@ -17,17 +19,17 @@ const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, intentosIniciale
 
 const comprobarSlots = (filaIntento) => {
     let slotsRellenos = true;
-    Object.values(document.getElementById("slots" + filaIntento).children).forEach(slot => {
-        if (slot.children[0] == undefined) slotsRellenos = false;
+    $("#slots" + filaIntento).children().each(function () {
+        if ($(this).children()[0] == undefined) slotsRellenos = false;
     });
     return slotsRellenos;
 }
 
 const obtenerColores = (filaIntento) => {
     let colores = [];
-    Object.values(document.getElementById("slots" + filaIntento).children).forEach(slot => {
-        if (slot.children[0] != undefined) {
-            let color = convertirAHex(slot.children[0].style.backgroundColor);
+    $("#slots" + filaIntento).children().each(function () {
+        if ($(this).children()[0] != undefined) {
+            let color = convertirAHex($(this).children()[0].style.backgroundColor);
             colores.push(color);
         } else colores.push(null);
     });

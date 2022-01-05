@@ -24,8 +24,8 @@ const DOM = {
 const generarConf = () => {
     DOM.coloresConf.innerHTML = "";
     juegoEnCurso.coloresJuego.forEach(color => {
-        $('<input>', {
-            type: 'color',
+        $("<input>", {
+            type: "color",
             value: color
         }).appendTo(DOM.coloresConf)
     })
@@ -50,8 +50,8 @@ const aniadirColor = () => {
             let colorRandom = "rgb(" + generarNumeroAleatorio(0, 255) + "," + generarNumeroAleatorio(0, 255) + "," + generarNumeroAleatorio(0, 255) + ")";
             nuevoColor = convertirAHex(colorRandom);
         } while (colores.includes(nuevoColor));
-        $('<input>', {
-            type: 'color',
+        $("<input>", {
+            type: "color",
             value: nuevoColor
         }).appendTo(DOM.coloresConf)
     } else mostrarError("errorColores", "No puede haber mas de " + coloresMaximos + " colores");
@@ -93,28 +93,24 @@ const establecerNuevaConf = () => {
 }
 
 const generarColores = () => {
-    if (DOM.opciones.innerHTML != "") DOM.opciones.innerHTML = "";
-    const fragment = document.createDocumentFragment();
-    const template = DOM.plantillaMonedaEstandar.content;
-
+    if (!$('#opciones').is(':empty')) $("#opciones").empty();
     juegoEnCurso.coloresJuego.forEach(color => {
-        template.querySelectorAll("div")[0].id = color;
-        template.querySelectorAll("div")[0].style.backgroundColor = color;
-        const clone = template.cloneNode(true);
-        fragment.appendChild(clone);
+        $("<div>", {
+            id: color,
+            draggable: "true",
+            class: "tamanioMoneda rounded-circle",
+            style: "background-image: url('Assets/img/Coin.png'); background-size: cover; background-color:" + color + ";"
+        }).appendTo(DOM.opciones)
     })
-    DOM.opciones.appendChild(fragment);
 }
 
 const generarSlotsCombinacion = () => {
-    if (DOM.slotsCombCorrecta.innerHTML != "") DOM.slotsCombCorrecta.innerHTML = "";
-    const fragmentSlot = document.createDocumentFragment();
-    const templateSlot = DOM.plantillaSlots.content;
+    if (!$('#slotsCombCorrecta').is(':empty')) $("#slotsCombCorrecta").empty();
     for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
-        const cloneSlot = templateSlot.cloneNode(true);
-        fragmentSlot.appendChild(cloneSlot);
+        $("<div>", {
+            class: "tamanioMoneda rounded-circle monedaIntento",
+        }).appendTo(DOM.slotsCombCorrecta)
     }
-    DOM.slotsCombCorrecta.appendChild(fragmentSlot);
 }
 
 const generarIntentos = () => {
@@ -129,9 +125,9 @@ const generarIntentos = () => {
     }
     templateIntento.querySelectorAll("div")[2].innerHTML = "";
     for (let i = 1; i <= juegoEnCurso.intentosIniciales; i++) {
-        templateIntento.querySelectorAll('[id^="intento"]')[0].id = "intento" + i;
-        templateIntento.querySelectorAll('[id^="slots"]')[0].id = "slots" + i;
-        templateIntento.querySelectorAll('[id^="comprobacion"]')[0].id = "comprobacion" + i;
+        templateIntento.querySelectorAll("[id^='intento']")[0].id = "intento" + i;
+        templateIntento.querySelectorAll("[id^='slots']")[0].id = "slots" + i;
+        templateIntento.querySelectorAll("[id^='comprobacion']")[0].id = "comprobacion" + i;
         templateIntento.querySelectorAll("div")[2].appendChild(fragmentSlot);
         const cloneIntento = templateIntento.cloneNode(true);
         fragmentIntento.appendChild(cloneIntento);
@@ -140,40 +136,40 @@ const generarIntentos = () => {
 }
 
 const mostrarError = (contenedorPadre, mensajeError) => {
-    let parrafoError = document.createElement("div");
-    parrafoError.innerHTML = mensajeError;
-    parrafoError.id = "mensajeError";
-    parrafoError.classList.add("error");
-    document.getElementById(contenedorPadre).appendChild(parrafoError);
-    $('#mensajeError').delay(1000).fadeOut(500);
-    setTimeout(() => $('#mensajeError').remove(), 1500);
+    $("<div>", {
+        text: mensajeError,
+        id: "mensajeError",
+        class: "error"
+    }).appendTo("#" + contenedorPadre)
+    $("#mensajeError").delay(1000).fadeOut(500);
+    setTimeout(() => $("#mensajeError").remove(), 1500);
 }
 
 const mostrarResultadoIntento = (filaIntento, cantidadAciertos, cantidadCoincidencias, cantidadFallos) => {
-    document.getElementById("comprobacion" + filaIntento).innerHTML = "";
-    document.getElementById("comprobacion" + filaIntento).classList.replace("flex-column", "flex-row");
-    const fragment = document.createDocumentFragment();
-    const template = DOM.plantillaMonedaPequenia.content;
+    $("#comprobacion" + filaIntento).empty();
+    $("#comprobacion" + filaIntento).addClass('flex-row').removeClass('flex-column');
     for (let i = 1; i <= cantidadAciertos; i++) {
-        template.querySelectorAll("div")[0].style.backgroundColor = "#0a0a0a";
-        const clone = template.cloneNode(true);
-        fragment.appendChild(clone);
+        $("<div>", {
+            class: "monedaSolucion rounded-circle mx-1",
+            style: "background-image: url(Assets/img/Coin.png);background-size: cover; background-color: #0a0a0a;"
+        }).appendTo("#comprobacion" + filaIntento)
     }
     for (let i = 1; i <= cantidadCoincidencias; i++) {
-        template.querySelectorAll("div")[0].style.backgroundColor = "white";
-        const clone = template.cloneNode(true);
-        fragment.appendChild(clone);
+        $("<div>", {
+            class: "monedaSolucion rounded-circle mx-1",
+            style: "background-image: url(Assets/img/Coin.png);background-size: cover; background-color: white;"
+        }).appendTo("#comprobacion" + filaIntento)
     }
     for (let i = 1; i <= cantidadFallos; i++) {
-        template.querySelectorAll("div")[0].style.backgroundColor = "gray";
-        const clone = template.cloneNode(true);
-        fragment.appendChild(clone);
+        $("<div>", {
+            class: "monedaSolucion rounded-circle mx-1",
+            style: "background-image: url(Assets/img/Coin.png);background-size: cover; background-color: gray;"
+        }).appendTo("#comprobacion" + filaIntento)
     }
-    document.getElementById("comprobacion" + filaIntento).appendChild(fragment);
 }
 
 const mostrarSolucion = (resultado) => {
-    Object.values(DOM.intentos.children).forEach(intento => { if (intento.querySelectorAll('input')[0] != null) intento.remove() });
+    Object.values(DOM.intentos.children).forEach(intento => { if (intento.querySelectorAll("input")[0] != null) intento.remove() });
     const fragmentMoneda = document.createDocumentFragment();
     const templateMoneda = DOM.plantillaMonedaSolucion.content;
     for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
