@@ -13,8 +13,8 @@ const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, intentosIniciale
     generarColores();
     generarSlotsCombinacion();
     generarIntentos();
-    DOM.seccionResultado.innerHTML = "";
-    DOM.botonCombinacionCorrecta.disabled = false;
+    $('#seccionResultado').empty();
+    $("botonCombinacionCorrecta").prop('disabled', false);
 }
 
 const comprobarSlots = (filaIntento) => {
@@ -61,17 +61,31 @@ class juego {
     comprobarIntento(filaIntento) {
         if (comprobarSlots(filaIntento)) {
             let intento = new combinacion(obtenerColores(filaIntento));
+            let coloresSolucionSinRevisar = this.combinacionCorrecta.colores.slice();
+            let coloresIntentoSinRevisar = obtenerColores(filaIntento);
             let contadorAciertos = 0;
             let contadorCoincidencias = 0;
             for (let i = 0; i < intento.colores.length; i++) {
-                if (Object.values(this.combinacionCorrecta.colores)[i] == Object.values(intento.colores)[i]) contadorAciertos++;
-                else if (Object.values(this.combinacionCorrecta.colores).includes(Object.values(intento.colores)[i])) contadorCoincidencias++;
+                if (Object.values(this.combinacionCorrecta.colores)[i] == Object.values(intento.colores)[i]) {
+                    contadorAciertos++;
+                    coloresSolucionSinRevisar.splice(i, 1, null);
+                    coloresIntentoSinRevisar.splice(i, 1, null);
+                }
+            }
+            coloresSolucionSinRevisar = quitarNulos(coloresSolucionSinRevisar);
+            coloresIntentoSinRevisar = quitarNulos(coloresIntentoSinRevisar);
+            for (let i = 0; i < intento.colores.length; i++) {
+                if (coloresSolucionSinRevisar.includes(coloresIntentoSinRevisar[i])) {
+                    contadorCoincidencias++;
+                    let indiceElemento = coloresSolucionSinRevisar.indexOf(coloresIntentoSinRevisar[i]);
+                    coloresSolucionSinRevisar.splice(indiceElemento, 1, null);
+                }
             }
             let contadorFallos = this.cantidadSlots - contadorAciertos - contadorCoincidencias;
             mostrarResultadoIntento(filaIntento, contadorAciertos, contadorCoincidencias, contadorFallos);
             this.intentosRestantes = this.intentosRestantes - 1;
-            if (contadorAciertos == this.cantidadSlots) mostrarSolucion(true);
-            else if (this.intentosRestantes == 0) mostrarSolucion(false);
+            if (contadorAciertos == this.cantidadSlots) mostrarPartidaGanada();
+            else if (this.intentosRestantes == 0) mostrarPartidaPerdida();
         } else mostrarError("comprobacion" + filaIntento, "Rellena todos los slots");
     }
 }

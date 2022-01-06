@@ -25,8 +25,7 @@ const generarConf = () => {
     DOM.coloresConf.innerHTML = "";
     juegoEnCurso.coloresJuego.forEach(color => {
         $("<input>", {
-            type: "color",
-            value: color
+            type: "color", value: color
         }).appendTo(DOM.coloresConf)
     })
     $("#inputIntentos").val(juegoEnCurso.intentosIniciales);
@@ -51,8 +50,7 @@ const aniadirColor = () => {
             nuevoColor = convertirAHex(colorRandom);
         } while (colores.includes(nuevoColor));
         $("<input>", {
-            type: "color",
-            value: nuevoColor
+            type: "color", value: nuevoColor
         }).appendTo(DOM.coloresConf)
     } else mostrarError("errorColores", "No puede haber mas de " + coloresMaximos + " colores");
 }
@@ -114,25 +112,36 @@ const generarSlotsCombinacion = () => {
 }
 
 const generarIntentos = () => {
-    if (DOM.intentos.innerHTML != "") DOM.intentos.innerHTML = "";
-    const fragmentIntento = document.createDocumentFragment();
-    const fragmentSlot = document.createDocumentFragment();
-    const templateIntento = DOM.plantillaIntento.content;
-    const templateSlot = DOM.plantillaSlots.content;
-    for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
-        const cloneSlot = templateSlot.cloneNode(true);
-        fragmentSlot.appendChild(cloneSlot);
-    }
-    templateIntento.querySelectorAll("div")[2].innerHTML = "";
+    if (!$('#intentos').is(':empty')) $("#intentos").empty();
     for (let i = 1; i <= juegoEnCurso.intentosIniciales; i++) {
-        templateIntento.querySelectorAll("[id^='intento']")[0].id = "intento" + i;
-        templateIntento.querySelectorAll("[id^='slots']")[0].id = "slots" + i;
-        templateIntento.querySelectorAll("[id^='comprobacion']")[0].id = "comprobacion" + i;
-        templateIntento.querySelectorAll("div")[2].appendChild(fragmentSlot);
-        const cloneIntento = templateIntento.cloneNode(true);
-        fragmentIntento.appendChild(cloneIntento);
+        $("<div>", {
+            id: "intento" + i, class: "row py-2"
+        }).append([
+            $("<div>", {
+                class: "col-8 px-1"
+            }).append(
+                $("<div>", {
+                    id: "slots" + i, class: "d-flex flex-wrap justify-content-around w-100"
+                }).append(function () {
+                    for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
+                        $("<div>", {
+                            class: "tamanioMoneda rounded-circle monedaIntento",
+                        }).appendTo($(this))
+                    }
+                })
+            ), $("<div>", {
+                class: "col-4 px-1"
+            }).append(
+                $("<div>", {
+                    id: "comprobacion" + i, class: "d-flex justify-content-center align-items-center flex-column h-100"
+                }).append(
+                    $("<input>", {
+                        type: "button", value: "Comprobar intento", class: "btn btn-success"
+                    })
+                )
+            )
+        ]).appendTo(DOM.intentos)
     }
-    DOM.intentos.appendChild(fragmentIntento);
 }
 
 const mostrarError = (contenedorPadre, mensajeError) => {
@@ -148,51 +157,153 @@ const mostrarError = (contenedorPadre, mensajeError) => {
 const mostrarResultadoIntento = (filaIntento, cantidadAciertos, cantidadCoincidencias, cantidadFallos) => {
     $("#comprobacion" + filaIntento).empty();
     $("#comprobacion" + filaIntento).addClass('flex-row').removeClass('flex-column');
-    for (let i = 1; i <= cantidadAciertos; i++) {
+    generarMonedasPequenias(cantidadAciertos, "#0a0a0a", "#comprobacion" + filaIntento);
+    generarMonedasPequenias(cantidadCoincidencias, "white", "#comprobacion" + filaIntento);
+    generarMonedasPequenias(cantidadFallos, "gray", "#comprobacion" + filaIntento);
+}
+
+const generarMonedasPequenias = (numeroMonedas, color, idContenedorPadre) => {
+    for (let i = 1; i <= numeroMonedas; i++) {
         $("<div>", {
             class: "monedaSolucion rounded-circle mx-1",
-            style: "background-image: url(Assets/img/Coin.png);background-size: cover; background-color: #0a0a0a;"
-        }).appendTo("#comprobacion" + filaIntento)
-    }
-    for (let i = 1; i <= cantidadCoincidencias; i++) {
-        $("<div>", {
-            class: "monedaSolucion rounded-circle mx-1",
-            style: "background-image: url(Assets/img/Coin.png);background-size: cover; background-color: white;"
-        }).appendTo("#comprobacion" + filaIntento)
-    }
-    for (let i = 1; i <= cantidadFallos; i++) {
-        $("<div>", {
-            class: "monedaSolucion rounded-circle mx-1",
-            style: "background-image: url(Assets/img/Coin.png);background-size: cover; background-color: gray;"
-        }).appendTo("#comprobacion" + filaIntento)
+            style: "background-image: url(Assets/img/Coin.png);background-size: cover; background-color: " + color + ";"
+        }).appendTo(idContenedorPadre)
     }
 }
 
-const mostrarSolucion = (resultado) => {
-    Object.values(DOM.intentos.children).forEach(intento => { if (intento.querySelectorAll("input")[0] != null) intento.remove() });
-    const fragmentMoneda = document.createDocumentFragment();
-    const templateMoneda = DOM.plantillaMonedaSolucion.content;
-    for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
-        templateMoneda.querySelectorAll("div")[0].style.backgroundColor = juegoEnCurso.combinacionCorrecta.colores[i];
-        const cloneMoneda = templateMoneda.cloneNode(true);
-        fragmentMoneda.appendChild(cloneMoneda);
-    }
-    if (resultado) {
-        const fragmentGanada = document.createDocumentFragment();
-        const templateGanada = DOM.plantillaPartidaGanada.content;
-        templateGanada.querySelectorAll("span")[0].innerHTML = juegoEnCurso.intentosRestantes;
-        templateGanada.querySelector("#slotsSolucion").appendChild(fragmentMoneda);
-        const cloneGanada = templateGanada.cloneNode(true);
-        templateGanada.querySelector("#slotsSolucion").innerHTML = "";
-        fragmentGanada.appendChild(cloneGanada);
-        DOM.seccionResultado.appendChild(fragmentGanada);
-    } else {
-        const fragmentPerdida = document.createDocumentFragment();
-        const templatePerdida = DOM.plantillaPartidaPerdida.content;
-        templatePerdida.querySelector("#slotsSolucion").appendChild(fragmentMoneda);
-        const clonePerdida = templatePerdida.cloneNode(true);
-        templatePerdida.querySelector("#slotsSolucion").innerHTML = "";
-        fragmentPerdida.appendChild(clonePerdida);
-        DOM.seccionResultado.appendChild(fragmentPerdida);
-    }
+const mostrarPartidaGanada = () => {
+    $("#intentos").children().each(function () { if ($(this).find("input")[0] != null) $(this).remove() });
+    $("<div>", {
+        class: "partidaGanda rounded-3 p-2 mt-3"
+    }).append([
+        $("<div>", {
+            class: "row py-2"
+        }).append(
+            $("<div>", {
+                class: "col"
+            }).append(
+                $("<h1>", {
+                    class: "text-center",
+                    text: "¡¡Has ganado la partida!!"
+                })
+            )
+        ),
+        $("<div>", {
+            class: "row py-2"
+        }).append(
+            $("<div>", {
+                class: "col"
+            }).append(
+                $("<div>", {
+                    id: "slotsSolucion",
+                    class: "d-flex justify-content-around w-100"
+                }).append(function () {
+                    for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
+                        $("<div>", {
+                            class: "tamanioMoneda rounded-circle",
+                            style: "background-image: url(Assets/img/CoinSolucion.png);background-size: cover; background-color: " + juegoEnCurso.combinacionCorrecta.colores[i] + ";"
+                        }).appendTo($(this))
+                    }
+                })
+            )
+        ),
+        $("<div>", {
+            class: "row py-2"
+        }).append([
+            $("<div>", {
+                class: "col d-flex align-items-center"
+            }).append(
+                $("<h4>", {
+                }).append([
+                    $("<span>", {
+                        text: "Intentos restantes:",
+                    }),
+                    $("<span>", {
+                        text: juegoEnCurso.intentosRestantes
+                    })
+                ])
+            ),
+            $("<div>", {
+                class: "col text-end"
+            }).append([
+                $("<h4>", {
+                    text: "¿Quieres volver a jugar?"
+                }),
+                $("<input>", {
+                    type: "button",
+                    value: "Nuevo juego",
+                    class: "btn btn-success mt-2",
+                    click: function () { iniciarJuego() }
+                })
+            ])
+        ])
+    ]).appendTo("#seccionResultado")
+}
+
+
+const mostrarPartidaPerdida = () => {
+    $("#intentos").children().each(function () { if ($(this).find("input")[0] != null) $(this).remove() });
+    $("<div>", {
+        class: "partidaPerdida rounded-3 p-2 mt-3"
+    }).append([
+        $("<div>", {
+            class: "row py-2"
+        }).append(
+            $("<div>", {
+                class: "col"
+            }).append(
+                $("<h1>", {
+                    class: "text-center",
+                    text: "Has perdido la partida..."
+                })
+            )
+        ),
+        $("<div>", {
+            class: "row py-2"
+        }).append(
+            $("<div>", {
+                class: "col"
+            }).append([
+                $("<h4>", {
+                    class: "mb-4",
+                    text: "La combinacion correcta era:"
+                }),
+                $("<div>", {
+                    id: "slotsSolucion",
+                    class: "d-flex justify-content-around w-100"
+                }).append(function () {
+                    for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
+                        $("<div>", {
+                            class: "tamanioMoneda rounded-circle",
+                            style: "background-image: url(Assets/img/CoinSolucion.png);background-size: cover; background-color: " + juegoEnCurso.combinacionCorrecta.colores[i] + ";"
+                        }).appendTo($(this))
+                    }
+                })
+            ])
+        ),
+        $("<div>", {
+            class: "row py-2"
+        }).append([
+            $("<div>", {
+                class: "col d-flex align-items-center"
+            }).append(
+                $("<h4>", {
+                    text: "Otra vez sera..."
+                })
+            ),
+            $("<div>", {
+                class: "col text-end"
+            }).append([
+                $("<h4>", {
+                    text: "¿Quieres volver a intentarlo?"
+                }),
+                $("<input>", {
+                    type: "button",
+                    value: "Nuevo juego",
+                    class: "btn btn-danger mt-2",
+                    click: function () { iniciarJuego() }
+                })
+            ])
+        ])
+    ]).appendTo("#seccionResultado")
 }

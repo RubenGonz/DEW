@@ -11,3 +11,9 @@ function convertirAHex(colorRgb) {
 const generarNumeroAleatorio = (valorMin, valorMax) => {
     return Math.floor((Math.random() * (valorMax - valorMin)) + valorMin);
 }
+
+const quitarNulos = (array) => {
+    return array.filter(function (elemento) {
+        return elemento != null;
+    });
+}
