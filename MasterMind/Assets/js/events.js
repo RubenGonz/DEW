@@ -1,16 +1,16 @@
-$('#botonConfiguracion').bind("click", () => $("#configuracionPartida").slideToggle("slow"));
-$('#botonCombinacionCorrecta').bind("click", () => $("#contenedorCombinacionCorrecta").slideToggle("slow"));
-$('#nuevoJuegoLeyenda').bind("click", () => iniciarJuego());
-$('#botonNuevaConf').bind("click", () => establecerNuevaConf());
-$('#botonSumar').bind("click", () => aniadirColor());
-$('#botonRestar').bind("click", () => quitarColor());
-$('#checkboxRepeticiones').bind("click", () => {
-    if ($('#checkboxRepeticiones').prop('checked')) $("#checkboxRepeticiones").next().text("Repeticiones activadas");
-    else $("#checkboxRepeticiones").next().text("Repeticiones desactivadas");
+DOM.botonConfiguracion.bind("click", () => DOM.configuracionPartida.slideToggle("slow"));
+DOM.botonCombinacionCorrecta.bind("click", () => DOM.contenedorCombinacionCorrecta.slideToggle("slow"));
+DOM.nuevoJuegoLeyenda.bind("click", () => iniciarJuego());
+DOM.botonNuevaConf.bind("click", () => establecerNuevaConf());
+DOM.botonSumar.bind("click", () => aniadirColor());
+DOM.botonRestar.bind("click", () => quitarColor());
+DOM.checkboxRepeticiones.bind("click", () => {
+    if (DOM.checkboxRepeticiones.prop('checked')) DOM.checkboxRepeticiones.next().text("Repeticiones activadas");
+    else DOM.checkboxRepeticiones.next().text("Repeticiones desactivadas");
 });
-$('#botonEstablecerCombinacionCorrecta').bind("click", () => {
+DOM.botonEstablecerCombinacionCorrecta.bind("click", () => {
     let combinacionCorrecta = [];
-    $("#slotsCombCorrecta").children().each(function () {
+    DOM.slotsCombCorrecta.children().each(function () {
         if ($(this).children()[0] != undefined) {
             let color = convertirAHex($(this).children()[0].style.backgroundColor);
             combinacionCorrecta.push(color);
@@ -18,19 +18,18 @@ $('#botonEstablecerCombinacionCorrecta').bind("click", () => {
     });
     if (!combinacionCorrecta.includes(null)) {
         iniciarJuego(juegoEnCurso.coloresJuego, juegoEnCurso.intentosIniciales, juegoEnCurso.cantidadSlots, juegoEnCurso.repeticiones, combinacionCorrecta);
-        $("contenedorCombinacionCorrecta").hide();
-        $("botonCombinacionCorrecta").prop('disabled', true);
+        DOM.contenedorCombinacionCorrecta.hide("slow");
+        DOM.botonCombinacionCorrecta.prop('disabled', true);
     }
 });
-
-$("#opciones").bind({
+DOM.opciones.bind({
     "dragstart": function (e) {
         let target = $(e.target)[0];
         if (target.draggable == true) e.originalEvent.dataTransfer.setData('text/plain', target.id);
     }
 })
 
-$("#slotsCombCorrecta").bind({
+DOM.slotsCombCorrecta.bind({
     "dragstart": function (e) {
         let target = $(e.target)[0];
         if (target.draggable == true) e.originalEvent.dataTransfer.setData('text/plain', target.id);
@@ -39,7 +38,7 @@ $("#slotsCombCorrecta").bind({
         let target = $(e.target);
         let idColor = e.originalEvent.dataTransfer.getData("text");
         let coloresUsados = [];
-        $("#slotsCombCorrecta").children().each(function () {
+        DOM.slotsCombCorrecta.children().each(function () {
             if ($(this).children()[0] != undefined) {
                 let color = convertirAHex($(this).children()[0].style.backgroundColor);
                 coloresUsados.push(color);
@@ -57,7 +56,7 @@ $("#slotsCombCorrecta").bind({
     }
 })
 
-$("#intentos").bind({
+DOM.intentos.bind({
     "dragstart": function (e) {
         let target = $(e.target)[0];
         if (target.draggable == true) e.originalEvent.dataTransfer.setData('text/plain', target.id);

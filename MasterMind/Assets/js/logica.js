@@ -3,8 +3,8 @@ let juegoEnCurso;
 
 window.onload = () => {
     iniciarJuego(coloresDefecto, 10, 4, false);
-    $("#contenedorCombinacionCorrecta").hide();
-    $("#configuracionPartida").hide();
+    DOM.contenedorCombinacionCorrecta.hide();
+    DOM.configuracionPartida.hide();
 }
 
 const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, intentosIniciales = juegoEnCurso.intentosIniciales, cantidadSlots = juegoEnCurso.cantidadSlots, repeticiones = juegoEnCurso.repeticiones, combinacionCorrecta) => {
@@ -13,8 +13,8 @@ const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, intentosIniciale
     generarColores();
     generarSlotsCombinacion();
     generarIntentos();
-    $('#seccionResultado').empty();
-    $("botonCombinacionCorrecta").prop('disabled', false);
+    DOM.seccionResultado.empty();
+    DOM.botonCombinacionCorrecta.prop('disabled', false);
 }
 
 const comprobarSlots = (filaIntento) => {

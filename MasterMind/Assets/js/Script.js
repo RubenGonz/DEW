@@ -1,50 +1,47 @@
 const DOM = {
-    opciones: document.getElementById("opciones"),
-    nuevoJuegoLeyenda: document.getElementById("nuevoJuegoLeyenda"),
-    botonCombinacionCorrecta: document.getElementById("botonCombinacionCorrecta"),
+    opciones: $("#opciones"),
+    botonCombinacionCorrecta: $("#botonCombinacionCorrecta"),
     contenedorCombinacionCorrecta: $("#contenedorCombinacionCorrecta"),
-    slotsCombCorrecta: document.getElementById("slotsCombCorrecta"),
-    botonEstablecerCombinacionCorrecta: document.getElementById("botonEstablecerCombinacionCorrecta"),
-    intentos: document.getElementById("intentos"),
-    seccionResultado: document.getElementById("seccionResultado"),
-    coloresConf: document.getElementById("coloresConf"),
-    inputIntentos: document.getElementById("inputIntentos"),
-    inputSlots: document.getElementById("inputSlots"),
-    checkboxRepeticiones: document.getElementById("checkboxRepeticiones"),
-    botonNuevaConf: document.getElementById("botonNuevaConf"),
-    plantillaMonedaEstandar: document.getElementById("plantillaMonedaEstandar"),
-    plantillaMonedaSolucion: document.getElementById("plantillaMonedaSolucion"),
-    plantillaIntento: document.getElementById("plantillaIntento"),
-    plantillaSlots: document.getElementById("plantillaSlots"),
-    plantillaMonedaPequenia: document.getElementById("plantillaMonedaPequenia"),
-    plantillaPartidaGanada: document.getElementById("plantillaPartidaGanada"),
-    plantillaPartidaPerdida: document.getElementById("plantillaPartidaPerdida")
+    slotsCombCorrecta: $("#slotsCombCorrecta"),
+    botonEstablecerCombinacionCorrecta: $("#botonEstablecerCombinacionCorrecta"),
+    nuevoJuegoLeyenda: $("#nuevoJuegoLeyenda"),
+    seccionResultado: $("#seccionResultado"),
+    intentos: $("#intentos"),
+    botonConfiguracion: $("#botonConfiguracion"),
+    configuracionPartida: $("#configuracionPartida"),
+    coloresConf: $("#coloresConf"),
+    botonSumar: $("#botonSumar"),
+    botonRestar: $("#botonRestar"),
+    inputIntentos: $("#inputIntentos"),
+    inputSlots: $("#inputSlots"),
+    checkboxRepeticiones: $("#checkboxRepeticiones"),
+    botonNuevaConf: $("#botonNuevaConf"),
 }
 
 const generarConf = () => {
-    DOM.coloresConf.innerHTML = "";
+    DOM.coloresConf.empty();
     juegoEnCurso.coloresJuego.forEach(color => {
         $("<input>", {
             type: "color", value: color
         }).appendTo(DOM.coloresConf)
     })
-    $("#inputIntentos").val(juegoEnCurso.intentosIniciales);
-    $("#inputSlots").val(juegoEnCurso.cantidadSlots);
+    DOM.inputIntentos.val(juegoEnCurso.intentosIniciales);
+    DOM.inputSlots.val(juegoEnCurso.cantidadSlots);
     if (juegoEnCurso.repeticiones) {
-        $("#checkboxRepeticiones").prop("checked", true);
-        $("#checkboxRepeticiones").next().text("Repeticiones activadas");
+        DOM.checkboxRepeticiones.prop("checked", true);
+        DOM.checkboxRepeticiones.next().text("Repeticiones activadas");
     } else {
-        $("#checkboxRepeticiones").prop("checked", false);
-        $("#checkboxRepeticiones").next().text("Repeticiones desactivadas");
+        DOM.checkboxRepeticiones.prop("checked", false);
+        DOM.checkboxRepeticiones.next().text("Repeticiones desactivadas");
     }
 }
 
 const aniadirColor = () => {
     let coloresMaximos = 10;
-    if ($("#coloresConf").children().length < coloresMaximos) {
+    if (DOM.coloresConf.children().length < coloresMaximos) {
         let nuevoColor;
         let colores = [];
-        $("#coloresConf").children().each(function () { colores.push($(this).val()) });
+        DOM.coloresConf.children().each(function () { colores.push($(this).val()) });
         do {
             let colorRandom = "rgb(" + generarNumeroAleatorio(0, 255) + "," + generarNumeroAleatorio(0, 255) + "," + generarNumeroAleatorio(0, 255) + ")";
             nuevoColor = convertirAHex(colorRandom);
@@ -56,17 +53,17 @@ const aniadirColor = () => {
 }
 
 const quitarColor = () => {
-    if ($("#coloresConf").children().length > 1) $("#coloresConf").children().last().remove();
+    if (DOM.coloresConf.children().length > 1) DOM.coloresConf.children().last().remove();
     else mostrarError("errorColores", "Tiene que haber como minimo un color");
 }
 
 const establecerNuevaConf = () => {
     let configuracionValida = true;
     let colores = [];
-    $("#coloresConf").children().each(function () { colores.push($(this).val()) });
-    let numIntentos = parseInt($("#inputIntentos").val());
-    let numSlots = parseInt($("#inputSlots").val());
-    let repeticiones = $("#checkboxRepeticiones").prop("checked");;
+    DOM.coloresConf.children().each(function () { colores.push($(this).val()) });
+    let numIntentos = parseInt(DOM.inputIntentos.val());
+    let numSlots = parseInt(DOM.inputSlots.val());
+    let repeticiones = DOM.checkboxRepeticiones.prop("checked");;
     let coloresOrdenados = colores.slice().sort();
     let coloresRepetidos = [];
     for (let i = 0; i < coloresOrdenados.length; i++) if (coloresOrdenados[i + 1] === coloresOrdenados[i] && !coloresRepetidos.includes(coloresOrdenados[i])) coloresRepetidos.push(coloresOrdenados[i]);
@@ -91,7 +88,7 @@ const establecerNuevaConf = () => {
 }
 
 const generarColores = () => {
-    if (!$('#opciones').is(':empty')) $("#opciones").empty();
+    if (!DOM.opciones.is(":empty")) DOM.opciones.empty();
     juegoEnCurso.coloresJuego.forEach(color => {
         $("<div>", {
             id: color,
@@ -103,7 +100,7 @@ const generarColores = () => {
 }
 
 const generarSlotsCombinacion = () => {
-    if (!$('#slotsCombCorrecta').is(':empty')) $("#slotsCombCorrecta").empty();
+    if (!DOM.slotsCombCorrecta.is(":empty")) DOM.slotsCombCorrecta.empty();
     for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
         $("<div>", {
             class: "tamanioMoneda rounded-circle monedaIntento",
@@ -112,7 +109,7 @@ const generarSlotsCombinacion = () => {
 }
 
 const generarIntentos = () => {
-    if (!$('#intentos').is(':empty')) $("#intentos").empty();
+    if (!DOM.intentos.is(":empty")) DOM.intentos.empty();
     for (let i = 1; i <= juegoEnCurso.intentosIniciales; i++) {
         $("<div>", {
             id: "intento" + i, class: "row py-2"
@@ -156,7 +153,7 @@ const mostrarError = (contenedorPadre, mensajeError) => {
 
 const mostrarResultadoIntento = (filaIntento, cantidadAciertos, cantidadCoincidencias, cantidadFallos) => {
     $("#comprobacion" + filaIntento).empty();
-    $("#comprobacion" + filaIntento).addClass('flex-row').removeClass('flex-column');
+    $("#comprobacion" + filaIntento).addClass("flex-row").removeClass("flex-column");
     generarMonedasPequenias(cantidadAciertos, "#0a0a0a", "#comprobacion" + filaIntento);
     generarMonedasPequenias(cantidadCoincidencias, "white", "#comprobacion" + filaIntento);
     generarMonedasPequenias(cantidadFallos, "gray", "#comprobacion" + filaIntento);
@@ -172,7 +169,7 @@ const generarMonedasPequenias = (numeroMonedas, color, idContenedorPadre) => {
 }
 
 const mostrarPartidaGanada = () => {
-    $("#intentos").children().each(function () { if ($(this).find("input")[0] != null) $(this).remove() });
+    DOM.intentos.children().each(function () { if ($(this).find("input")[0] != null) $(this).remove() });
     $("<div>", {
         class: "partidaGanda rounded-3 p-2 mt-3"
     }).append([
@@ -237,12 +234,11 @@ const mostrarPartidaGanada = () => {
                 })
             ])
         ])
-    ]).appendTo("#seccionResultado")
+    ]).appendTo(DOM.seccionResultado)
 }
 
-
 const mostrarPartidaPerdida = () => {
-    $("#intentos").children().each(function () { if ($(this).find("input")[0] != null) $(this).remove() });
+    DOM.intentos.children().each(function () { if ($(this).find("input")[0] != null) $(this).remove() });
     $("<div>", {
         class: "partidaPerdida rounded-3 p-2 mt-3"
     }).append([
@@ -305,5 +301,5 @@ const mostrarPartidaPerdida = () => {
                 })
             ])
         ])
-    ]).appendTo("#seccionResultado")
+    ]).appendTo(DOM.seccionResultado)
 }
