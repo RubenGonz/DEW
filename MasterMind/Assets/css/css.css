@@ -1,6 +1,7 @@
 :root {
     --diametroMonedaPequenia: 32px;
     --diametroMonedaGrande: 64px;
+    --diametroMonedaCargando: 150px;
     --anchoConf: 300px;
 }
 
@@ -86,4 +87,82 @@ input[type="color"] {
 input[type="color"]::-webkit-color-swatch {
     border-radius: 50%;
     border: none;
+}
+
+#fondoTransparente {
+    z-index: 2000;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(255,255,255,0.7);
+}
+
+.textoCargando {
+    height: 10vh;
+}
+
+.monedaCargando {
+    width: var(--diametroMonedaCargando);
+    width: var(--diametroMonedaCargando);
+}
+
+.loader {
+    width: 100%;
+    height: 90vh;
+    border-radius: 50%;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+footer {
+    margin-top: 5vh;
+    padding-top: 10px;
+    padding-left: 15vw;
+    padding-right: 15vw;
+}
+
+.informacionPagina {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.socialMediaBar, .ayudaUsuario {
+    list-style-type: none;
+}
+
+.socialMediaBar li{
+    display: flex;
+    align-items: center;
+}
+
+.socialMediaBar li > *{
+    margin: 5px;
+}
+
+.socialMediaBar img{
+    height: 2rem;
+}
+
+.ayudaUsuario {
+    padding-left: 0;
+}
+
+.ayudaUsuario li{
+    margin: 10px;
+}
+
+footer a:link,footer a:hover,footer a:visited {
+    color: black;
+    text-decoration: none;
 }

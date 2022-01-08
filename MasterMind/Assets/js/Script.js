@@ -27,6 +27,8 @@ const iniciarJuego = (coloresJuego = juegoEnCurso.coloresJuego, intentosIniciale
     DOM.botonCombinacionCorrecta.prop('disabled', false);
     DOM.contenedorCombinacionCorrecta.hide();
     DOM.configuracionPartida.hide();
+    DOM.fondoTransparente.show();
+    DOM.fondoTransparente.delay(3500).fadeOut(500);
 }
 
 /**

@@ -2,6 +2,7 @@
  * Constante DOM con valores del documento html
  */
 const DOM = {
+    fondoTransparente: $("#fondoTransparente"),
     opciones: $("#opciones"),
     botonCombinacionCorrecta: $("#botonCombinacionCorrecta"),
     contenedorCombinacionCorrecta: $("#contenedorCombinacionCorrecta"),
