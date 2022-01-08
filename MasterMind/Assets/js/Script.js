@@ -1,3 +1,6 @@
+/**
+ * Constante DOM con valores del documento html
+ */
 const DOM = {
     opciones: $("#opciones"),
     botonCombinacionCorrecta: $("#botonCombinacionCorrecta"),
@@ -18,6 +21,10 @@ const DOM = {
     botonNuevaConf: $("#botonNuevaConf"),
 }
 
+/**
+ * Constante que genera los valores de la 
+ * configuracion para el usuario
+ */
 const generarConf = () => {
     DOM.coloresConf.empty();
     juegoEnCurso.coloresJuego.forEach(color => {
@@ -36,6 +43,11 @@ const generarConf = () => {
     }
 }
 
+/**
+ * Constante que genera un nuevo input de 
+ * tipo color en la configuracion y si no 
+ * puede muestra un error
+ */
 const aniadirColor = () => {
     let coloresMaximos = 10;
     if (DOM.coloresConf.children().length < coloresMaximos) {
@@ -52,11 +64,22 @@ const aniadirColor = () => {
     } else mostrarError("errorColores", "No puede haber mas de " + coloresMaximos + " colores");
 }
 
+/**
+ * Constante que elimina un input de 
+ * tipo color en la configuracion y si no 
+ * puede muestra un error
+ */
 const quitarColor = () => {
     if (DOM.coloresConf.children().length > 1) DOM.coloresConf.children().last().remove();
     else mostrarError("errorColores", "Tiene que haber como minimo un color");
 }
 
+/**
+ * Constante que comprueba que los valores 
+ * introducidos en la configuracion son validos
+ * Si son validos inicia un nuevo juego con esta configuracion 
+ * Si no son validos muestra mensajes de error donde corresponda
+ */
 const establecerNuevaConf = () => {
     let configuracionValida = true;
     let colores = [];
@@ -87,6 +110,9 @@ const establecerNuevaConf = () => {
     else mostrarError("errorConfiguracion", "La configuración introducida no es válida");
 }
 
+/**
+ * Constante que genera los colores de la leyenda
+ */
 const generarColores = () => {
     if (!DOM.opciones.is(":empty")) DOM.opciones.empty();
     juegoEnCurso.coloresJuego.forEach(color => {
@@ -99,6 +125,10 @@ const generarColores = () => {
     })
 }
 
+/**
+ * Constante que genera los slots de la seccion 
+ * de la combinacion correcta
+ */
 const generarSlotsCombinacion = () => {
     if (!DOM.slotsCombCorrecta.is(":empty")) DOM.slotsCombCorrecta.empty();
     for (let i = 0; i < juegoEnCurso.cantidadSlots; i++) {
@@ -108,6 +138,10 @@ const generarSlotsCombinacion = () => {
     }
 }
 
+/**
+ * Constante que genera los intentos 
+ * en la seccion de intentos
+ */
 const generarIntentos = () => {
     if (!DOM.intentos.is(":empty")) DOM.intentos.empty();
     for (let i = 1; i <= juegoEnCurso.intentosIniciales; i++) {
@@ -141,33 +175,55 @@ const generarIntentos = () => {
     }
 }
 
-const mostrarError = (contenedorPadre, mensajeError) => {
+/**
+ * Constante que genera un mensaje de error bajo un contenedor
+ * @param {String} idContenedorPadre id del contenedor padre
+ * @param {String} mensajeError mensaje a mostrar
+ */
+const mostrarError = (idContenedorPadre, mensajeError) => {
     $("<div>", {
         text: mensajeError,
         id: "mensajeError",
         class: "error"
-    }).appendTo("#" + contenedorPadre)
+    }).appendTo("#" + idContenedorPadre)
     $("#mensajeError").delay(1000).fadeOut(500);
     setTimeout(() => $("#mensajeError").remove(), 1500);
 }
 
+/**
+ * Constante que genera el resultado del intento hecho
+ * @param {Number} filaIntento numero de la fila donde se hizo el intento
+ * @param {Number} cantidadAciertos numero de slots acertados
+ * @param {Number} cantidadCoincidencias numero de slots coincididos
+ * @param {Number} cantidadFallos numero de slots fallados
+ */
 const mostrarResultadoIntento = (filaIntento, cantidadAciertos, cantidadCoincidencias, cantidadFallos) => {
     $("#comprobacion" + filaIntento).empty();
     $("#comprobacion" + filaIntento).addClass("flex-row").removeClass("flex-column");
-    generarMonedasPequenias(cantidadAciertos, "#0a0a0a", "#comprobacion" + filaIntento);
-    generarMonedasPequenias(cantidadCoincidencias, "white", "#comprobacion" + filaIntento);
-    generarMonedasPequenias(cantidadFallos, "gray", "#comprobacion" + filaIntento);
+    generarMonedasPequenias(cantidadAciertos, "#0a0a0a", "comprobacion" + filaIntento);
+    generarMonedasPequenias(cantidadCoincidencias, "white", "comprobacion" + filaIntento);
+    generarMonedasPequenias(cantidadFallos, "gray", "comprobacion" + filaIntento);
 }
 
+/**
+ * Constante que genera monedas pequenias de un color 
+ * @param {Number} numeroMonedas numero de monedas a generar
+ * @param {String} color color en hexadecimal de la moneda
+ * @param {String} idContenedorPadre id del contenedorpadre
+ */
 const generarMonedasPequenias = (numeroMonedas, color, idContenedorPadre) => {
     for (let i = 1; i <= numeroMonedas; i++) {
         $("<div>", {
             class: "monedaSolucion rounded-circle mx-1",
             style: "background-image: url(Assets/img/Coin.png);background-size: cover; background-color: " + color + ";"
-        }).appendTo(idContenedorPadre)
+        }).appendTo("#" + idContenedorPadre)
     }
 }
 
+/**
+ * Constante que genera la pantalla de 
+ * ganador al acabar la partida
+ */
 const mostrarPartidaGanada = () => {
     DOM.intentos.children().each(function () { if ($(this).find("input")[0] != null) $(this).remove() });
     $("<div>", {
@@ -237,6 +293,10 @@ const mostrarPartidaGanada = () => {
     ]).appendTo(DOM.seccionResultado)
 }
 
+/**
+ * Constante que genera la pantalla de 
+ * perdedor al acabar la partida
+ */
 const mostrarPartidaPerdida = () => {
     DOM.intentos.children().each(function () { if ($(this).find("input")[0] != null) $(this).remove() });
     $("<div>", {
