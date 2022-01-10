@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<!--
+↓ INSTRUCCIONES ↓
+    1 - Pon de color rojo todos los elementos de tipo h2.
+    2 - Cambia el precio del vuelo para que ahora sea '88.99 EUR'
+    3 - Asegúrate que este código se ejecuta una vez que el documento está listo.
+    4 - Modifica todos los títulos de las vacaciones (h2), su nuevo valor será "Santiago del Teide".
+    5 - Pon de color verde la lista de vacaciones cuyo id es #vacations.
+    6 - Pon de color naranja aquellos ítems que tenga la clase .america
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Selectores básicos</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("h2").css({ "color": "red" });
+            $("span:contains('EUR')").html("88.99 EUR");
+            $("h2").html("Santiago del Teide");
+            $("#vacations").css({"backgroundColor":"green"});
+            $(".america").css({"backgroundColor":"orange"});
+        });
+    </script>
+</head>
+
+<body>
+    <div id="vacations-wrapper">
+        <h1>Vacation Packages</h1>
+        <ul id="vacations">
+            <li class="vacation america">
+                <h2>San Francisco, California</h2>
+                <span class="details">700 EUR</span>
+            </li>
+
+            <li class="vacation america">
+                <h2>Washington DC, District of Columbia</h2>
+                <span class="details">400 EUR</span>
+            </li>
+
+            <li class="vacation europe">
+                <h2>London, England</h2>
+                <span class="details">1,100 EUR</span>
+            </li>
+
+            <li class="vacation asia">
+                <h2>Shanghai, China</h2>
+                <span class="details">1,200 EUR</span>
+            </li>
+        </ul>
+
+        <ul class="sorting">
+            <li><a href="#">America</a></li>
+            <li><a href="#">Europe</a></li>
+            <li><a href="#">Asia</a></li>
+        </ul>
+    </div>
+</body>
+
+</html>

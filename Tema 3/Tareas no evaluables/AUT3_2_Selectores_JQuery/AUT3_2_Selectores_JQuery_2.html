@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+↓ INSTRUCCIONES ↓
+    a - Pon de color rojo todos los módulos de primero
+    b - Pon de color verde el módulo Sistemas Informáticos
+    c - Pon de color negro el módulo que va detrás de Sistemas Informáticos
+    d - Busca los ítems vacíos y añade el contenido 'Nodo vacío'
+    e - Pon de color amarillo los módulos que tengan el atributo href
+    f - Pon de color amarillo ( y fondo negro) los módulos que no tengan el atributo href
+    g - Aumenta a 1.4em aquellos módulos que contengan la cadena 'mod' en href
+    h - Pon de color naranja aquellos módulos que empiecen por la cadena 'mod' en href
+    i - Pon de color azul aquellos módulos que terminen con la cadena '.html' en href
+    j - Suma todas las horas de los módulos de segundo
+    k - Selecciona los módulos DEW, DSW y EIE
+    l- Añade las que faltan: 
+        [FCT]	Formación en centros de trabajo	346 (horas)
+        [PRW]	Proyecto de desarrollo de aplicaciones web	64 (horas)
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Selectores Dificultad Baja</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("p:contains('Primero') + ul a").css({ "color": "red" });
+            $("a:contains('Sistemas Informáticos')").css({ "color": "green" });
+            $("a:eq(1)").css({ "color": "black" });
+            $("li:empty").html("Nodo vacío");
+            $("[href]").css({ "color": "yellow" });
+            $("a:not([href])").css({ "color": "yellow", "background": "black" });
+            $("[href*='mod']").css({ "font-size": "1.4em" });
+            $("[href^='mod']").css({ "color": "orange" });
+            $("[href$='.html']").css({ "color": "blue" });
+
+            let horasTotales = 0;
+            $("p:contains('Segundo') + ul li li:contains('horas')").toArray().forEach(modulo => {
+                horasTotales += parseInt(modulo.innerHTML.replace(/\D/g, ''));
+            });
+            console.log(horasTotales);
+
+            $("li:contains(DEW),li:contains(DSW),li:contains(EMR)").css({ "color": "blue" });
+            $("li:contains(EMR)").after("<li>PRW<ul><li>Proyecto de desarrollo de aplicaciones web</li><li>64 horas</li></ul></li>");
+            $("li:contains(EMR)").after("<li>FCT<ul><li>Formación en centros de trabajo</li><li>346 horas</li></ul></li>");
+
+        });
+    </script>
+</head>
+
+<body>
+    <p>Primero</p>
+    <ul>
+        <li><a href="#">Programación</a></li>
+        <li><a href="modBD.html">Base de Datos</a></li>
+        <li><a href="SImod.html">Sistemas Informáticos</a></li>
+        <li><a href="mod-LM.html">Lenguajes de Marcas</a></li>
+        <li><a>Formación y Orientación Laboral</a></li>
+        <li></li>
+    </ul>
+
+    <p>Segundo</p>
+    <ul>
+        <li>DSW
+            <ul>
+                <li>Desarrollo Web en Entorno Servidor</li>
+                <li>168 horas</li>
+            </ul>
+        </li>
+        <li>DEW
+            <ul>
+                <li>Desarrollo Web en Entorno Cliente</li>
+                <li>147 horas</li>
+            </ul>
+        </li>
+        <li>DPL
+            <ul>
+                <li>Despliegue de Aplicaciones Web</li>
+                <li>126 horas</li>
+            </ul>
+        </li>
+        <li>DOR
+            <ul>
+                <li>Diseño de Interfaces Web</li>
+                <li>126 horas</li>
+            </ul>
+        </li>
+        <li>EMR
+            <ul>
+                <li>Empresa e iniciativa emprendedora</li>
+                <li>63 horas</li>
+            </ul>
+        </li>
+    </ul>
+</body>
+
+</html>

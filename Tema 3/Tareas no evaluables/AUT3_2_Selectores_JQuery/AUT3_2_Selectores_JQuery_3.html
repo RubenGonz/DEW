@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+↓ INSTRUCCIONES ↓
+    a. Añade la clase border a Primero y Segundo.
+    b. Añade la clase green a las abreviaturas de cada módulo de segundo.
+    c. Borra la clase border.
+    d. La clase border se debe poner o quitar cuando clickamos sobre primero o segundo.
+    e. Cambia el texto ‘Primero’ por ‘Módulos de primero’.
+    f. Cambia el texto‘Segundo’ por ‘Módulos de segundo’.
+    g. Quita los elementos de las listas que estén vacíos.
+    h. Inserta el módulo de FOL al final de la lista de primero. Realizar en ambos sentidos.
+    i. Inserta el módulo de Programación al principio de la lista de primero. Realizar en ambos sentidos.
+    j. Inserta el módulo de Sistemas Informáticos detrás de base de datos.
+    k. En la lista de los módulos de segundo, inserta al final de cada uno de ellos la cantidad de horas que tienen cuando se haga click sobre ellos. 
+       Parte del nombre de cada módulo y añade la información desde ul.
+    l. Elimina la lista que contiene los módulos de segundo.
+    m. Vacía la lista que contiene los módulos de primero.
+-->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Selectores Dificultad Media</title>
+    <style type="text/css">
+        .green {
+            color: green;
+        }
+
+        .azul {
+            color: blue;
+        }
+
+        .border {
+            border: 2px solid;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        
+    </script>
+</head>
+
+<body>
+    <p>Primero</p>
+    <ul>
+        <li>Base de Datos</li>
+        <li>Lenguajes de Marcas</li>
+        <li></li>
+    </ul>
+
+    <p>Segundo</p>
+    <ul>
+        <li>DSW
+            <ul data-hours="168">
+                <li class="azul">Desarrollo Web en Entorno Servidor</li>
+            </ul>
+        </li>
+        <li>DEW
+            <ul data-hours="147">
+                <li class="azul">Desarrollo Web en Entorno Cliente</li>
+            </ul>
+        </li>
+        <li>DPL
+            <ul data-hours="126">
+                <li class="azul">Despliegue de Aplicaciones Web</li>
+            </ul>
+        </li>
+        <li>DOR
+            <ul data-hours="126">
+                <li class="azul">Diseño de Interfaces Web</li>
+            </ul>
+        </li>
+        <li>EMR
+            <ul data-hours="64">
+                <li class="azul">Empresa e iniciativa emprendedora</li>
+            </ul>
+        </li>
+    </ul>
+</body>
+
+</html>
