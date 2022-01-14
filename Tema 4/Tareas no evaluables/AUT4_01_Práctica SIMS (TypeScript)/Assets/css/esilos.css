@@ -1,0 +1,26 @@
+#nombres {
+    background-color: lightblue;
+    border-color: lightskyblue;
+}
+
+#habitaciones {
+    background-color: lightgreen;
+    border-color: burlywood;
+}
+
+#oraciones {
+    background-color: white;
+    border-color: black;
+}
+
+.seccion {
+    height: 100%;
+    padding: 1rem;
+    margin: 5px;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
