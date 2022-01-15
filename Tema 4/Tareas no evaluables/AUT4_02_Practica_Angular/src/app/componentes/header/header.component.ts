@@ -7,9 +7,5 @@ import { Component } from '@angular/core';
 })
 
 export class HeaderComponent {
-    rutaImgLogo: string;
-
-    constructor() {
-        this.rutaImgLogo = "../../../assets/img/logo.png"
-    }
+    
 }

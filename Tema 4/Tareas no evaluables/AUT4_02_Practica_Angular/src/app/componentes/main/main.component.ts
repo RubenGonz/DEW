@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
 })
 
 export class MainComponent {
-    
+    listaProductos: string[];
+
+    constructor() {
+        this.listaProductos = ["Cereza", "Coco", "Platano"];
+    }
 }

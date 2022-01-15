@@ -1,8 +1,8 @@
 <div class="m-5">
     <h1>Lista de productos</h1>
-    <div id="productos" class="d-flex justify-content-around mt-5">
-        <div>Producto</div>
-        <div>Producto</div>
-        <div>Producto</div>
+    <div class="d-flex justify-content-around mt-5 w-100">
+        <div *ngFor="let producto of listaProductos">
+            <producto [nombreProducto]="producto"></producto>
+        </div>
     </div>
 </div>
