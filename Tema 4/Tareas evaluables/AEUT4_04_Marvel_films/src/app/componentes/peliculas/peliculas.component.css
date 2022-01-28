@@ -1,0 +1,14 @@
+.portadaPelicula {
+    border-radius: 5px;
+    width: 235px;
+}
+
+.cartaPelicula {
+    width: 250px;
+    border: 1px solid lightgray;
+    transition: 0.5s;
+}
+
+.cartaPelicula:hover{
+    box-shadow: 0px 0px 10px -1px rgba(50, 50, 50, 0.75);
+}

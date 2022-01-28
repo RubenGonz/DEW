@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { PeliculaComponent } from './componentes/pelicula/pelicula.component';
+import { PeliculasComponent } from './componentes/peliculas/peliculas.component';
 import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
 import { PieComponent } from './componentes/pie/pie.component';
 import { ContenidoComponent } from './componentes/contenido/contenido.component';
@@ -12,7 +12,7 @@ import { ContenidoComponent } from './componentes/contenido/contenido.component'
 @NgModule({
   declarations: [
     AppComponent,
-    PeliculaComponent,
+    PeliculasComponent,
     CabeceraComponent,
     PieComponent,
     ContenidoComponent
