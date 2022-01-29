@@ -8,6 +8,7 @@ import { PeliculasComponent } from './componentes/peliculas/peliculas.component'
 import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
 import { PieComponent } from './componentes/pie/pie.component';
 import { ContenidoComponent } from './componentes/contenido/contenido.component';
+import { PeliculaDetalladaComponent } from './componentes/pelicula-detallada/pelicula-detallada.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ContenidoComponent } from './componentes/contenido/contenido.component'
     PeliculasComponent,
     CabeceraComponent,
     PieComponent,
-    ContenidoComponent
+    ContenidoComponent,
+    PeliculaDetalladaComponent
   ],
   imports: [
     BrowserModule,
