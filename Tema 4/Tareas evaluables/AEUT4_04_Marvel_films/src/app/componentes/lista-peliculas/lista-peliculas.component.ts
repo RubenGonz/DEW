@@ -4,15 +4,14 @@ import { Pelicula } from '../../interfaces/pelicula';
 import { PeliculaService } from 'src/app/servicios/pelicula.service';
 
 @Component({
-    selector: 'peliculas',
-    templateUrl: './peliculas.component.html',
-    styleUrls: ['./peliculas.component.css']
+    selector: 'lista-peliculas',
+    templateUrl: './lista-peliculas.component.html',
+    styleUrls: ['./lista-peliculas.component.css']
 })
 
-export class PeliculasComponent implements OnInit {
+export class ListaPeliculasComponent implements OnInit {
 
     peliculas: Pelicula[] = [];
-    peliculaSeleccionada?: Pelicula;
 
     constructor(private peliculaService: PeliculaService) { }
 
@@ -22,10 +21,6 @@ export class PeliculasComponent implements OnInit {
 
     getPeliculas(): void {
         this.peliculaService.getPeliculas().subscribe(peliculasObtenidas => this.peliculas = peliculasObtenidas);
-    }
-
-    alPulsar(peliculaPulsada: Pelicula): void {
-        this.peliculaSeleccionada = peliculaPulsada;
     }
 
 }

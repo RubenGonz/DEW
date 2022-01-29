@@ -18,4 +18,10 @@ export class PeliculaService {
         this.mensajesService.aniadir("Peliculas obtenidas con éxito")
         return of(PELICULAS);
     }
+
+    getPelicula(id: number): Observable<Pelicula> {
+        const pelicula = PELICULAS.find(peliculaBuscada => peliculaBuscada.id === id)!;
+        this.mensajesService.aniadir("Pelicula encontrada con éxito");
+        return of(pelicula);
+    }
 }

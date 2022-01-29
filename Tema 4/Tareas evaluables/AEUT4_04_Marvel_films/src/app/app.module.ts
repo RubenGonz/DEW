@@ -1,29 +1,33 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing/app-routing.module';
 import { AppComponent } from './app.component';
 
-import { PeliculasComponent } from './componentes/peliculas/peliculas.component';
+import { ListaPeliculasComponent } from './componentes/lista-peliculas/lista-peliculas.component';
 import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
 import { PieComponent } from './componentes/pie/pie.component';
-import { ContenidoComponent } from './componentes/contenido/contenido.component';
 import { PeliculaDetalladaComponent } from './componentes/pelicula-detallada/pelicula-detallada.component';
+import { FasePeliculaPipe } from './pipes/fase-pelicula.pipe';
+import { NombrePeliculaPipe } from './pipes/nombre-pelicula.pipe';
+import { SinopsisPeliculaPipe } from './pipes/sinopsis-pelicula.pipe';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PeliculasComponent,
-    CabeceraComponent,
-    PieComponent,
-    ContenidoComponent,
-    PeliculaDetalladaComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        ListaPeliculasComponent,
+        CabeceraComponent,
+        PieComponent,
+        PeliculaDetalladaComponent,
+        FasePeliculaPipe,
+        NombrePeliculaPipe,
+        SinopsisPeliculaPipe
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

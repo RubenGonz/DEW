@@ -1,3 +1,24 @@
-<div *ngIf="pelicula">
-    {{pelicula.nombre}}
+<div *ngIf="pelicula" class="row pelicula">
+    <div class="col-12 col-lg-6 d-flex justify-content-around align-items-center mt-3">
+        <img src="{{pelicula.urlImagen}}" alt="Portada de {{pelicula.nombre}}" class="portadaPelicula">
+    </div>
+    
+    <div class="col-12 col-lg-6 d-flex align-items-center p-4 mt-3 pe-lg-5">
+        <div class="w-100">
+            <div class="d-flex justify-content-between">
+                <h1>{{pelicula.nombre | nombrePelicula}}</h1>
+                <div *ngIf="pelicula.esMarvel === true">{{pelicula.fechaSalida | fasePelicula }}</div>
+            </div>
+
+            <div class="fw-bold">Fecha de salida: {{pelicula.fechaSalida}}</div>
+
+            <div id="sinopsis" class="mt-4">
+                {{pelicula.sinopsis | sinopsisPelicula}}
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-danger" (click)="goBack()">Volver a la lista de peliculas</button>                
+            </div>
+        </div>
+    </div>
 </div>
