@@ -6,5 +6,11 @@
 .portadaPelicula {
     max-height: 80vh;
     border-radius: 1rem;
-    box-shadow: 0px 0px 10px -1px rgba(50, 50, 50, 0.75);
+    box-shadow: 0px 0px 15px 0px black;
+}
+
+.info-pelicula {
+    background-color: white;
+    border-radius: 2rem;
+    box-shadow: 0px 0px 15px 22px  white;
 }

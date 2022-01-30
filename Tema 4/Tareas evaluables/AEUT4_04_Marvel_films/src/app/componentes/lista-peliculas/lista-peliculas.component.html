@@ -1,15 +1,46 @@
 <div class="p-2">
     <div class="d-flex justify-content-between px-4 my-2">
         <h2 class="m-0">Lista de peliculas</h2>
-        <button class="btn btn-danger">Añadir pelicula</button>
+        <button id="botonCrearFormulario" class="btn btn-danger" (click)="crearFormulario()">Añadir pelicula</button>
+    </div>
+
+    <div id="formNuevaPelicula" class="formulario w-50 mx-auto my-5 d-none">
+        <h3 class="text-center pt-3">Nueva pelicula</h3>
+        <hr class="mx-auto w-75">
+        <div class="d-flex flex-column align-items-center pb-3">
+            <label for="nombrePelicula" class="fw-bold">Nombre de la pelicula</label>
+            <input type="text" name="formNuevaPelicula" id="nombrePelicula" class="w-50 text-center">
+        </div>
+        <div class="d-flex flex-column align-items-center pb-3">
+            <label for="urlImagen" class="fw-bold">Url de la imagen</label>
+            <input type="text" name="formNuevaPelicula" id="urlImagen" class="w-50 text-center">
+        </div>
+        <div class="d-flex flex-column align-items-center pb-3">
+            <label for="fechaSalida" class="fw-bold">Fecha de salida</label>
+            <input type="text" name="formNuevaPelicula" id="fechaSalida" placeholder="dd/mm/aaaa" class="w-50 text-center">
+        </div>
+        <div class="d-flex flex-column align-items-center pb-3">
+            <label for="sinopsis" class="fw-bold">Sinopsis</label>
+            <input type="text" name="formNuevaPelicula" id="sinopsis" class="w-50 text-center">
+        </div>
+        <div class="d-flex flex-column align-items-center pb-3">
+            <label for="esMarvel" class="fw-bold">¿La pelicula es de Marvel?</label>
+            <input type="text" name="formNuevaPelicula" id="esMarvel" placeholder="'Si' o 'No', 'No' está predeterminado" class="w-50 text-center">
+        </div>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-danger my-3" (click)="aniadirPelicula()">Añadir pelicula</button>
+        </div>
     </div>
 
     <div class="d-flex flex-wrap justify-content-around">
         <div *ngFor="let pelicula of peliculas">
-            <div class="cartaPelicula m-2 p-2 rounded-3" routerLink="/peliculaDetallada/{{pelicula.id}}">
+            <div class="cartaPelicula m-2 p-2 rounded-3 border border-danger"
+                routerLink="/peliculaDetallada/{{pelicula.id}}">
                 <img src={{pelicula.urlImagen}} alt="Portada de {{pelicula.nombre}}" class="portadaPelicula">
-                <p class="text-center mb-0"><span *ngIf="pelicula.esMarvel === true">{{pelicula.fechaSalida | fasePelicula }} - </span>
-                    {{pelicula.nombre | nombrePelicula}}</p>
+                <p class="text-center mb-0">
+                    <span *ngIf="pelicula.esMarvel === true">{{pelicula.fechaSalida | fasePelicula }} - </span>
+                    <span>{{pelicula.nombre | nombrePelicula}}</span>
+                </p>
             </div>
         </div>
     </div>

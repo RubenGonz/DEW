@@ -23,4 +23,26 @@ export class ListaPeliculasComponent implements OnInit {
         this.peliculaService.getPeliculas().subscribe(peliculasObtenidas => this.peliculas = peliculasObtenidas);
     }
 
+    crearFormulario(): void {
+        let formulario = document.getElementById("formNuevaPelicula");
+        let boton = document.getElementById("botonCrearFormulario");
+
+        if (formulario?.classList.contains("d-none")) {
+            boton!.innerHTML = "Ocultar formulario";
+            formulario?.classList.remove("d-none");
+        } else {
+            boton!.innerHTML = "Añadir pelicula";
+            formulario?.classList.add("d-none");
+        }
+    }
+
+    aniadirPelicula(): void {
+        let inputsObtenidos = document.getElementsByName("formNuevaPelicula");
+        let valoresInputs = [];
+        let valoresValidos = true;
+        inputsObtenidos.forEach(htmlElement => {
+            let htmlInput = htmlElement as HTMLInputElement;
+            valoresInputs.push(htmlInput.value);
+        })
+    }
 }
