@@ -1,4 +1,4 @@
-export interface Pelicula {
+export interface InterfazPelicula {
     id: number;
     nombre: string;
     urlImagen: string;
