@@ -4,6 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'fasePelicula'
 })
 
+/**
+ * Pipe que transforma una fecha a una fase de marvel
+ */
 export class FasePeliculaPipe implements PipeTransform {
 
     transform(fecha: string): string {

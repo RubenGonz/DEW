@@ -12,20 +12,40 @@ import { MensajesService } from 'src/app/servicios/mensajes.service';
     styleUrls: ['./lista-peliculas.component.css']
 })
 
+/**
+ * Clase que construye el componente que lista las peliculas
+ */
 export class ListaPeliculasComponent implements OnInit {
 
+    /**
+     * Variable que guarda las peliculas de la pagina
+     */
     peliculas: InterfazPelicula[] = [];
 
+    /**
+     * Constructor que inicializa el servicio de mensajes y peliculas
+     * @param peliculaService servicio que abastece el manejo de las peliculas
+     * @param mensajesService servicio que abastece el manejo de los mensajes
+     */
     constructor(private peliculaService: PeliculaService, private mensajesService: MensajesService) { }
 
+    /**
+     * Al construirse se obtienen las peliculas
+     */
     ngOnInit(): void {
         this.getPeliculas();
     }
 
+    /**
+     * Metodo que guarda las peliculas del servicio
+     */
     getPeliculas(): void {
         this.peliculaService.getPeliculas().subscribe(peliculasObtenidas => this.peliculas = peliculasObtenidas);
     }
 
+    /**
+     * Metodo que crea el formulario para crear una nueva pelicula
+     */
     crearFormularioNuevaPeli(): void {
         let formulario = document.getElementById("formNuevaPelicula");
         let boton = document.getElementById("botonCrearFormulario");
@@ -39,6 +59,10 @@ export class ListaPeliculasComponent implements OnInit {
         }
     }
 
+    /**
+     * Metodo que devuelve los valores rellenados por los usuarios
+     * @returns array con los valores de los inputs
+     */
     obtenerDatosNuevaPeli(): any[] {
         let inputsObtenidos = document.getElementsByName("formNuevaPelicula");
         let valoresInputs: any[] = [];
@@ -51,6 +75,10 @@ export class ListaPeliculasComponent implements OnInit {
         return valoresInputs;
     }
 
+    /**
+     * Metodo que valida los datos del formulario
+     * @returns true si es valido o false si no lo es
+     */
     validarPelicula(): boolean {
         let valoresInputs = this.obtenerDatosNuevaPeli();
         let valoresValidos = true;
@@ -65,6 +93,10 @@ export class ListaPeliculasComponent implements OnInit {
         return valoresValidos;
     }
 
+    /**
+     * Metodo que construye una pelicula y 
+     * la manda al servicio para aniadirla
+     */
     aniadirPelicula(): void {
         if (this.validarPelicula()) {
             let valores = this.obtenerDatosNuevaPeli();

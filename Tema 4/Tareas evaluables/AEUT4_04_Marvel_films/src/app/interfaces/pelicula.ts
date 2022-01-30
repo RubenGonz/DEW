@@ -1,3 +1,6 @@
+/**
+ * Interfaz de las peliculas
+ */
 export interface InterfazPelicula {
     id: number;
     nombre: string;

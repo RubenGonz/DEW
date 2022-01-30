@@ -5,6 +5,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './cabecera.component.html',
   styleUrls: ['./cabecera.component.css']
 })
+
+/**
+ * Clase que construye la cabecera de todas las paginas
+ */
 export class CabeceraComponent implements OnInit {
 
   constructor() { }

@@ -3,6 +3,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
     name: 'sinopsisPelicula'
 })
+
+/**
+ * Pipe que transforma una sinopsis larga a una
+ * mas corta con la opcion de un boton para leer la
+ * sinopsis completa
+ */
 export class SinopsisPeliculaPipe implements PipeTransform {
 
     transform(sinopsis: string): void {
@@ -31,6 +37,12 @@ export class SinopsisPeliculaPipe implements PipeTransform {
         }
     }
 
+    /**
+     * Metodo que muestra la sinopsis completa 
+     * quitando el boton le leer mas y aniadiendo 
+     * el de leer menos
+     * @param sinopsisOculta texto oculto
+     */
     mostrarMas(sinopsisOculta: string) {
         let parteExtendida = document.createElement("span");
         parteExtendida.id = "sinopsisExtendida";
@@ -47,6 +59,12 @@ export class SinopsisPeliculaPipe implements PipeTransform {
         document.getElementById("LeerMas")?.remove();
     }
 
+    /**
+     * Metodo que oculta la sinopsis completa 
+     * quitando el boton le leer menos y aniadiendo 
+     * el de leer mas
+     * @param sinopsisOculta texto oculto
+     */
     mostrarMenos(sinopsisOculta: string) {
         document.getElementById("sinopsisExtendida")?.remove();
         document.getElementById("LeerMenos")?.remove();

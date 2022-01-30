@@ -4,6 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListaPeliculasComponent } from '../componentes/lista-peliculas/lista-peliculas.component';
 import { PeliculaDetalladaComponent } from '../componentes/pelicula-detallada/pelicula-detallada.component';
 
+/**
+ * Rutas disponibles
+ */
 const routes: Routes = [
   { path: "", redirectTo: "/listaPeliculas", pathMatch: "full" },
   { path: "listaPeliculas", component: ListaPeliculasComponent },
