@@ -36,8 +36,16 @@ export class PeliculaService {
         });
     }
 
-    modificarPelicula() {
-        
+    modificarPelicula(id: number, datos: any[]) {
+        let indicePelicula:number = -1;
+        PELICULAS.find(peliculaBuscada => {
+            if (peliculaBuscada.id === id) indicePelicula = PELICULAS.indexOf(peliculaBuscada);
+        });
+        PELICULAS[indicePelicula].nombre = datos[0];
+        PELICULAS[indicePelicula].urlImagen = datos[1];
+        PELICULAS[indicePelicula].fechaSalida = datos[2];
+        PELICULAS[indicePelicula].sinopsis = datos[3];
+        PELICULAS[indicePelicula].esMarvel = datos[4];
     }
 
     idDisponible(): number {

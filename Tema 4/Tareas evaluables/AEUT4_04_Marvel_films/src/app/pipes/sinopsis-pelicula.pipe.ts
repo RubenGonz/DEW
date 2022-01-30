@@ -7,6 +7,7 @@ export class SinopsisPeliculaPipe implements PipeTransform {
 
     transform(sinopsis: string): void {
         let div = document.getElementById("sinopsis");
+        div!.innerHTML = "";
         let sinopsisInicial;
 
         if (sinopsis.length > 300) {

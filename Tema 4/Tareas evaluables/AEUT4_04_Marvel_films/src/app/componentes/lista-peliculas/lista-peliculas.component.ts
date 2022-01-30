@@ -39,7 +39,7 @@ export class ListaPeliculasComponent implements OnInit {
         }
     }
 
-    obtenerDatosPeli(): any[] {
+    obtenerDatosNuevaPeli(): any[] {
         let inputsObtenidos = document.getElementsByName("formNuevaPelicula");
         let valoresInputs: any[] = [];
         inputsObtenidos.forEach(htmlElement => {
@@ -52,7 +52,7 @@ export class ListaPeliculasComponent implements OnInit {
     }
 
     validarPelicula(): boolean {
-        let valoresInputs = this.obtenerDatosPeli();
+        let valoresInputs = this.obtenerDatosNuevaPeli();
         let valoresValidos = true;
         let partesFecha = valoresInputs[2].split("/");
         let fecha = partesFecha[1] + "/" + partesFecha[0] + "/" + partesFecha[2];
@@ -67,7 +67,7 @@ export class ListaPeliculasComponent implements OnInit {
 
     aniadirPelicula(): void {
         if (this.validarPelicula()) {
-            let valores = this.obtenerDatosPeli();
+            let valores = this.obtenerDatosNuevaPeli();
             let peliculaPorAniadir: InterfazPelicula = new ClasePelicula(this.peliculaService.idDisponible(), valores[0], valores[1], valores[2], valores[3], valores[4]);
             this.peliculaService.addPelicula(peliculaPorAniadir);
             this.mensajesService.aniadir("La película ha sido introducida con éxito");
