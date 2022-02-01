@@ -11,6 +11,7 @@ import { PeliculaDetalladaComponent } from './componentes/pelicula-detallada/pel
 import { FasePeliculaPipe } from './pipes/fase-pelicula.pipe';
 import { NombrePeliculaPipe } from './pipes/nombre-pelicula.pipe';
 import { SinopsisPeliculaPipe } from './pipes/sinopsis-pelicula.pipe';
+import { HomeComponent } from './componentes/home/home.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { SinopsisPeliculaPipe } from './pipes/sinopsis-pelicula.pipe';
         PeliculaDetalladaComponent,
         FasePeliculaPipe,
         NombrePeliculaPipe,
-        SinopsisPeliculaPipe
+        SinopsisPeliculaPipe,
+        HomeComponent
     ],
     imports: [
         BrowserModule,
