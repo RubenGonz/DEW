@@ -1,1 +1,60 @@
-<p>home works!</p>
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="letraMarvel text-center">MARVEL SUPERHEROES</div>
+    <img src="../../../assets/Imagenes/Home.png" alt="Imagen de marvel" class="mw-100">
+</div>
+<div>
+    <article>
+        <h2>¿Qué es Marvel?</h2>
+        <p>Marvel Worldwide, Inc., conocida como Marvel Comics, es una editorial de historietas estadounidense creada en
+            1939, inicialmente con el nombre de Timely Publications. Entre sus personajes emblemáticos del género
+            superheroico se encuentran Spider-Man, Wolverine, X-Men, Capitán América, Iron Man, Hulk, Thor, Los 4
+            Fantásticos, Daredevil, Punisher, Los vengadores, entre otros. A partir de los años 1990, la compañía se
+            posicionó como una de las principales editoriales de cómics del país. El 31 de agosto de 2009, The Walt
+            Disney
+            Company compró Marvel Entertainment por cerca de 4 000 millones de dólares, fusionándose con esta el 1 de
+            enero
+            de 2010.</p>
+    </article>
+    <article>
+        <h2>Universo cinematográfico</h2>
+        <p>El Universo cinematográfico de Marvel (MCU; en inglés, Marvel Cinematic Universe) es una franquicia de medios
+            y un universo compartido, centrada en una serie de películas de superhéroes producidas independientemente
+            por Marvel Studios. Las películas están basadas en personajes que aparecen en los cómics estadounidenses
+            publicados por Marvel Comics. La franquicia también incluye series de televisión, cortometrajes, series
+            digitales y literatura. El universo compartido, al igual que el Universo Marvel original en los cómics, se
+            estableció mediante cruce de elementos, escenarios, elenco y personajes comunes de la trama. La saga es
+            pionera en unir a varios superhéroes y varios equipos de ellos en un solo universo, algo no visto antes en
+            el cine de superhéroes.
+
+            La primera película del MCU es Iron Man (2008), que comenzó las películas de la Fase Uno culminando en la
+            película cruzada The Avengers (2012). La Fase Dos comenzó con Iron Man 3 (2013) y concluyó con Ant-Man
+            (2015). La Fase Tres comenzó con Captain America: Civil War (2016) y concluyó con Spider-Man: Lejos de casa
+            (2019). Las primeras tres fases de la franquicia se conocen colectivamente como «La saga Infinity».a​ Las
+            películas de la Fase Cuatro comenzaron con Black Widow (2021).
+
+            Marvel Television expandió el universo a la televisión con Marvel's Agents of S.H.I.E.L.D. en la cadena ABC
+            en 2013, antes de expandirse aún más hacia el streaming con Marvel's Daredevil en Netflix en 2015 y Marvel's
+            Runaways en Hulu en 2017, y por último a la televisión por cable con Marvel's Cloak & Dagger en 2018 en
+            Freeform. También produjeron la serie digital Marvel's Agents of S.H.I.E.L.D.: Slingshot. Marvel Studios
+            comenzó a producir su propias series de televisión para streaming en Disney+, comenzando con WandaVision en
+            2021 como el comienzo de la Fase Cuatro. El MCU también incluye cómics relacionados publicados por Marvel
+            Comics, mientras que Marvel Studios ha producido series de cortometrajes directo para video y una campaña de
+            marketing viral para sus películas y el universo con el falso programa de noticias WHIH Newsfront.
+
+            La franquicia ha tenido éxito comercial y, en general, ha recibido críticas positivas. Ha inspirado a otros
+            estudios de cine y televisión a intentar crear universos compartidos similares con adaptaciones de
+            personajes de cómics. El MCU también ha inspirado varias atracciones temáticas, una exhibición de arte, dos
+            especiales de televisión, guías para cada película, múltiples videojuegos vinculados y comerciales. </p>
+    </article>
+    <article>
+        <h2>Peliculas actuales</h2>
+        <div class="d-flex justify-content-around align-items-center flex-wrap peliculasHome">
+            <div class="mx-5 my-3 h5" *ngFor="let pelicula of peliculasHome">
+                <span class="btn fw-bold peliculaLista" routerLink="/peliculaDetallada/{{pelicula.id}}">{{pelicula.nombre | nombrePelicula}}</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center my-3">
+            <div class="btn" routerLink="/listaPeliculas"><span class="h3">Ver todas las peliculas</span></div>
+        </div>
+    </article>
+</div>

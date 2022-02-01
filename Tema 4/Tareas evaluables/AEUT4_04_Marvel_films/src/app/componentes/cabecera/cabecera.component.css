@@ -18,8 +18,3 @@
     border-radius: 4px;
     box-shadow: 0px 10px 13px -7px red;
 }
-
-@font-face {
-    font-family: "marvel";
-    src: url(../../../assets/Fuentes/Marvel-Regular.ttf);
-}
