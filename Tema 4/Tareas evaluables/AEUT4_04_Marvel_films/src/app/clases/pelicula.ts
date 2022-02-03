@@ -18,15 +18,15 @@ export class ClasePelicula implements InterfazPelicula {
     constructor(public id: number, public nombre: string, public urlImagen: string, public fechaSalida: string, public sinopsis: string, public esMarvel: boolean) {
         this.id = id;
         this.nombre = nombre;
-        urlImagen == null ? this.urlImagen = "Sin información" : this.urlImagen = urlImagen;
+        urlImagen == null || urlImagen == "" ? this.urlImagen = "/assets/Imagenes/ImagenNoDisponible.png" : this.urlImagen = urlImagen;
         this.fechaSalida = this.transformarFecha(fechaSalida);
         sinopsis == null ? this.sinopsis = "Sin información." : this.sinopsis = sinopsis;
         this.esMarvel = esMarvel;
     }
 
     transformarFecha(fecha: string): string {
-        if (fecha == null) fecha = "???"
-        else {
+        if (fecha == null) fecha = "???";
+        if (fecha.includes("-")) {
             let partesFecha = fecha.split("-");
             fecha = partesFecha[2] + "/" + partesFecha[1] + "/" + partesFecha[0];
         }

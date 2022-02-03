@@ -14,7 +14,7 @@ export class FasePeliculaPipe implements PipeTransform {
         if (anio >= 2008 && anio <= 2012) return "Fase 1";
         if (anio >= 2013 && anio <= 2015) return "Fase 2";
         if (anio >= 2016 && anio <= 2019) return "Fase 3";
-        if (anio >= 2021 && anio <= 2012) return "Fase 4";
+        if (anio >= 2020 && anio <= 2023) return "Fase 4";
         return "Fase inexistente";
     }
 

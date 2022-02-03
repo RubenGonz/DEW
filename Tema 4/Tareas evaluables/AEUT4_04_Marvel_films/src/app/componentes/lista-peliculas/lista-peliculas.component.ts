@@ -86,7 +86,6 @@ export class ListaPeliculasComponent implements OnInit {
         let fecha = partesFecha[1] + "/" + partesFecha[0] + "/" + partesFecha[2];
 
         if (valoresInputs[0] == "") valoresValidos = false;
-        if (valoresInputs[1] == "") valoresValidos = false;
         if (isNaN(Date.parse(fecha))) valoresValidos = false;
         if (valoresInputs[3] == "") valoresValidos = false;
 

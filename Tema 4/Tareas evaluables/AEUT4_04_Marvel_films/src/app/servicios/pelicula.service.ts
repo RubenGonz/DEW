@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { MensajesService } from './mensajes.service';
 import { map } from 'rxjs/operators';
 
 import { InterfazPelicula } from '../interfaces/pelicula';
-import { PELICULAS } from '../mocks/mock-peliculas';
 import { ClasePelicula } from '../clases/pelicula';
 
 @Injectable({
@@ -19,11 +17,20 @@ import { ClasePelicula } from '../clases/pelicula';
 export class PeliculaService {
 
     peliculasApi: InterfazPelicula[] = [];
+    peliculasObtenidas: boolean = false;
     url: string = "https://mcuapi.herokuapp.com/api/v1/movies";
 
-    constructor(private http: HttpClient, private mensajesService: MensajesService) { }
+    constructor(private http: HttpClient) { }
 
+    /**
+     * Funcion que retorna un observable con las peliculas de la 
+     * api en el caso de que no se hayan obtenido nunca o las peliculas
+     * actuales del servicio
+     * @returns Observable con las peliculas en un array
+     */
     getPeliculas(): Observable<InterfazPelicula[]> {
+        if (this.peliculasObtenidas) return of(this.peliculasApi) 
+        else this.peliculasObtenidas = true;
         return this.fetchApi().pipe(
             map(peliculas => {
                 this.peliculasApi = peliculas;
@@ -31,6 +38,11 @@ export class PeliculaService {
             }))
     }
 
+    /**
+     * Función que retorna las peliculas de la api en 
+     * el formato deseado
+     * @returns Observable con las peliculas en un array
+     */
     fetchApi(): Observable<InterfazPelicula[]> {
         return this.http.get<any>(this.url).pipe(
             map(data => data.data.map((pelicula: any) => {
@@ -46,8 +58,7 @@ export class PeliculaService {
      * @returns pelicula buscada
      */
     getPelicula(id: number): Observable<InterfazPelicula> {
-        const pelicula = this.peliculasApi.find(peliculaBuscada => peliculaBuscada.id === id)!;
-        this.mensajesService.aniadir("Pelicula encontrada con éxito");
+        let pelicula = this.peliculasApi.find(peliculaBuscada => peliculaBuscada.id === id)!;
         return of(pelicula);
     }
 
@@ -57,7 +68,7 @@ export class PeliculaService {
      * @param pelicula a aniadir
      */
     addPelicula(pelicula: InterfazPelicula): void {
-        PELICULAS.push(pelicula);
+        this.peliculasApi.push(pelicula);
     }
 
     /**
@@ -67,8 +78,8 @@ export class PeliculaService {
      */
     eliminarPelicula(id: number): void {
         this.getPelicula(id).subscribe(peliculaAEliminar => {
-            let indice = PELICULAS.indexOf(peliculaAEliminar);
-            if (indice != -1) PELICULAS.splice(indice, 1)
+            let indice = this.peliculasApi.indexOf(peliculaAEliminar);
+            if (indice != -1) this.peliculasApi.splice(indice, 1);
         });
     }
 
@@ -80,14 +91,14 @@ export class PeliculaService {
      */
     modificarPelicula(id: number, datos: any[]) {
         let indicePelicula: number = -1;
-        PELICULAS.find((peliculaBuscada: any) => {
-            if (peliculaBuscada.id === id) indicePelicula = PELICULAS.indexOf(peliculaBuscada);
+        this.peliculasApi.find((peliculaBuscada: InterfazPelicula) => {
+            if (peliculaBuscada.id === id) indicePelicula = this.peliculasApi.indexOf(peliculaBuscada);
         });
-        PELICULAS[indicePelicula].nombre = datos[0];
-        PELICULAS[indicePelicula].urlImagen = datos[1];
-        PELICULAS[indicePelicula].fechaSalida = datos[2];
-        PELICULAS[indicePelicula].sinopsis = datos[3];
-        PELICULAS[indicePelicula].esMarvel = datos[4];
+        this.peliculasApi[indicePelicula].nombre = datos[0];
+        this.peliculasApi[indicePelicula].urlImagen = datos[1];
+        this.peliculasApi[indicePelicula].fechaSalida = datos[2];
+        this.peliculasApi[indicePelicula].sinopsis = datos[3];
+        this.peliculasApi[indicePelicula].esMarvel = datos[4];
     }
 
     /**
@@ -95,7 +106,7 @@ export class PeliculaService {
      * @returns id disponible
      */
     idDisponible(): number {
-        let id = PELICULAS[PELICULAS.length - 1].id;
+        let id = this.peliculasApi[this.peliculasApi.length - 1].id;
         let idLibreEcontrado = false;
         while (!idLibreEcontrado) {
             let peliculaEnBucle: any;
