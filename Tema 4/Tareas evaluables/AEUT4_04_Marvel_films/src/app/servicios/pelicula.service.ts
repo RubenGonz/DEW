@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
 import { MensajesService } from './mensajes.service';
+import { map } from 'rxjs/operators';
 
 import { InterfazPelicula } from '../interfaces/pelicula';
 import { PELICULAS } from '../mocks/mock-peliculas';
+import { ClasePelicula } from '../clases/pelicula';
 
 @Injectable({
     providedIn: 'root'
@@ -16,20 +18,27 @@ import { PELICULAS } from '../mocks/mock-peliculas';
  */
 export class PeliculaService {
 
-    /**
-     * Constructor que inicializa el servicio de mensajes
-     * @param mensajesService servicio de mensajes
-     */
-    constructor(private mensajesService: MensajesService) { }
+    peliculasApi: InterfazPelicula[] = [];
+    url: string = "https://mcuapi.herokuapp.com/api/v1/movies";
 
-    /**
-     * Funcion que obtiene las peliculas de neustro mock
-     * @returns array de peliculas
-     */
+    constructor(private http: HttpClient, private mensajesService: MensajesService) { }
+
     getPeliculas(): Observable<InterfazPelicula[]> {
-        this.mensajesService.aniadir("Peliculas obtenidas con éxito")
-        return of(PELICULAS);
+        return this.fetchApi().pipe(
+            map(peliculas => {
+                this.peliculasApi = peliculas;
+                return peliculas;
+            }))
     }
+
+    fetchApi(): Observable<InterfazPelicula[]> {
+        return this.http.get<any>(this.url).pipe(
+            map(data => data.data.map((pelicula: any) => {
+                let peliculaNueva = new ClasePelicula(pelicula.id, pelicula.title, pelicula.cover_url, pelicula.release_date, pelicula.overview, true);
+                return peliculaNueva;
+            }))
+        );
+    };
 
     /**
      * Funcion que devuelve una pelicula psandole un id
@@ -37,7 +46,7 @@ export class PeliculaService {
      * @returns pelicula buscada
      */
     getPelicula(id: number): Observable<InterfazPelicula> {
-        const pelicula = PELICULAS.find(peliculaBuscada => peliculaBuscada.id === id)!;
+        const pelicula = this.peliculasApi.find(peliculaBuscada => peliculaBuscada.id === id)!;
         this.mensajesService.aniadir("Pelicula encontrada con éxito");
         return of(pelicula);
     }
@@ -70,8 +79,8 @@ export class PeliculaService {
      * @param datos nuevos datos a cambiar
      */
     modificarPelicula(id: number, datos: any[]) {
-        let indicePelicula:number = -1;
-        PELICULAS.find(peliculaBuscada => {
+        let indicePelicula: number = -1;
+        PELICULAS.find((peliculaBuscada: any) => {
             if (peliculaBuscada.id === id) indicePelicula = PELICULAS.indexOf(peliculaBuscada);
         });
         PELICULAS[indicePelicula].nombre = datos[0];

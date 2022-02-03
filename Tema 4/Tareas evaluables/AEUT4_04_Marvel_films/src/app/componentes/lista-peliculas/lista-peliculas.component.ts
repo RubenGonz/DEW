@@ -40,7 +40,7 @@ export class ListaPeliculasComponent implements OnInit {
      * Metodo que guarda las peliculas del servicio
      */
     getPeliculas(): void {
-        this.peliculaService.getPeliculas().subscribe(peliculasObtenidas => this.peliculas = peliculasObtenidas);
+        this.peliculaService.getPeliculas().subscribe(peliculasApi => this.peliculas = peliculasApi);
     }
 
     /**

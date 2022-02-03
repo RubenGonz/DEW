@@ -5,7 +5,6 @@ import { InterfazPelicula } from 'src/app/interfaces/pelicula';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { PeliculaService } from 'src/app/servicios/pelicula.service';
-import { PELICULAS } from 'src/app/mocks/mock-peliculas';
 
 @Component({
     selector: 'pelicula-detallada',

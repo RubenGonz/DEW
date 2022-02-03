@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     }
 
     getPeliculas(): void {
-        this.peliculaService.getPeliculas().subscribe(peliculas => this.peliculasHome = peliculas.slice(0,8));
+        this.peliculaService.getPeliculas().subscribe(peliculasApi => this.peliculasHome = peliculasApi.slice(0,8));
     }
 
 }
