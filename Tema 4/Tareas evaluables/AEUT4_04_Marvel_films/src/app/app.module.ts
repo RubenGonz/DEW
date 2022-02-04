@@ -12,6 +12,7 @@ import { FasePeliculaPipe } from './pipes/fase-pelicula.pipe';
 import { NombrePeliculaPipe } from './pipes/nombre-pelicula.pipe';
 import { SinopsisPeliculaPipe } from './pipes/sinopsis-pelicula.pipe';
 import { HomeComponent } from './componentes/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { HomeComponent } from './componentes/home/home.component';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
