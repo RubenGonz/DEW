@@ -12,7 +12,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SinopsisPeliculaPipe implements PipeTransform {
 
     transform(sinopsis: string): void {
-        let div = document.getElementById("sinopsis");
+        let div = document.getElementById("sinopsisPeli");
         div!.innerHTML = "";
         let sinopsisInicial;
 
@@ -55,7 +55,7 @@ export class SinopsisPeliculaPipe implements PipeTransform {
         leerMenos.addEventListener("click", () => this.mostrarMenos(sinopsisOculta));
 
         document.getElementById("LeerMas")?.insertAdjacentElement("afterend", parteExtendida);
-        document.getElementById("sinopsis")?.insertAdjacentElement("beforeend", leerMenos);
+        document.getElementById("sinopsisPeli")?.insertAdjacentElement("beforeend", leerMenos);
         document.getElementById("LeerMas")?.remove();
     }
 
@@ -74,7 +74,7 @@ export class SinopsisPeliculaPipe implements PipeTransform {
         leerMas.innerHTML = "... Leer más";
         leerMas.style.color = "blue";
         leerMas.addEventListener("click", () => this.mostrarMas(sinopsisOculta));
-        document.getElementById("sinopsis")?.insertAdjacentElement("beforeend", leerMas);
+        document.getElementById("sinopsisPeli")?.insertAdjacentElement("beforeend", leerMas);
     }
 
 }
