@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './routing/app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 
 import { ListaPeliculasComponent } from './componentes/lista-peliculas/lista-peliculas.component';
@@ -12,7 +13,6 @@ import { FasePeliculaPipe } from './pipes/fase-pelicula.pipe';
 import { NombrePeliculaPipe } from './pipes/nombre-pelicula.pipe';
 import { SinopsisPeliculaPipe } from './pipes/sinopsis-pelicula.pipe';
 import { HomeComponent } from './componentes/home/home.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -28,9 +28,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]
