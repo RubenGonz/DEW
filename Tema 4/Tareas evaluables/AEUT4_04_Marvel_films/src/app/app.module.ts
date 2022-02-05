@@ -13,7 +13,11 @@ import { FasePeliculaPipe } from './pipes/fase-pelicula.pipe';
 import { NombrePeliculaPipe } from './pipes/nombre-pelicula.pipe';
 import { SinopsisPeliculaPipe } from './pipes/sinopsis-pelicula.pipe';
 import { HomeComponent } from './componentes/home/home.component';
-import {MatButtonModule} from '@angular/material/button';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -32,7 +36,10 @@ import {MatButtonModule} from '@angular/material/button';
         BrowserAnimationsModule,
         AppRoutingModule,
         HttpClientModule,
-        MatButtonModule 
+        MatButtonModule,
+        MatCardModule,
+        MatInputModule,
+        FormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
