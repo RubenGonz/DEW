@@ -1,0 +1,12 @@
+Servicios: 
+	Tenemos un servicio que será el que trabaje la información de las peliculas, teniendo el fetch entre otras cosas.
+Componentes:
+	Tenemos uno para la cabecera, otro para el pie de pagina, otro para las peliculas detalladas y uno para la lista de peliculas.
+Pipes:
+	Tenemos 3 pipes uno para calcular la rotacion con respecto a la tierra asi como la traslación y uno para modificar el aspecto del clima.
+Routing:
+	Tenemos un archivo que hace de routing entre las paginas.
+Clases:
+	Tenemos una clase planeta con el contructor de la interfaz del planeta.
+Interfaces:
+	Tenemos una interfaz con los atributos de un planeta.

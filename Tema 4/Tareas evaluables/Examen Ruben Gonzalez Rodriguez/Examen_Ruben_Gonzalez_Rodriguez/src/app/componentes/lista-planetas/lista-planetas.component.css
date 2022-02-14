@@ -1,0 +1,7 @@
+.cartaPlaneta{
+    transition: .2s;
+}
+
+.cartaPlaneta:hover{
+    box-shadow: 0px 0px 15px 0px black;
+}

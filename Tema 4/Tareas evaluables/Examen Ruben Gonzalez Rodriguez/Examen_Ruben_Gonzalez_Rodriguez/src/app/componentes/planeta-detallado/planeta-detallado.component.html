@@ -1,0 +1,15 @@
+<div *ngIf="planeta">
+    <div class="m-2 rounded-3 border border-dark cartaPlaneta" routerLink="/planetaDetallado/{{planeta.id}}">
+        <div class="text-center bg-dark text-light">
+            {{planeta.name}}
+        </div>
+        <div class="bg-light rounded-3">
+            <ul class="list-unstyled p-2 mb-0 ">
+                <li><span class="fw-bold">Identificador:</span> {{planeta.id}}</li>
+                <li><span class="fw-bold">Periodo de rotación:</span> {{planeta.rotation_period}} horas {{planeta.rotation_period | rotacion}}</li>
+                <li><span class="fw-bold">Periodo de órbita:</span> {{planeta.orbital_period}} días {{planeta.orbital_period | traslacion}}</li>
+                <li><span class="fw-bold">Clima:</span> {{planeta.climate}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

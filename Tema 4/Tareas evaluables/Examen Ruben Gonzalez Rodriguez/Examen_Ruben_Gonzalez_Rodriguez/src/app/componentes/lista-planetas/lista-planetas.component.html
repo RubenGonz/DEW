@@ -1,0 +1,18 @@
+<h2 class="ms-4 mt-4">Escoja uno de los planetas:</h2>
+<div class="d-flex flex-wrap justify-content-around my-4">
+    <div *ngFor="let planeta of planetas">
+        <div class="m-2 rounded-3 border border-dark cartaPlaneta" routerLink="/planetaDetallado/{{planeta.id}}">
+            <div class="text-center bg-dark text-light">
+                {{planeta.name}}
+            </div>
+            <div class="bg-light rounded-3">
+                <ul class="list-unstyled p-2 mb-0 ">
+                    <li><span class="fw-bold">Identificador:</span> {{planeta.id}}</li>
+                    <li><span class="fw-bold">Periodo de rotación:</span> {{planeta.rotation_period}} horas</li>
+                    <li><span class="fw-bold">Periodo de órbita:</span> {{planeta.orbital_period}} días</li>
+                    <li><span class="fw-bold">Clima:</span> {{planeta.climate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
