@@ -64,7 +64,7 @@ export class PeliculaService {
 
     /**
      * Metodo que aniade una pelicula al array 
-     * de PELICULAS
+     * de peliculasApi
      * @param pelicula a aniadir
      */
     addPelicula(pelicula: InterfazPelicula): void {
@@ -73,7 +73,7 @@ export class PeliculaService {
 
     /**
      * Metodo que elimina una pelicula del array 
-     * de PELICULAS
+     * de peliculasApi
      * @param id de la pelicula a eliminar
      */
     eliminarPelicula(id: number): void {
@@ -85,7 +85,7 @@ export class PeliculaService {
 
     /**
      * Metodo que modifica una pelicula del array 
-     * de PELICULAS
+     * de peliculasApi
      * @param id de la pelicula
      * @param datos nuevos datos a cambiar
      */

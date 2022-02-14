@@ -24,6 +24,12 @@ export class ClasePelicula implements InterfazPelicula {
         this.esMarvel = esMarvel;
     }
 
+    /**
+     * Función que convierte una fecha dada 
+     * a una válida
+     * @param fecha fecha a parsear
+     * @returns fecha válida
+     */
     transformarFecha(fecha: string): string {
         if (fecha == null) fecha = "???";
         if (fecha.includes("-")) {

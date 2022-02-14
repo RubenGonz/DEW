@@ -17,9 +17,6 @@ import { PeliculaService } from 'src/app/servicios/pelicula.service';
  */
 export class PeliculaDetalladaComponent implements OnInit {
 
-    /**
-     * Variable que guarda la pelicula de la pagina
-     */
     pelicula: InterfazPelicula | undefined;
 
     /**

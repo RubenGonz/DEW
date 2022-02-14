@@ -1,5 +1,8 @@
 import { animate, query, style, transition, trigger } from "@angular/animations"
 
+/**
+ * Constante que guarda nuestra animacion 
+ */
 export const animacion =
     trigger('myAnimation', [
         transition('* => *', [

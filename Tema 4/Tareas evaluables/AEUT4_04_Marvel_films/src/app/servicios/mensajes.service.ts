@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 export class MensajesService {
 
     /**
-     * Variable que guard aos mensajes
+     * Variable que guard los mensajes
      */
     mensajes: string[] = [];
 
