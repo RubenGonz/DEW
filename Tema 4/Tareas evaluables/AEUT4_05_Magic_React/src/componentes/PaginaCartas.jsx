@@ -52,9 +52,12 @@ const PaginaCartas = () => {
     const aniadirSeleccionada = (card) => {
         setStorage((old) => {
             const index = buscarCarta(card.id);
-            if (index == -1) return [...old, { card, cantidad: 1 }];
+            if (index === -1) return [...old, { card, cantidad: 1 }];
             const cartaEncontrada = [...old][index];
-            return [...old].splice(index, 1, { card, cantidad: cartaEncontrada.cantidad++ });
+            let copia = [...old];
+            if (cartaEncontrada.cantidad >= 4) return copia;
+            copia.splice(index, 1, { card, cantidad: cartaEncontrada.cantidad++ });
+            return copia;
         });
     };
 
