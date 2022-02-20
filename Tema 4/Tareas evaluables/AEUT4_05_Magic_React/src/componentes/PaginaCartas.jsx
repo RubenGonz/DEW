@@ -3,16 +3,24 @@ import { Fetch } from "../hooks/Fetch";
 import ListaCartas from "./ListaCartas";
 import CartasSeleccionadas from './CartasSeleccionadas';
 
+/**
+ * Componente que engloba la página
+ * @returns html de la página
+ */
 const PaginaCartas = () => {
     const [cartasGuardadas, setStorage] = useState([]);
-    const cartas = Fetch();
+    const cartasApi = Fetch();
 
+    /**
+     * Función que obtiene las cartas de localStorage
+     * @returns cartas en Json
+     */
     const obtenerCartas = () => {
         return JSON.parse(localStorage.getItem('cartas-guardadas'));
     }
 
     /**
-     * Hook que guarda en el estado las cartas del local storage
+     * Metodo que guarda en el estado las cartas del localStorage
      */
     useEffect(() => {
         if (localStorage.getItem("cartas-guardadas")) {
@@ -21,7 +29,7 @@ const PaginaCartas = () => {
     }, []);
 
     /**
-     * Hook que guarda en el local storage las cartas
+     * Metodo que guarda las cartas en el localStorage
      */
     useEffect(() => {
         localStorage.setItem("cartas-guardadas", JSON.stringify(cartasGuardadas));
@@ -29,32 +37,31 @@ const PaginaCartas = () => {
 
 
     /**
-     * Funcion que busca una carta en el array de cartas guardadas
-     * @param {string} id de la carta
-     * @returns indice de la carta en el array de cartas guardadas
+     * Funcion que busca una carta 
+     * @param {string} id id de la carta
+     * @returns indice de la carta
      */
     const buscarCarta = (id) => {
         return cartasGuardadas.findIndex(item => item.card.id === id);
     }
 
     /**
-     * Metodo que aniade una carta al deck de cartas seleccionadas
-     * NOTA: NO FUNCIONA BIEN, SOBREESCRIBE LAS CARTAS CUANDO ANIADES MAS DE 1, TENGO QUE REVISARLO
-     * @param {card} card a aniadir
+     * Función que aniade una carta a las cartas 
+     * @param {*} card carta a guardar
      */
     const aniadirSeleccionada = (card) => {
         setStorage((old) => {
-            const indexCard = buscarCarta(card.id);
-            if (indexCard === -1) return [...old, { card, amount: 1 }];
-            const foundCard = [...old][indexCard]
-            return [...old].splice(indexCard, 1, { card, amount: foundCard.amount++ });
+            const index = buscarCarta(card.id);
+            if (index == -1) return [...old, { card, cantidad: 1 }];
+            const cartaEncontrada = [...old][index];
+            return [...old].splice(index, 1, { card, cantidad: cartaEncontrada.cantidad++ });
         });
     };
 
     return (
         <>
             <div className="cartasApi">
-                <ListaCartas cartas={cartas} add={aniadirSeleccionada} />
+                <ListaCartas cartas={cartasApi} add={aniadirSeleccionada} />
             </div>
             <div className="cartasSeleccionadas">
                 <CartasSeleccionadas cartas={cartasGuardadas} />

@@ -1,7 +1,7 @@
 /**
  * Componente plantilla de una carta de la lista de cartas
- * @param {*} props carta
- * @returns 
+ * @param {*} props información carta
+ * @returns Carta en html
  */
 const Carta = (props) => {
   const card = props.card;

@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Hook que interactua con una api
+ * @returns cartas de la api
+ */
 export const Fetch = () => {
     const API = 'https://api.scryfall.com/cards/search?order=set&q=e%3Augin&unique=prints';
     const [cartas, setCards] = useState([]);
